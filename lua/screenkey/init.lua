@@ -137,15 +137,17 @@ local function transform_input(in_key)
                 local key = k:match("^<.-%-.*(.)>$")
                 local shift = k:match("^<.-%-(S)%-.>$") ~= nil
 
-                if not shift then
-                    key = key:lower()
-                end
-                if modifier == "C" then
-                    table.insert(transformed_keys, string.format("%s+%s", keys["CTRL"], key))
-                elseif modifier == "A" or modifier == "M" then
-                    table.insert(transformed_keys, string.format("%s+%s", keys["ALT"], key))
-                elseif modifier == "D" then
-                    table.insert(transformed_keys, string.format("%s+%s", keys["SUPER"], key))
+                if key ~= nil then
+                    if not shift then
+                        key = key:lower()
+                    end
+                    if modifier == "C" then
+                        table.insert(transformed_keys, string.format("%s+%s", keys["CTRL"], key))
+                    elseif modifier == "A" or modifier == "M" then
+                        table.insert(transformed_keys, string.format("%s+%s", keys["ALT"], key))
+                    elseif modifier == "D" then
+                        table.insert(transformed_keys, string.format("%s+%s", keys["SUPER"], key))
+                    end
                 end
             end
         end
@@ -220,6 +222,7 @@ function M.setup(opts)
 end
 
 function M.toggle()
+    queued_keys = {}
     if active then
         close_window()
     else
