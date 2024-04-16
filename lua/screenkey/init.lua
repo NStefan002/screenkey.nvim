@@ -43,12 +43,15 @@ local config = {
         border = "single",
     },
     compress_after = 3,
+    clear_after = 3,
 }
 
 local active = false
 local bufnr, winnr = -1, -1
 local ns_id = api.nvim_create_namespace("screenkey")
 local queued_keys = {}
+local time = 0 -- time in seconds
+local timer = nil
 
 local function create_window()
     if active then
@@ -92,6 +95,33 @@ local function close_window()
     end
 
     bufnr, winnr = -1, -1
+end
+
+local function create_timer()
+    timer = (vim.uv or vim.loop).new_timer()
+    timer:start(
+        0,
+        1000,
+        vim.schedule_wrap(function()
+            time = time + 1
+            if time == config.clear_after then
+                queued_keys = {}
+                local rep = {}
+                for _ = 1, config.win_opts.height do
+                    table.insert(rep, "")
+                end
+                vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, rep)
+            end
+        end)
+    )
+end
+
+local function kill_timer()
+    if timer then
+        timer:stop()
+        timer:close()
+        timer = nil
+    end
 end
 
 --- Explanation:
@@ -225,13 +255,16 @@ function M.toggle()
     queued_keys = {}
     if active then
         close_window()
+        kill_timer()
     else
         create_window()
+        create_timer()
     end
     active = not active
 end
 
 vim.on_key(function(_, typed)
+    time = 0
     if not active or #typed == 0 then
         return
     end
