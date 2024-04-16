@@ -2,41 +2,36 @@ local M = {}
 local api = vim.api
 
 local keys = {
-    ["<tab>"] = "󰌒",
-    ["<cr>"] = "󰌑",
-    ["<esc>"] = "Esc",
+    ["<TAB>"] = "󰌒",
+    ["<CR>"] = "󰌑",
+    ["<ESC>"] = "Esc",
     [" "] = "␣",
-    ["<bs>"] = "󰌥",
-    ["<del>"] = "Del",
-    ["<left>"] = "",
-    ["<right>"] = "",
-    ["<up>"] = "",
-    ["<down>"] = "",
-    ["<home>"] = "Home",
-    ["<end>"] = "End",
-    ["<pageup>"] = "PgUp",
-    ["<pagedown>"] = "PgDn",
-    ["<insert>"] = "Ins",
-    ["<f1>"] = "󱊫",
-    ["<f2>"] = "󱊬",
-    ["<f3>"] = "󱊭",
-    ["<f4>"] = "󱊮",
-    ["<f5>"] = "󱊯",
-    ["<f6>"] = "󱊰",
-    ["<f7>"] = "󱊱",
-    ["<f8>"] = "󱊲",
-    ["<f9>"] = "󱊳",
-    ["<f10>"] = "󱊴",
-    ["<f11>"] = "󱊵",
-    ["<f12>"] = "󱊶",
+    ["<BS>"] = "󰌥",
+    ["<DEL>"] = "Del",
+    ["<LEFT>"] = "",
+    ["<RIGHT>"] = "",
+    ["<UP>"] = "",
+    ["<DOWN>"] = "",
+    ["<HOME>"] = "Home",
+    ["<END>"] = "End",
+    ["<PAGEUP>"] = "PgUp",
+    ["<PAGEDOWN>"] = "PgDn",
+    ["<INSERT>"] = "Ins",
+    ["<F1>"] = "󱊫",
+    ["<F2>"] = "󱊬",
+    ["<F3>"] = "󱊭",
+    ["<F4>"] = "󱊮",
+    ["<F5>"] = "󱊯",
+    ["<F6>"] = "󱊰",
+    ["<F7>"] = "󱊱",
+    ["<F8>"] = "󱊲",
+    ["<F9>"] = "󱊳",
+    ["<F10>"] = "󱊴",
+    ["<F11>"] = "󱊵",
+    ["<F12>"] = "󱊶",
     ["CTRL"] = "Ctrl",
     ["ALT"] = "󰘵",
 }
-local transformed_keys = {}
-for key, value in pairs(keys) do
-    transformed_keys[vim.keycode(key)] = value
-end
-keys = transformed_keys
 
 local config = {
     win_opts = {
@@ -46,7 +41,7 @@ local config = {
         height = 3,
         border = "single",
     },
-    compress_after = 2,
+    compress_after = 3,
 }
 
 local active = false
@@ -98,37 +93,60 @@ local function close_window()
     bufnr, winnr = -1, -1
 end
 
+--- Explanation:
+--- Vim sometimes packs multiple keys into one input, e.g. `jk` when exiting insert mode with `jk`.
+--- For this reason, we need to split the input into individual keys and transform them into the
+--- corresponding symbols.
+--- see `:h keytrans()`
 ---@param key string
----@return string
-local function transform_key(key)
-    if keys[key] then
-        return keys[key]
-    end
-
-    ---@type string
-    local translated_key = vim.fn.keytrans(key)
-    -- check ctrl combo keys
-    local ctrl_match = translated_key:match("^<C.-(.)>$")
-    if ctrl_match then
-        -- check ctrl-shift combo keys
-        local shift_match = translated_key:match("^<C%-S%-.>$")
-        if not shift_match then
-            ctrl_match = ctrl_match:lower()
+---@return string[]
+local function transform_input(key)
+    key = vim.fn.keytrans(key)
+    ---@type string[]
+    local split = {}
+    local tmp = ""
+    local diamond_open = false
+    for i = 1, #key do
+        local curr_char = key:sub(i, i)
+        tmp = tmp .. curr_char
+        if curr_char == "<" then
+            diamond_open = true
+        elseif curr_char == ">" then
+            diamond_open = false
         end
-        return string.format("%s+%s", keys["CTRL"], ctrl_match)
+        if not diamond_open then
+            table.insert(split, tmp)
+            tmp = ""
+        end
     end
 
-    -- ignore mouse input (use keyboard!)
-    if
-        translated_key:match("Left")
-        or translated_key:match("Right")
-        or translated_key:match("Middle")
-        or translated_key:match("Scroll")
-    then
-        return ""
+    ---@type string[]
+    local transformed_keys = {}
+
+    for _, k in pairs(split) do
+        -- ignore mouse input (just use keyboard)
+        if not (k:match("Left") or k:match("Right") or k:match("Middle") or k:match("Scroll")) then
+            -- parse keyboard input
+            if #k == 1 then
+                table.insert(transformed_keys, k)
+            elseif keys[k:upper()] then
+                table.insert(transformed_keys, keys[k:upper()])
+            else
+                -- check ctrl combo keys
+                local ctrl_match = k:match("^<C.-(.)>$")
+                if ctrl_match then
+                    -- check ctrl-shift combo keys
+                    local shift_match = k:match("^<C%-S%-.>$")
+                    if not shift_match then
+                        ctrl_match = ctrl_match:lower()
+                    end
+                    table.insert(transformed_keys, string.format("%s+%s", keys["CTRL"], ctrl_match))
+                end
+            end
+        end
     end
 
-    return translated_key
+    return transformed_keys
 end
 
 ---@return string
@@ -209,9 +227,9 @@ vim.on_key(function(_, typed)
     if not active or #typed == 0 then
         return
     end
-    local key = transform_key(typed)
-    if #key > 0 then
-        table.insert(queued_keys, transform_key(typed))
+    local transformed_keys = transform_input(typed)
+    for _, k in pairs(transformed_keys) do
+        table.insert(queued_keys, k)
     end
     display_text()
 end, ns_id)
