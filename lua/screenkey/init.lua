@@ -30,7 +30,8 @@ local keys = {
     ["<F11>"] = "󱊵",
     ["<F12>"] = "󱊶",
     ["CTRL"] = "Ctrl",
-    ["ALT"] = "󰘵",
+    ["ALT"] = "Alt",
+    ["SUPER"] = "󰘳",
 }
 
 local config = {
@@ -98,16 +99,16 @@ end
 --- For this reason, we need to split the input into individual keys and transform them into the
 --- corresponding symbols.
 --- see `:h keytrans()`
----@param key string
+---@param in_key string
 ---@return string[]
-local function transform_input(key)
-    key = vim.fn.keytrans(key)
+local function transform_input(in_key)
+    in_key = vim.fn.keytrans(in_key)
     ---@type string[]
     local split = {}
     local tmp = ""
     local diamond_open = false
-    for i = 1, #key do
-        local curr_char = key:sub(i, i)
+    for i = 1, #in_key do
+        local curr_char = in_key:sub(i, i)
         tmp = tmp .. curr_char
         if curr_char == "<" then
             diamond_open = true
@@ -132,15 +133,19 @@ local function transform_input(key)
             elseif keys[k:upper()] then
                 table.insert(transformed_keys, keys[k:upper()])
             else
-                -- check ctrl combo keys
-                local ctrl_match = k:match("^<C.-(.)>$")
-                if ctrl_match then
-                    -- check ctrl-shift combo keys
-                    local shift_match = k:match("^<C%-S%-.>$")
-                    if not shift_match then
-                        ctrl_match = ctrl_match:lower()
-                    end
-                    table.insert(transformed_keys, string.format("%s+%s", keys["CTRL"], ctrl_match))
+                local modifier = k:match("^<([CMAD])%-.+>$")
+                local key = k:match("^<.-%-.*(.)>$")
+                local shift = k:match("^<.-%-(S)%-.>$") ~= nil
+
+                if not shift then
+                    key = key:lower()
+                end
+                if modifier == "C" then
+                    table.insert(transformed_keys, string.format("%s+%s", keys["CTRL"], key))
+                elseif modifier == "A" or modifier == "M" then
+                    table.insert(transformed_keys, string.format("%s+%s", keys["ALT"], key))
+                elseif modifier == "D" then
+                    table.insert(transformed_keys, string.format("%s+%s", keys["SUPER"], key))
                 end
             end
         end
