@@ -48,6 +48,7 @@ use({
 
 ```lua
 {
+    -- see :h nvim_open_win
     win_opts = {
         relative = "editor",
         anchor = "SE",
@@ -55,7 +56,10 @@ use({
         height = 3,
         border = "single",
     },
+    -- compress input when repeated <compress_after> times
     compress_after = 3,
+    -- clear the input after <clear_after> seconds of inactivity
+    clear_after = 3,
 }
 ```
 </details>
