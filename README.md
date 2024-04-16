@@ -6,6 +6,10 @@ It is useful for screencasts, presentations, and live coding sessions.
 
 ## 📺 Showcase
 
+
+https://github.com/NStefan002/screenkey.nvim/assets/100767853/29ea0949-4fd3-4d00-b5a3-2c249bb84360
+
+
 ## ⚡️ Requirements
 
 - Neovim nightly (0.10.0+)
