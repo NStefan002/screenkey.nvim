@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/NStefan002/screenkey.nvim/compare/v1.1.0...v1.2.0) (2024-04-16)
+
+
+### Features
+
+* **timer:** clear screenkey buffer after specified time ([f7204a4](https://github.com/NStefan002/screenkey.nvim/commit/f7204a414ff374f290c7ac3e808584af0f949c7a))
+
 ## [1.1.0](https://github.com/NStefan002/screenkey.nvim/compare/v1.0.0...v1.1.0) (2024-04-16)
 
 
