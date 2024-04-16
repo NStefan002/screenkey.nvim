@@ -2,34 +2,35 @@ local M = {}
 local api = vim.api
 
 local keys = {
-    ["<tab>"] = "TAB",
-    ["<cr>"] = "ENTER",
-    ["<esc>"] = "ESC",
-    [" "] = "SPACE",
-    ["<bs>"] = "BACKSPACE",
-    ["<del>"] = "DEL",
-    ["<left>"] = "LEFT",
-    ["<right>"] = "RIGHT",
-    ["<up>"] = "UP",
-    ["<down>"] = "DOWN",
-    ["<home>"] = "HOME",
-    ["<end>"] = "END",
-    ["<pageup>"] = "PGUP",
-    ["<pagedown>"] = "PGDN",
-    ["<insert>"] = "INS",
-    ["<f1>"] = "F1",
-    ["<f2>"] = "F2",
-    ["<f3>"] = "F3",
-    ["<f4>"] = "F4",
-    ["<f5>"] = "F5",
-    ["<f6>"] = "F6",
-    ["<f7>"] = "F7",
-    ["<f8>"] = "F8",
-    ["<f9>"] = "F9",
-    ["<f10>"] = "F10",
-    ["<f11>"] = "F11",
-    ["<f12>"] = "F12",
-    ["CTRL"] = "CTRL",
+    ["<tab>"] = "󰌒",
+    ["<cr>"] = "󰌑",
+    ["<esc>"] = "Esc",
+    [" "] = "␣",
+    ["<bs>"] = "󰌥",
+    ["<del>"] = "Del",
+    ["<left>"] = "",
+    ["<right>"] = "",
+    ["<up>"] = "",
+    ["<down>"] = "",
+    ["<home>"] = "Home",
+    ["<end>"] = "End",
+    ["<pageup>"] = "PgUp",
+    ["<pagedown>"] = "PgDn",
+    ["<insert>"] = "Ins",
+    ["<f1>"] = "󱊫",
+    ["<f2>"] = "󱊬",
+    ["<f3>"] = "󱊭",
+    ["<f4>"] = "󱊮",
+    ["<f5>"] = "󱊯",
+    ["<f6>"] = "󱊰",
+    ["<f7>"] = "󱊱",
+    ["<f8>"] = "󱊲",
+    ["<f9>"] = "󱊳",
+    ["<f10>"] = "󱊴",
+    ["<f11>"] = "󱊵",
+    ["<f12>"] = "󱊶",
+    ["CTRL"] = "Ctrl",
+    ["ALT"] = "󰘵",
 }
 local transformed_keys = {}
 for key, value in pairs(keys) do
@@ -164,13 +165,8 @@ local function compress_output()
     local text = table.concat(compressed_keys, " ")
     while #text > config.win_opts.width - 2 do
         local removed = table.remove(compressed_keys, 1)
+        -- HACK: don't touch this, please
         local num_removed = tonumber(string.match(removed:match("%.%.x%d$") or "1", "%d$"))
-        -- local compressed = removed:match("%.%.x%d$")
-        -- local num_removed = 1
-        -- if compressed then
-        --     local num = tonumber(compressed:match("%d$") or "0")
-        --     num_removed = num_removed + num
-        -- end
         for _ = 1, num_removed do
             table.remove(queued_keys, 1)
         end
