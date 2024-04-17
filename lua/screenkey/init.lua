@@ -1,5 +1,6 @@
 local M = {}
 local api = vim.api
+local util = require("screenkey.util")
 
 local keys = {
     ["<TAB>"] = "󰌒",
@@ -44,6 +45,10 @@ local config = {
     },
     compress_after = 3,
     clear_after = 3,
+    disable = {
+        filetypes = {},
+        buftypes = {},
+    },
 }
 
 local active = false
@@ -110,7 +115,7 @@ local function create_timer()
                 for _ = 1, config.win_opts.height do
                     table.insert(rep, "")
                 end
-                vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, rep)
+                api.nvim_buf_set_lines(bufnr, 0, -1, false, rep)
             end
         end)
     )
@@ -122,6 +127,20 @@ local function kill_timer()
         timer:close()
         timer = nil
     end
+end
+
+local function should_disable()
+    local filetype = api.nvim_get_option_value("filetype", { buf = 0 })
+    if util.tbl_contains(config.disable.filetypes, filetype) then
+        return true
+    end
+
+    local buftype = api.nvim_get_option_value("buftype", { buf = 0 })
+    if util.tbl_contains(config.disable.buftypes, buftype) then
+        return true
+    end
+
+    return false
 end
 
 --- Explanation:
@@ -265,6 +284,9 @@ end
 
 vim.on_key(function(_, typed)
     time = 0
+    if should_disable() then
+        return
+    end
     if not active or not typed or #typed == 0 then
         return
     end
