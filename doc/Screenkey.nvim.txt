@@ -74,6 +74,12 @@ Defaultsettings: ~
         compress_after = 3,
         -- clear the input after <clear_after> seconds of inactivity
         clear_after = 3,
+        -- temporarily disable screenkey (for example when inside of the terminal)
+        disable = {
+            filetypes = {}, -- for example: "toggleterm"
+            -- :h 'buftype'
+            buftypes = {}, -- for example: "terminal"
+        },
     }
 <
 
@@ -84,6 +90,10 @@ HOW TO USE                          *Screenkey.nvim-screenkey.nvim-how-to-use*
 - Don’t worry about leaking your passwords when using `sudo` while streaming/recording because you forgot to turn your display-key application,
     `Screenkey` will only show pieces of information about your input in Neovim.
 
+
+  [!NOTE] If you’re using a terminal inside of the Neovim, and you want
+  screenkey to automatically stop displaying your keys when you’re inside of
+  the terminal, see `disable` option in the plugin configuration.
 
 SIMILAR PROJECTS AND SOME DIFFERENCES*Screenkey.nvim-screenkey.nvim-similar-projects-and-some-differences*
 
