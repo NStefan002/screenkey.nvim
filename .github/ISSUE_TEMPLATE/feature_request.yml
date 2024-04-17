@@ -1,0 +1,24 @@
+name: Feature request
+description: Request an enhancement for Screenkey.nvim
+labels: [enhancement]
+body:
+
+  - type: markdown
+    attributes:
+      value: |
+        Before requesting: search existing feature requests
+
+  - type: textarea
+    attributes:
+      label: "Problem"
+      description: "Describe the problem to be solved."
+      placeholder: "..."
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Expected behavior"
+      description: "Describe what the new feature or behavior would look like. How does it solve the problem?"
+    validations:
+      required: true
