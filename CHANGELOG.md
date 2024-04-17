@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/NStefan002/screenkey.nvim/compare/v1.2.1...v1.3.0) (2024-04-17)
+
+
+### Features
+
+* **config:** disable screenkey for specified file/buf types ([82b00c6](https://github.com/NStefan002/screenkey.nvim/commit/82b00c6bbb01c74024eb8ebed52edb08a905d9e6))
+
 ## [1.2.1](https://github.com/NStefan002/screenkey.nvim/compare/v1.2.0...v1.2.1) (2024-04-17)
 
 
