@@ -265,7 +265,7 @@ end
 
 vim.on_key(function(_, typed)
     time = 0
-    if not active or #typed == 0 then
+    if not active or not typed or #typed == 0 then
         return
     end
     local transformed_keys = transform_input(typed)
