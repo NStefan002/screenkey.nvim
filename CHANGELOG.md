@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.1](https://github.com/NStefan002/screenkey.nvim/compare/v1.2.0...v1.2.1) (2024-04-17)
+
+
+### Bug Fixes
+
+* `typed` is a nil value ([1d0db12](https://github.com/NStefan002/screenkey.nvim/commit/1d0db12f947fd5020998d9b6523dff5ad05e8179))
+* render space correctly ([8aa833f](https://github.com/NStefan002/screenkey.nvim/commit/8aa833f0961f47a0fc68849c4f4da5ed7cb4c620))
+
 ## [1.2.0](https://github.com/NStefan002/screenkey.nvim/compare/v1.1.0...v1.2.0) (2024-04-16)
 
 
