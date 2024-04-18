@@ -39,6 +39,7 @@ lazy <https://github.com/folke/lazy.nvim>
     {
         "NStefan002/screenkey.nvim",
         cmd = "Screenkey",
+        version = "*",
         config = true,
     }
 <
