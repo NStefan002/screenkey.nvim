@@ -23,6 +23,7 @@ https://github.com/NStefan002/screenkey.nvim/assets/100767853/29ea0949-4fd3-4d00
 {
     "NStefan002/screenkey.nvim",
     cmd = "Screenkey",
+    version = "*",
     config = true,
 }
 ```
