@@ -12,7 +12,7 @@ https://github.com/NStefan002/screenkey.nvim/assets/100767853/29ea0949-4fd3-4d00
 
 ## ⚡️ Requirements
 
-- Neovim nightly (0.10.0+)
+- Neovim nightly (0.10.0+, not older than April 1st, since Screenkey requires [#28098](https://github.com/neovim/neovim/pull/28098#event-12302234671))
 - a [Nerd Font](https://www.nerdfonts.com/) **_(optional, but recommended)_**
 
 ## 📋 Installation
