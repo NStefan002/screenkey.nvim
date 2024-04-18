@@ -282,11 +282,12 @@ function M.toggle()
     active = not active
 end
 
-vim.on_key(function(_, typed)
+vim.on_key(function(key, typed)
     time = 0
     if should_disable() then
         return
     end
+    typed = typed or key
     if not active or not typed or #typed == 0 then
         return
     end
