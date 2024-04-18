@@ -38,6 +38,13 @@ body:
 
   - type: input
     attributes:
+      label: "Neovim version (`nvim -v`)"
+      placeholder: "NVIM v0.10.0-dev-b0f92281"
+    validations:
+      required: true
+
+  - type: input
+    attributes:
       label: "Terminal name/version"
       placeholder: "wezterm 20240203-110809-5046fc22"
     validations:
