@@ -10,7 +10,7 @@ jobs:
       - name: panvimdoc
         uses: kdheepak/panvimdoc@main
         with:
-          vimdoc: Screenkey.nvim
+          vimdoc: screenkey.nvim
           version: "Neovim >= 0.10.0"
           demojify: true
           treesitter: true
