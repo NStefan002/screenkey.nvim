@@ -1,5 +1,6 @@
 local M = {}
 local api = vim.api
+local grp = -1
 local util = require("screenkey.util")
 
 local keys = {
@@ -265,6 +266,29 @@ local function display_text()
     )
 end
 
+local function create_autocmds()
+    -- autocmds already set
+    if grp ~= -1 then
+        return
+    end
+
+    grp = api.nvim_create_augroup("Screenkey", {})
+
+    api.nvim_create_autocmd("TabEnter", {
+        group = grp,
+        callback = function()
+            if active then
+                close_window()
+                active = false
+                create_window()
+                active = true
+                display_text()
+            end
+        end,
+        desc = "Move Screenkey window to the new tabpage",
+    })
+end
+
 ---@param opts? table
 function M.setup(opts)
     config = vim.tbl_deep_extend("force", config, opts or {})
@@ -277,6 +301,7 @@ function M.toggle()
         kill_timer()
     else
         create_window()
+        create_autocmds()
         create_timer()
     end
     active = not active
