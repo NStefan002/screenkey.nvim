@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/NStefan002/screenkey.nvim/compare/v1.3.1...v1.4.0) (2024-04-20)
+
+
+### Features
+
+* **tabs:** move the screenkey to the current tab-page ([fe9c1e8](https://github.com/NStefan002/screenkey.nvim/commit/fe9c1e8d45309347df8a16d879bb687238892a83))
+
 ## [1.3.1](https://github.com/NStefan002/screenkey.nvim/compare/v1.3.0...v1.3.1) (2024-04-18)
 
 
