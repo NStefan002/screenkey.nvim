@@ -56,6 +56,10 @@ use({
         width = 40,
         height = 3,
         border = "single",
+        row = vim.o.lines - vim.o.cmdheight - 1,
+        col = vim.o.columns - 1,
+        -- The default `row` and `col` will put the window on the bottom left.
+        -- If you want to move it to the top left, use `row = 1`.
     },
     -- compress input when repeated <compress_after> times
     compress_after = 3,
