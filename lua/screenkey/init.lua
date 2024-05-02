@@ -2,6 +2,7 @@ local M = {}
 local api = vim.api
 local grp = -1
 local Util = require("screenkey.util")
+local Config = require("screenkey.config")
 
 local keys = {
     ["<TAB>"] = "󰌒",
@@ -36,22 +37,6 @@ local keys = {
     ["SUPER"] = "󰘳",
 }
 
-local config = {
-    win_opts = {
-        relative = "editor",
-        anchor = "SE",
-        width = 40,
-        height = 3,
-        border = "single",
-    },
-    compress_after = 3,
-    clear_after = 3,
-    disable = {
-        filetypes = {},
-        buftypes = {},
-    },
-}
-
 local active = false
 local bufnr, winnr = -1, -1
 local ns_id = api.nvim_create_namespace("screenkey")
@@ -66,16 +51,16 @@ local function create_window()
 
     bufnr = api.nvim_create_buf(false, true)
     winnr = api.nvim_open_win(bufnr, false, {
-        relative = config.win_opts.relative,
-        anchor = config.win_opts.anchor,
+        relative = Config.options.win_opts.relative,
+        anchor = Config.options.win_opts.anchor,
         title = "Screenkey",
         title_pos = "center",
         row = vim.o.lines - vim.o.cmdheight - 1,
         col = vim.o.columns - 1,
-        width = config.win_opts.width,
-        height = config.win_opts.height,
+        width = Config.options.win_opts.width,
+        height = Config.options.win_opts.height,
         style = "minimal",
-        border = config.win_opts.border,
+        border = Config.options.win_opts.border,
         focusable = false,
         noautocmd = true,
     })
@@ -110,10 +95,10 @@ local function create_timer()
         1000,
         vim.schedule_wrap(function()
             time = time + 1
-            if time == config.clear_after then
+            if time == Config.options.clear_after then
                 queued_keys = {}
                 local rep = {}
-                for _ = 1, config.win_opts.height do
+                for _ = 1, Config.options.win_opts.height do
                     table.insert(rep, "")
                 end
                 api.nvim_buf_set_lines(bufnr, 0, -1, false, rep)
@@ -132,12 +117,12 @@ end
 
 local function should_disable()
     local filetype = api.nvim_get_option_value("filetype", { buf = 0 })
-    if Util.tbl_contains(config.disable.filetypes, filetype) then
+    if Util.tbl_contains(Config.options.disable.filetypes, filetype) then
         return true
     end
 
     local buftype = api.nvim_get_option_value("buftype", { buf = 0 })
-    if Util.tbl_contains(config.disable.buftypes, buftype) then
+    if Util.tbl_contains(Config.options.disable.buftypes, buftype) then
         return true
     end
 
@@ -199,7 +184,7 @@ local function compress_output()
         if key == last_key then
             duplicates = duplicates + 1
         else
-            if duplicates >= config.compress_after then
+            if duplicates >= Config.options.compress_after then
                 table.insert(compressed_keys, string.format("%s..x%d", last_key, duplicates))
             else
                 for _ = 1, duplicates do
@@ -211,7 +196,7 @@ local function compress_output()
         end
     end
     -- check the last key
-    if duplicates >= config.compress_after then
+    if duplicates >= Config.options.compress_after then
         table.insert(compressed_keys, string.format("%s..x%d", last_key, duplicates))
     else
         for _ = 1, duplicates do
@@ -221,7 +206,7 @@ local function compress_output()
 
     -- remove old entries
     local text = table.concat(compressed_keys, " ")
-    while #text > config.win_opts.width - 2 do
+    while #text > Config.options.win_opts.width - 2 do
         local removed = table.remove(compressed_keys, 1)
         -- HACK: don't touch this, please
         local num_removed = tonumber(string.match(removed:match("%.%.x%d$") or "1", "%d$"))
@@ -238,8 +223,8 @@ local function display_text()
     local text = compress_output()
     -- center text inside of screenkey window
     local padding =
-        string.rep(" ", math.floor((config.win_opts.width - api.nvim_strwidth(text)) / 2))
-    local line = math.floor(config.win_opts.height / 2)
+        string.rep(" ", math.floor((Config.options.win_opts.width - api.nvim_strwidth(text)) / 2))
+    local line = math.floor(Config.options.win_opts.height / 2)
     api.nvim_buf_set_lines(bufnr, line, line + 1, false, { string.format("%s%s", padding, text) })
 end
 
@@ -268,7 +253,7 @@ end
 
 ---@param opts? table
 function M.setup(opts)
-    config = vim.tbl_deep_extend("force", config, opts or {})
+    Config.setup(opts)
 end
 
 function M.toggle()
