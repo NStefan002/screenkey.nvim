@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/NStefan002/screenkey.nvim/compare/v1.4.0...v1.4.1) (2024-05-02)
+
+
+### Bug Fixes
+
+* remove unnecessary padding ([ff32c3e](https://github.com/NStefan002/screenkey.nvim/commit/ff32c3e875daa085872377ae8f50d066df3cef30))
+
 ## [1.4.0](https://github.com/NStefan002/screenkey.nvim/compare/v1.3.1...v1.4.0) (2024-04-20)
 
 
