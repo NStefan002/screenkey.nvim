@@ -7,6 +7,7 @@ Table of Contents                           *screenkey.nvim-table-of-contents*
   - Showcase                          |screenkey.nvim-screenkey.nvim-showcase|
   - Requirements                  |screenkey.nvim-screenkey.nvim-requirements|
   - Installation                  |screenkey.nvim-screenkey.nvim-installation|
+  - Configuration                |screenkey.nvim-screenkey.nvim-configuration|
   - How to use                      |screenkey.nvim-screenkey.nvim-how-to-use|
   - Similar projects and some differences|screenkey.nvim-screenkey.nvim-similar-projects-and-some-differences|
 
@@ -59,7 +60,10 @@ rocks.nvim <https://github.com/nvim-neorocks/rocks.nvim>
 
 `:Rocks install screenkey.nvim`
 
-Defaultsettings: ~
+
+CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
+
+- Default settings
 
 >lua
     {
@@ -71,19 +75,41 @@ Defaultsettings: ~
             height = 3,
             border = "single",
         },
-        -- compress input when repeated <compress_after> times
         compress_after = 3,
-        -- clear the input after <clear_after> seconds of inactivity
         clear_after = 3,
-        -- temporarily disable screenkey (for example when inside of the terminal)
         disable = {
-            filetypes = {}, -- for example: "toggleterm"
-            -- :h 'buftype'
-            buftypes = {}, -- for example: "terminal"
+            filetypes = {},
+            buftypes = {},
         },
+        group_mappings = false,
     }
 <
 
+  --------------------------------------------------------------------------------------
+  option              explanation
+  ------------------- ------------------------------------------------------------------
+  win_opts            see :h nvim_open_win
+
+  compress after      compress input when repeated times (for example jjjj will be
+                      compressed to j..x4)
+
+  clear_after         clear the input after <clear_after> seconds of inactivity
+
+  disable             temporarily disable screenkey (for example when inside of the
+                      terminal)
+
+  disable.filetypes   for example: toggleterm or toml
+
+  disable.buftypes    see :h 'buftype', for example: terminal
+
+  win_opts            see :h nvim_open_win
+
+  group_mappings      for example: <leader>sf opens up a fuzzy finder, if the
+                      group_mappings option is set to true, every time you open up a
+                      fuzzy finder with <leader>sf, Screenkey will show ␣sf instead of
+                      ␣ s f to indicate that the used key combination was a defined
+                      mapping.
+  --------------------------------------------------------------------------------------
 
 HOW TO USE                          *screenkey.nvim-screenkey.nvim-how-to-use*
 
