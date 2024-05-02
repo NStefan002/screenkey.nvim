@@ -157,7 +157,11 @@ local function transform_input(in_key)
         end
     end
 
-    return transformed_keys
+    if Config.options.group_mappings then
+        return { table.concat(transformed_keys, "") }
+    else
+        return transformed_keys
+    end
 end
 
 ---@return string
