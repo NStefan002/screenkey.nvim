@@ -1,4 +1,5 @@
 local M = {}
+local Config = require("screenkey.config")
 
 ---@param t table Table to check
 ---@param value any Value to compare or predicate function reference
@@ -33,4 +34,19 @@ function M.split_key(key)
     end
     return split
 end
+
+function M.should_disable()
+    local filetype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
+    if M.tbl_contains(Config.options.disable.filetypes, filetype) then
+        return true
+    end
+
+    local buftype = vim.api.nvim_get_option_value("buftype", { buf = 0 })
+    if M.tbl_contains(Config.options.disable.buftypes, buftype) then
+        return true
+    end
+
+    return false
+end
+
 return M

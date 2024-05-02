@@ -115,20 +115,6 @@ local function kill_timer()
     end
 end
 
-local function should_disable()
-    local filetype = api.nvim_get_option_value("filetype", { buf = 0 })
-    if Util.tbl_contains(Config.options.disable.filetypes, filetype) then
-        return true
-    end
-
-    local buftype = api.nvim_get_option_value("buftype", { buf = 0 })
-    if Util.tbl_contains(Config.options.disable.buftypes, buftype) then
-        return true
-    end
-
-    return false
-end
-
 --- Explanation:
 --- Vim sometimes packs multiple keys into one input, e.g. `jk` when exiting insert mode with `jk`.
 --- For this reason, we need to split the input into individual keys and transform them into the
@@ -251,6 +237,22 @@ local function create_autocmds()
     })
 end
 
+vim.on_key(function(key, typed)
+    time = 0
+    if Util.should_disable() then
+        return
+    end
+    typed = typed or key
+    if not active or not typed or #typed == 0 then
+        return
+    end
+    local transformed_keys = transform_input(typed)
+    for _, k in pairs(transformed_keys) do
+        table.insert(queued_keys, k)
+    end
+    display_text()
+end, ns_id)
+
 ---@param opts? table
 function M.setup(opts)
     Config.setup(opts)
@@ -268,21 +270,5 @@ function M.toggle()
     end
     active = not active
 end
-
-vim.on_key(function(key, typed)
-    time = 0
-    if should_disable() then
-        return
-    end
-    typed = typed or key
-    if not active or not typed or #typed == 0 then
-        return
-    end
-    local transformed_keys = transform_input(typed)
-    for _, k in pairs(transformed_keys) do
-        table.insert(queued_keys, k)
-    end
-    display_text()
-end, ns_id)
 
 return M
