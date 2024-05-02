@@ -1,7 +1,7 @@
 local M = {}
 local api = vim.api
 local grp = -1
-local util = require("screenkey.util")
+local Util = require("screenkey.util")
 
 local keys = {
     ["<TAB>"] = "󰌒",
@@ -132,12 +132,12 @@ end
 
 local function should_disable()
     local filetype = api.nvim_get_option_value("filetype", { buf = 0 })
-    if util.tbl_contains(config.disable.filetypes, filetype) then
+    if Util.tbl_contains(config.disable.filetypes, filetype) then
         return true
     end
 
     local buftype = api.nvim_get_option_value("buftype", { buf = 0 })
-    if util.tbl_contains(config.disable.buftypes, buftype) then
+    if Util.tbl_contains(config.disable.buftypes, buftype) then
         return true
     end
 
@@ -153,24 +153,7 @@ end
 ---@return string[]
 local function transform_input(in_key)
     in_key = vim.fn.keytrans(in_key)
-    ---@type string[]
-    local split = {}
-    local tmp = ""
-    local diamond_open = false
-    for i = 1, #in_key do
-        local curr_char = in_key:sub(i, i)
-        tmp = tmp .. curr_char
-        if curr_char == "<" then
-            diamond_open = true
-        elseif curr_char == ">" then
-            diamond_open = false
-        end
-        if not diamond_open then
-            table.insert(split, tmp)
-            tmp = ""
-        end
-    end
-
+    local split = Util.split_key(in_key)
     ---@type string[]
     local transformed_keys = {}
 
