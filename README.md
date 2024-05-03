@@ -75,6 +75,7 @@ use({
 | `disable.buftypes`  | see `:h 'buftype'`, for example: `terminal`                                                                                                                                                                                                                                |
 | `win_opts`          | see `:h nvim_open_win`                                                                                                                                                                                                                                                     |
 | `group_mappings`    | for example: `<leader>sf` opens up a fuzzy finder, if the `group_mappings` option is set to `true`, every time you open up a fuzzy finder with `<leader>sf`, Screenkey will show `␣sf` instead of `␣ s f` to indicate that the used key combination was a defined mapping. |
+| `show_leader`       | if this option is set to `true`, in the last example instead of `␣ s f` Screenkey will display `<leader> s f` (of course, if the `<space>` is `<leader>`), if the current key is not a defined mapping, Screenkey will display `<space>` as `␣`                            |
 
 ## ❓ How to use
 
