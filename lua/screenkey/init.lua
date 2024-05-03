@@ -131,8 +131,14 @@ local function transform_input(in_key)
     for _, k in pairs(split) do
         -- ignore mouse input (just use keyboard)
         if not (k:match("Left") or k:match("Right") or k:match("Middle") or k:match("Scroll")) then
-            -- parse keyboard input
-            if #k == 1 then
+            local leader = vim.g.mapleader or ""
+            if
+                Config.options.show_leader
+                and Util.is_mapping(in_key)
+                and (k:upper() == leader:upper() or k:upper() == vim.fn.keytrans(leader):upper())
+            then
+                table.insert(transformed_keys, "<leader>")
+            elseif #k == 1 then
                 table.insert(transformed_keys, k)
             elseif keys[k:upper()] then
                 table.insert(transformed_keys, keys[k:upper()])

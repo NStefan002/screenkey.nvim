@@ -14,6 +14,7 @@ M.defaults = {
         filetypes = {},
         buftypes = {},
     },
+    show_leader = false,
     group_mappings = false,
 }
 

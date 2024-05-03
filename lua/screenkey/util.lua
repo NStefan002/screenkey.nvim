@@ -49,4 +49,22 @@ function M.should_disable()
     return false
 end
 
+---@param key string
+---@return boolean
+function M.is_mapping(key)
+    local mappings = vim.api.nvim_get_keymap(vim.api.nvim_get_mode().mode)
+    for _, mapping in ipairs(mappings) do
+        if
+            ---@diagnostic disable-next-line: undefined-field
+            key:upper() == mapping.lhs:upper()
+            ---@diagnostic disable-next-line: undefined-field
+            or key:upper() == vim.fn.keytrans(mapping.lhs):upper()
+        then
+            return true
+        end
+    end
+
+    return false
+end
+
 return M
