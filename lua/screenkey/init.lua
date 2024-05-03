@@ -89,7 +89,7 @@ local function close_window()
 end
 
 local function create_timer()
-    timer = (vim.uv or vim.loop).new_timer()
+    timer = vim.uv.new_timer()
     timer:start(
         0,
         1000,
