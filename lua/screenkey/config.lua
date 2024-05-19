@@ -2,6 +2,8 @@ local M = {}
 
 M.defaults = {
     win_opts = {
+        row = vim.o.lines - vim.o.cmdheight - 1,
+        col = vim.o.columns - 1,
         relative = "editor",
         anchor = "SE",
         width = 40,
