@@ -69,6 +69,8 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
     {
         -- see :h nvim_open_win
         win_opts = {
+            row = vim.o.lines - vim.o.cmdheight - 1,
+            col = vim.o.columns - 1,
             relative = "editor",
             anchor = "SE",
             width = 40,
@@ -101,8 +103,6 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
   disable.filetypes   for example: toggleterm or toml
 
   disable.buftypes    see :h 'buftype', for example: terminal
-
-  win_opts            see :h nvim_open_win
 
   group_mappings      for example: <leader>sf opens up a fuzzy finder, if the
                       group_mappings option is set to true, every time you open up a
