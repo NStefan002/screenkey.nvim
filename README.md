@@ -10,7 +10,7 @@ https://github.com/NStefan002/screenkey.nvim/assets/100767853/29ea0949-4fd3-4d00
 
 ## ⚡️ Requirements
 
--   Neovim nightly (0.10.0+, not older than April 1st, since Screenkey requires [#28098](https://github.com/neovim/neovim/pull/28098#event-12302234671))
+-   Neovim version >= 0.10.0
 -   a [Nerd Font](https://www.nerdfonts.com/) **_(optional, but recommended)_**
 
 ## 📋 Installation
@@ -86,10 +86,6 @@ use({
 > [!NOTE]
 > If you're using a terminal inside of the Neovim, and you want screenkey to automatically stop displaying your keys when you're inside of the terminal, see `disable` option in the plugin configuration.
 
-## 👀 Similar projects and some differences
+## 👀 Similar projects
 
 -   [keys.nvim](https://github.com/tamton-aquib/keys.nvim):
-    -   As of the last update of this README, **keys.nvim** cannot process the literal keys you type - for example if you have `<c-d>` mapped to `<c-d>zz`, when you press
-        `<c-d>` **keys.nvim** will show `^d z z` instead of `^d`.
-    -   Screenkey has `compress_after` option that enables it to compress your input - for example `jjjjjj` will be displayed as `j..x6`, which is usually way easier
-        to read and will save up a lot of space.
