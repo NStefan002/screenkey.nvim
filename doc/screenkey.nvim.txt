@@ -86,10 +86,14 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
     }
 <
 
-  --------------------------------------------------------------------------------------
+  ---------------------------------------------------------------------------------------
   option              explanation
-  ------------------- ------------------------------------------------------------------
-  win_opts            see :h nvim_open_win
+  ------------------- -------------------------------------------------------------------
+  win_opts            see :h nvim_open_win, note1: other options from nvim_open_win help
+                      can be provided (such as win, bufpos, zindex etc.), the ones listed
+                      above are just defaults, note2: currently, the only options that
+                      cannot be changed and will be ignored if you specify them are:
+                      title, title_pos, style, focusable and noatocmd)
 
   compress after      compress input when repeated times (for example jjjj will be
                       compressed to j..x4)
@@ -109,11 +113,11 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
                       ␣ s f to indicate that the used key combination was a defined
                       mapping.
 
-  show_leader         if this option is set to true, in the last example instead of
-                      ␣ s f Screenkey will display <leader> s f (of course, if the
-                      <space> is <leader>), if the current key is not a defined mapping,
-                      Screenkey will display <space> as ␣
-  --------------------------------------------------------------------------------------
+  show_leader         if this option is set to true, in the last example instead of ␣ s f
+                      Screenkey will display <leader> s f (of course, if the <space> is
+                      <leader>), if the current key is not a defined mapping, Screenkey
+                      will display <space> as ␣
+  ---------------------------------------------------------------------------------------
 
 HOW TO USE                          *screenkey.nvim-screenkey.nvim-how-to-use*
 
