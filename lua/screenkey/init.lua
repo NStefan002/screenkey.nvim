@@ -1,6 +1,5 @@
 local M = {}
 local api = vim.api
-local grp = -1
 local Util = require("screenkey.util")
 local Config = require("screenkey.config")
 
@@ -40,16 +39,15 @@ local keys = {
 local active = false
 local bufnr, winnr = -1, -1
 local ns_id = api.nvim_create_namespace("screenkey")
+local grp = -1
 local queued_keys = {}
 local time = 0 -- time in seconds
 local timer = nil
 
 local function create_window()
-    if active then
-        return
+    if bufnr == -1 or not vim.api.nvim_buf_is_valid(bufnr) then
+        bufnr = api.nvim_create_buf(false, true)
     end
-
-    bufnr = api.nvim_create_buf(false, true)
     winnr = api.nvim_open_win(
         bufnr,
         false,
@@ -70,10 +68,6 @@ local function create_window()
 end
 
 local function close_window()
-    if not active then
-        return
-    end
-
     if bufnr ~= -1 and api.nvim_buf_is_valid(bufnr) then
         api.nvim_buf_delete(bufnr, { force = true })
     end
@@ -229,18 +223,25 @@ local function create_autocmds()
 
     grp = api.nvim_create_augroup("Screenkey", {})
 
-    api.nvim_create_autocmd("TabEnter", {
+    local exiting = false
+    api.nvim_create_autocmd({ "TabEnter", "WinClosed" }, {
         group = grp,
-        callback = function()
-            if active then
-                close_window()
-                active = false
-                create_window()
-                active = true
-                display_text()
+        callback = function(ev)
+            if
+                active
+                and not exiting
+                and (ev.event == "TabEnter" or ev.match == tostring(winnr))
+            then
+                exiting = true
+                vim.schedule(function()
+                    close_window()
+                    create_window()
+                    display_text()
+                    exiting = false
+                end)
             end
         end,
-        desc = "Move Screenkey window to the new tabpage",
+        desc = "make the Screenkey window persistent",
     })
 end
 
@@ -266,16 +267,16 @@ function M.setup(opts)
 end
 
 function M.toggle()
+    active = not active
     queued_keys = {}
     if active then
-        close_window()
-        kill_timer()
-    else
         create_window()
         create_autocmds()
         create_timer()
+    else
+        close_window()
+        kill_timer()
     end
-    active = not active
 end
 
 return M
