@@ -50,20 +50,17 @@ local function create_window()
     end
 
     bufnr = api.nvim_create_buf(false, true)
-    winnr = api.nvim_open_win(bufnr, false, {
-        relative = Config.options.win_opts.relative,
-        anchor = Config.options.win_opts.anchor,
-        title = "Screenkey",
-        title_pos = "center",
-        row = Config.options.win_opts.row,
-        col = Config.options.win_opts.col,
-        width = Config.options.win_opts.width,
-        height = Config.options.win_opts.height,
-        style = "minimal",
-        border = Config.options.win_opts.border,
-        focusable = false,
-        noautocmd = true,
-    })
+    winnr = api.nvim_open_win(
+        bufnr,
+        false,
+        vim.tbl_deep_extend("keep", {
+            title = "Screenkey",
+            title_pos = "center",
+            style = "minimal",
+            focusable = false,
+            noautocmd = true,
+        }, Config.options.win_opts)
+    )
 
     if winnr == 0 then
         error("Screenkey: failed to create window")
