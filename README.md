@@ -47,7 +47,6 @@ use({
 
 ```lua
 {
-    -- see :h nvim_open_win
     win_opts = {
         row = vim.o.lines - vim.o.cmdheight - 1,
         col = vim.o.columns - 1,
