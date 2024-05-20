@@ -116,6 +116,23 @@ use({
 -   Don't worry about leaking your passwords when using `sudo` while streaming/recording because you forgot to turn your display-key application,
     `Screenkey` will only show pieces of information about your input in Neovim.
 
+-   This plugin exposes `get_keys` function that you can use for example in a statusline component. For [lualine](https://github.com/nvim-lualine/lualine.nvim) it would look something like this:
+
+```lua
+require("lualine").setup({
+    -- other options ...
+    sections = {
+        -- other sections ...
+        lualine_c = {
+            -- other components ...
+            function()
+                return require("screenkey").get_keys()
+            end,
+        },
+    },
+})
+```
+
 > [!NOTE]
 > If you're using a terminal inside of the Neovim, and you want screenkey to automatically stop displaying your keys when you're inside of the terminal, see `disable` option in the plugin configuration.
 
