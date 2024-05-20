@@ -3,39 +3,6 @@ local api = vim.api
 local Util = require("screenkey.util")
 local Config = require("screenkey.config")
 
-local keys = {
-    ["<TAB>"] = "󰌒",
-    ["<CR>"] = "󰌑",
-    ["<ESC>"] = "Esc",
-    ["<SPACE>"] = "␣",
-    ["<BS>"] = "󰌥",
-    ["<DEL>"] = "Del",
-    ["<LEFT>"] = "",
-    ["<RIGHT>"] = "",
-    ["<UP>"] = "",
-    ["<DOWN>"] = "",
-    ["<HOME>"] = "Home",
-    ["<END>"] = "End",
-    ["<PAGEUP>"] = "PgUp",
-    ["<PAGEDOWN>"] = "PgDn",
-    ["<INSERT>"] = "Ins",
-    ["<F1>"] = "󱊫",
-    ["<F2>"] = "󱊬",
-    ["<F3>"] = "󱊭",
-    ["<F4>"] = "󱊮",
-    ["<F5>"] = "󱊯",
-    ["<F6>"] = "󱊰",
-    ["<F7>"] = "󱊱",
-    ["<F8>"] = "󱊲",
-    ["<F9>"] = "󱊳",
-    ["<F10>"] = "󱊴",
-    ["<F11>"] = "󱊵",
-    ["<F12>"] = "󱊶",
-    ["CTRL"] = "Ctrl",
-    ["ALT"] = "Alt",
-    ["SUPER"] = "󰘳",
-}
-
 local active = false
 local bufnr, winnr = -1, -1
 local ns_id = api.nvim_create_namespace("screenkey")
@@ -131,8 +98,8 @@ local function transform_input(in_key)
                 table.insert(transformed_keys, "<leader>")
             elseif #k == 1 then
                 table.insert(transformed_keys, k)
-            elseif keys[k:upper()] then
-                table.insert(transformed_keys, keys[k:upper()])
+            elseif Config.options.keys[k:upper()] then
+                table.insert(transformed_keys, Config.options.keys[k:upper()])
             else
                 local modifier = k:match("^<([CMAD])%-.+>$")
                 local key = k:match("^<.-%-.*(.)>$")
@@ -143,11 +110,20 @@ local function transform_input(in_key)
                         key = key:lower()
                     end
                     if modifier == "C" then
-                        table.insert(transformed_keys, string.format("%s+%s", keys["CTRL"], key))
+                        table.insert(
+                            transformed_keys,
+                            string.format("%s+%s", Config.options.keys["CTRL"], key)
+                        )
                     elseif modifier == "A" or modifier == "M" then
-                        table.insert(transformed_keys, string.format("%s+%s", keys["ALT"], key))
+                        table.insert(
+                            transformed_keys,
+                            string.format("%s+%s", Config.options.keys["ALT"], key)
+                        )
                     elseif modifier == "D" then
-                        table.insert(transformed_keys, string.format("%s+%s", keys["SUPER"], key))
+                        table.insert(
+                            transformed_keys,
+                            string.format("%s+%s", Config.options.keys["SUPER"], key)
+                        )
                     end
                 end
             end
