@@ -83,6 +83,38 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
             buftypes = {},
         },
         group_mappings = false,
+        keys = {
+            ["<TAB>"] = "󰌒",
+            ["<CR>"] = "󰌑",
+            ["<ESC>"] = "Esc",
+            ["<SPACE>"] = "␣",
+            ["<BS>"] = "󰌥",
+            ["<DEL>"] = "Del",
+            ["<LEFT>"] = "",
+            ["<RIGHT>"] = "",
+            ["<UP>"] = "",
+            ["<DOWN>"] = "",
+            ["<HOME>"] = "Home",
+            ["<END>"] = "End",
+            ["<PAGEUP>"] = "PgUp",
+            ["<PAGEDOWN>"] = "PgDn",
+            ["<INSERT>"] = "Ins",
+            ["<F1>"] = "󱊫",
+            ["<F2>"] = "󱊬",
+            ["<F3>"] = "󱊭",
+            ["<F4>"] = "󱊮",
+            ["<F5>"] = "󱊯",
+            ["<F6>"] = "󱊰",
+            ["<F7>"] = "󱊱",
+            ["<F8>"] = "󱊲",
+            ["<F9>"] = "󱊳",
+            ["<F10>"] = "󱊴",
+            ["<F11>"] = "󱊵",
+            ["<F12>"] = "󱊶",
+            ["CTRL"] = "Ctrl",
+            ["ALT"] = "Alt",
+            ["SUPER"] = "󰘳",
+        },
     }
 <
 
@@ -117,6 +149,8 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
                       Screenkey will display <leader> s f (of course, if the <space> is
                       <leader>), if the current key is not a defined mapping, Screenkey
                       will display <space> as ␣
+
+  keys                how to display the special keys
   ---------------------------------------------------------------------------------------
 
 HOW TO USE                          *screenkey.nvim-screenkey.nvim-how-to-use*
