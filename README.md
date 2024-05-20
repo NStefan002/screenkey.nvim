@@ -63,6 +63,38 @@ use({
         buftypes = {},
     },
     group_mappings = false,
+    keys = {
+        ["<TAB>"] = "󰌒",
+        ["<CR>"] = "󰌑",
+        ["<ESC>"] = "Esc",
+        ["<SPACE>"] = "␣",
+        ["<BS>"] = "󰌥",
+        ["<DEL>"] = "Del",
+        ["<LEFT>"] = "",
+        ["<RIGHT>"] = "",
+        ["<UP>"] = "",
+        ["<DOWN>"] = "",
+        ["<HOME>"] = "Home",
+        ["<END>"] = "End",
+        ["<PAGEUP>"] = "PgUp",
+        ["<PAGEDOWN>"] = "PgDn",
+        ["<INSERT>"] = "Ins",
+        ["<F1>"] = "󱊫",
+        ["<F2>"] = "󱊬",
+        ["<F3>"] = "󱊭",
+        ["<F4>"] = "󱊮",
+        ["<F5>"] = "󱊯",
+        ["<F6>"] = "󱊰",
+        ["<F7>"] = "󱊱",
+        ["<F8>"] = "󱊲",
+        ["<F9>"] = "󱊳",
+        ["<F10>"] = "󱊴",
+        ["<F11>"] = "󱊵",
+        ["<F12>"] = "󱊶",
+        ["CTRL"] = "Ctrl",
+        ["ALT"] = "Alt",
+        ["SUPER"] = "󰘳",
+    },
 }
 ```
 
@@ -76,6 +108,7 @@ use({
 | `disable.buftypes`  | see `:h 'buftype'`, for example: `terminal`                                                                                                                                                                                                                                                                                                         |
 | `group_mappings`    | for example: `<leader>sf` opens up a fuzzy finder, if the `group_mappings` option is set to `true`, every time you open up a fuzzy finder with `<leader>sf`, Screenkey will show `␣sf` instead of `␣ s f` to indicate that the used key combination was a defined mapping.                                                                          |
 | `show_leader`       | if this option is set to `true`, in the last example instead of `␣ s f` Screenkey will display `<leader> s f` (of course, if the `<space>` is `<leader>`), if the current key is not a defined mapping, Screenkey will display `<space>` as `␣`                                                                                                     |
+| `keys`              | how to display the special keys                                                                                                                                                                                                                                                                                                                     |
 
 ## ❓ How to use
 
