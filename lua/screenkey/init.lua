@@ -88,7 +88,14 @@ local function transform_input(in_key)
 
     for _, k in pairs(split) do
         -- ignore mouse input (just use keyboard)
-        if not (k:match("Left") or k:match("Right") or k:match("Middle") or k:match("Scroll")) then
+        if
+            not (
+                k:match("Mouse") ~= nil
+                or k:match("Release") ~= nil
+                or k:match("Middle") ~= nil
+                or k:match("Scroll") ~= nil
+            )
+        then
             local leader = vim.g.mapleader or ""
             if
                 Config.options.show_leader
@@ -130,7 +137,7 @@ local function transform_input(in_key)
         end
     end
 
-    if Config.options.group_mappings then
+    if Config.options.group_mappings and #transformed_keys > 0 then
         return { table.concat(transformed_keys, "") }
     else
         return transformed_keys
