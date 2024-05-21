@@ -1,0 +1,31 @@
+---@class screenkey.config
+--- see ':h nvim_open_win()'
+---@field win_opts? table
+--- compress input when repeated <compress_after> times
+---@field compress_after? integer
+--- clear the input after `<clear_after>` seconds of inactivity
+---@field clear_after? number
+--- disable screenkey for certain filetypes and/or buftypes
+---@field disable? table<"filetypes" | "buftypes", string[]>
+--- show '<leader>' in mappings
+---@field show_leader? boolean
+--- display mappings in groups
+---@field group_mappings? boolean
+--- how to display the special keys
+---@field keys? table<string, string>
+
+---@class screenkey.config.full : screenkey.config
+--- see ':h nvim_open_win()'
+---@field win_opts table
+--- compress input when repeated <compress_after> times
+---@field compress_after integer
+--- clear the input after `<clear_after>` seconds of inactivity
+---@field clear_after number
+--- disable screenkey for certain filetypes and/or buftypes
+---@field disable table<"filetypes" | "buftypes", string[]>
+--- show '<leader>' in mappings
+---@field show_leader boolean
+--- display mappings in groups
+---@field group_mappings boolean
+--- how to display the special keys
+---@field keys table<string, string>

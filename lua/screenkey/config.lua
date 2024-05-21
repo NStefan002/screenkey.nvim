@@ -1,5 +1,6 @@
 local M = {}
 
+---@type screenkey.config.full
 M.defaults = {
     win_opts = {
         row = vim.o.lines - vim.o.cmdheight - 1,
@@ -18,6 +19,7 @@ M.defaults = {
     },
     show_leader = false,
     group_mappings = false,
+    -- TODO: group_text = false
 
     keys = {
         ["<TAB>"] = "󰌒",
@@ -53,9 +55,10 @@ M.defaults = {
     },
 }
 
-M.options = {}
+---@type screenkey.config.full?
+M.options = nil
 
----@param opts? table
+---@param opts? screenkey.config
 function M.setup(opts)
     M.options = vim.tbl_deep_extend("force", M.defaults, opts or {})
 end
