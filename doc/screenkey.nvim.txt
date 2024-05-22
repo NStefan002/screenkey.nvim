@@ -179,6 +179,8 @@ HOW TO USE                          *screenkey.nvim-screenkey.nvim-how-to-use*
     })
 <
 
+- Run `:checkhealth screenkey` to diagnose possible problems
+
 
   [!NOTE] If you’re using a terminal inside of the Neovim, and you want
   screenkey to automatically stop displaying your keys when you’re inside of
