@@ -262,4 +262,9 @@ function M.toggle()
     end
 end
 
+---@return string
+function M.get_keys()
+    return compress_output()
+end
+
 return M
