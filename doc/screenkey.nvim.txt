@@ -1,4 +1,4 @@
-*screenkey.nvim.txt*       For Neovim >= 0.10.0       Last change: 2024 May 20
+*screenkey.nvim.txt*       For Neovim >= 0.10.0       Last change: 2024 May 22
 
 ==============================================================================
 Table of Contents                           *screenkey.nvim-table-of-contents*
@@ -156,8 +156,28 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
 HOW TO USE                          *screenkey.nvim-screenkey.nvim-how-to-use*
 
 - `:Screenkey` to toggle the screenkey
-- Don’t worry about leaking your passwords when using `sudo` while streaming/recording because you forgot to turn your display-key application,
+- Don’t worry about leaking your passwords when using `sudo` while
+    streaming/recording because you forgot to turn your display-key application,
     `Screenkey` will only show pieces of information about your input in Neovim.
+- This plugin exposes `get_keys` function that you can use for example in a
+    statusline component. For lualine
+    <https://github.com/nvim-lualine/lualine.nvim> it would look something like
+    this:
+
+>lua
+    require("lualine").setup({
+        -- other options ...
+        sections = {
+            -- other sections ...
+            lualine_c = {
+                -- other components ...
+                function()
+                    return require("screenkey").get_keys()
+                end,
+            },
+        },
+    })
+<
 
 
   [!NOTE] If you’re using a terminal inside of the Neovim, and you want
