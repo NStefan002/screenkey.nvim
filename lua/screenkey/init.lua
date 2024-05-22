@@ -12,7 +12,7 @@ local time = 0 -- time in seconds
 local timer = nil
 
 local function create_window()
-    if bufnr == -1 or not vim.api.nvim_buf_is_valid(bufnr) then
+    if bufnr == -1 or not api.nvim_buf_is_valid(bufnr) then
         bufnr = api.nvim_create_buf(false, true)
     end
     winnr = api.nvim_open_win(
@@ -244,7 +244,7 @@ vim.on_key(function(key, typed)
     display_text()
 end, ns_id)
 
----@param opts? table
+---@param opts? screenkey.config
 function M.setup(opts)
     Config.setup(opts)
 end
