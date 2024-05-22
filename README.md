@@ -113,7 +113,7 @@ use({
 ## ❓ How to use
 
 -   `:Screenkey` to toggle the screenkey
--   Don't worry about leaking your passwords when using `sudo` while streaming/recording because you forgot to turn your display-key application,
+-   Don't worry about leaking your passwords when using `sudo` while streaming/recording because you forgot to turn off your display-key application,
     `Screenkey` will only show pieces of information about your input in Neovim.
 
 -   This plugin exposes `get_keys` function that you can use for example in a statusline component. For [lualine](https://github.com/nvim-lualine/lualine.nvim) it would look something like this:
