@@ -1,4 +1,4 @@
-*screenkey.nvim.txt*       For Neovim >= 0.10.0       Last change: 2024 May 22
+*screenkey.nvim.txt*       For Neovim >= 0.10.0       Last change: 2024 May 23
 
 ==============================================================================
 Table of Contents                           *screenkey.nvim-table-of-contents*
@@ -161,11 +161,18 @@ HOW TO USE                          *screenkey.nvim-screenkey.nvim-how-to-use*
     application, `Screenkey` will only show pieces of information about your input
     in Neovim.
 - This plugin exposes `get_keys` function that you can use for example in a
-    statusline component. For lualine
+    statusline component. You can use `vim.g.screenkey_statusline_component` to
+    toggle this feature on/off. For lualine
     <https://github.com/nvim-lualine/lualine.nvim> it would look something like
     this:
 
 >lua
+    vim.g.screenkey_statusline_component = true
+    
+    vim.keymap.set("n", "<leader>ssc", function()
+        vim.g.screenkey_statusline_component = not vim.g.screenkey_statusline_component
+    end, { desc = "Toggle screenkey statusline component" })
+    
     require("lualine").setup({
         -- other options ...
         sections = {
