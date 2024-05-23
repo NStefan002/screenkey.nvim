@@ -55,8 +55,8 @@ M.defaults = {
     },
 }
 
----@type screenkey.config.full?
-M.options = nil
+---@type screenkey.config.full
+M.options = M.defaults
 
 ---@param opts? screenkey.config
 function M.setup(opts)
