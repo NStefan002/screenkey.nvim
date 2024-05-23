@@ -46,6 +46,14 @@ local function close_window()
     bufnr, winnr = -1, -1
 end
 
+local function clear_screenkey_buffer()
+    local rep = {}
+    for _ = 1, Config.options.win_opts.height do
+        table.insert(rep, "")
+    end
+    api.nvim_buf_set_lines(bufnr, 0, -1, false, rep)
+end
+
 local function create_timer()
     timer = vim.uv.new_timer()
     timer:start(
@@ -53,13 +61,11 @@ local function create_timer()
         1000,
         vim.schedule_wrap(function()
             time = time + 1
-            if time == Config.options.clear_after then
+            if time >= Config.options.clear_after then
                 queued_keys = {}
-                local rep = {}
-                for _ = 1, Config.options.win_opts.height do
-                    table.insert(rep, "")
+                if active then
+                    clear_screenkey_buffer()
                 end
-                api.nvim_buf_set_lines(bufnr, 0, -1, false, rep)
             end
         end)
     )
@@ -229,19 +235,28 @@ local function create_autocmds()
 end
 
 vim.on_key(function(key, typed)
-    time = 0
+    if not active and not vim.g.screenkey_statusline_component then
+        kill_timer()
+        return
+    end
     if Util.should_disable() then
         return
     end
     typed = typed or key
-    if not active or not typed or #typed == 0 then
+    if not typed or #typed == 0 then
         return
+    end
+    time = 0
+    if not timer then
+        create_timer()
     end
     local transformed_keys = transform_input(typed)
     for _, k in pairs(transformed_keys) do
         table.insert(queued_keys, k)
     end
-    display_text()
+    if active then
+        display_text()
+    end
 end, ns_id)
 
 ---@param opts? screenkey.config
@@ -255,16 +270,14 @@ function M.toggle()
     if active then
         create_window()
         create_autocmds()
-        create_timer()
     else
         close_window()
-        kill_timer()
     end
 end
 
 ---@return string
 function M.get_keys()
-    return compress_output()
+    return vim.g.screenkey_statusline_component and compress_output() or ""
 end
 
 return M
