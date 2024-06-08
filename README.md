@@ -62,6 +62,7 @@ use({
         filetypes = {},
         buftypes = {},
     },
+    show_leader = true,
     group_mappings = false,
     keys = {
         ["<TAB>"] = "󰌒",
@@ -94,6 +95,7 @@ use({
         ["CTRL"] = "Ctrl",
         ["ALT"] = "Alt",
         ["SUPER"] = "󰘳",
+        ["<leader>"] = "<leader>",
     },
 }
 ```
