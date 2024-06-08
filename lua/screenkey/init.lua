@@ -108,7 +108,7 @@ local function transform_input(in_key)
                 and Util.is_mapping(in_key)
                 and (k:upper() == leader:upper() or k:upper() == vim.fn.keytrans(leader):upper())
             then
-                table.insert(transformed_keys, "<leader>")
+                table.insert(transformed_keys, Config.options.keys["<leader>"])
             elseif #k == 1 then
                 table.insert(transformed_keys, k)
             elseif Config.options.keys[k:upper()] then

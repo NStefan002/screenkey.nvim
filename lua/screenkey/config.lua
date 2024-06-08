@@ -52,6 +52,7 @@ M.defaults = {
         ["CTRL"] = "Ctrl",
         ["ALT"] = "Alt",
         ["SUPER"] = "󰘳",
+        ["<leader>"] = "<leader>",
     },
 }
 
