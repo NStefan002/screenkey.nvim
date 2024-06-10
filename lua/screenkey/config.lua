@@ -17,7 +17,7 @@ M.defaults = {
         filetypes = {},
         buftypes = {},
     },
-    show_leader = false,
+    show_leader = true,
     group_mappings = false,
     -- TODO: group_text = false
 
@@ -52,6 +52,7 @@ M.defaults = {
         ["CTRL"] = "Ctrl",
         ["ALT"] = "Alt",
         ["SUPER"] = "󰘳",
+        ["<leader>"] = "<leader>",
     },
 }
 
