@@ -1,4 +1,4 @@
-*screenkey.nvim.txt*       For Neovim >= 0.10.0       Last change: 2024 May 23
+*screenkey.nvim.txt*       For Neovim >= 0.10.0      Last change: 2024 June 10
 
 ==============================================================================
 Table of Contents                           *screenkey.nvim-table-of-contents*
@@ -82,6 +82,7 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
             filetypes = {},
             buftypes = {},
         },
+        show_leader = true,
         group_mappings = false,
         keys = {
             ["<TAB>"] = "󰌒",
@@ -114,6 +115,7 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
             ["CTRL"] = "Ctrl",
             ["ALT"] = "Alt",
             ["SUPER"] = "󰘳",
+            ["<leader>"] = "<leader>",
         },
     }
 <
