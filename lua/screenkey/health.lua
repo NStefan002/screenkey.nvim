@@ -1,6 +1,6 @@
 local M = {}
 
-M.check = function()
+function M.check()
     local Config = require("screenkey.config")
     vim.health.start("screenkey.nvim")
     local ok, err = Config.validate_config(Config.options)
