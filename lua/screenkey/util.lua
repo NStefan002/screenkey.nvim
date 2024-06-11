@@ -4,10 +4,14 @@ local Config = require("screenkey.config")
 
 ---@param t table Table to check
 ---@param value any Value to compare or predicate function reference
+---@param f? fun(tx: any, v: any): boolean Function to compare values (fist argument is table value, second is value to compare)
 ---@return boolean `true` if `t` contains `value`
-M.tbl_contains = function(t, value)
-    for _, v in pairs(t) do
-        if v == value then
+function M.tbl_contains(t, value, f)
+    f = f or function(tx, v)
+        return tx == v
+    end
+    for _, tx in pairs(t) do
+        if f(tx, value) then
             return true
         end
     end
@@ -90,6 +94,26 @@ function M.validate(opts, user_config, path)
         return true, nil
     end
     return false, table.concat(errors, "\n")
+end
+
+-- TODO: maybe add logic to check if two windows (some other and screenkey) are overlapping
+
+---@param bufnr integer
+---@param infront boolean if true move to front, else move to back
+function M.update_zindex(bufnr, infront)
+    local win_ids = api.nvim_tabpage_list_wins(0)
+    local target_win_id = -1
+    for _, win_id in ipairs(win_ids) do
+        if api.nvim_win_get_buf(win_id) == bufnr then
+            target_win_id = win_id
+            break
+        end
+    end
+    if target_win_id == -1 then
+        return
+    end
+    local target_zindex = api.nvim_win_get_config(target_win_id).zindex or 50
+    Config.options.win_opts.zindex = target_zindex + (infront and 1 or -1)
 end
 
 return M

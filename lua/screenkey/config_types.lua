@@ -11,6 +11,14 @@
 ---@field show_leader? boolean
 --- display mappings in groups
 ---@field group_mappings? boolean
+--- if screenkey is overlapping with the floating window that
+--- contains a buffer with the following filetypes, display
+--- the screenkey in front of the floating window
+---@field display_infront? string[]
+--- if screenkey is overlapping with the floating window that
+--- contains a buffer with the following filetypes, display
+--- the screenkey behind the floating window
+---@field display_behind? string[]
 --- how to display the special keys
 ---@field keys? table<string, string>
 
@@ -27,5 +35,13 @@
 ---@field show_leader boolean
 --- display mappings in groups
 ---@field group_mappings boolean
+--- if screenkey is overlapping with the floating window that
+--- contains a buffer with the following filetypes, display
+--- the screenkey in front of the floating window
+---@field display_infront string[]
+--- if screenkey is overlapping with the floating window that
+--- contains a buffer with the following filetypes, display
+--- the screenkey behind the floating window
+---@field display_behind string[]
 --- how to display the special keys
 ---@field keys table<string, string>

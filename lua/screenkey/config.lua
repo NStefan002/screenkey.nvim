@@ -20,6 +20,8 @@ M.defaults = {
     show_leader = true,
     group_mappings = false,
     -- TODO: group_text = false
+    display_infront = {},
+    display_behind = {},
 
     keys = {
         ["<TAB>"] = "󰌒",
@@ -86,6 +88,8 @@ function M.validate_config(config)
         disable = { config.disable, "table", true },
         show_leader = { config.show_leader, "boolean", true },
         group_mappings = { config.group_mappings, "boolean", true },
+        display_infront = { config.display_infront, "table", true },
+        display_behind = { config.display_behind, "table", true },
         keys = { config.keys, "table", true },
     }, config, "screenkey.config")
 
