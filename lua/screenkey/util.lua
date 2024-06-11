@@ -4,10 +4,14 @@ local Config = require("screenkey.config")
 
 ---@param t table Table to check
 ---@param value any Value to compare or predicate function reference
+---@param f? fun(tx: any, v: any): boolean Function to compare values (fist argument is table value, second is value to compare)
 ---@return boolean `true` if `t` contains `value`
-M.tbl_contains = function(t, value)
-    for _, v in pairs(t) do
-        if v == value then
+function M.tbl_contains(t, value, f)
+    f = f or function(tx, v)
+        return tx == v
+    end
+    for _, tx in pairs(t) do
+        if f(tx, value) then
             return true
         end
     end
