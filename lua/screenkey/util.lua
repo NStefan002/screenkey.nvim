@@ -96,4 +96,24 @@ function M.validate(opts, user_config, path)
     return false, table.concat(errors, "\n")
 end
 
+-- TODO: maybe add logic to check if two windows (some other and screenkey) are overlapping
+
+---@param bufnr integer
+---@param infront boolean if true move to front, else move to back
+function M.update_zindex(bufnr, infront)
+    local win_ids = api.nvim_tabpage_list_wins(0)
+    local target_win_id = -1
+    for _, win_id in ipairs(win_ids) do
+        if api.nvim_win_get_buf(win_id) == bufnr then
+            target_win_id = win_id
+            break
+        end
+    end
+    if target_win_id == -1 then
+        return
+    end
+    local target_zindex = api.nvim_win_get_config(target_win_id).zindex or 50
+    Config.options.win_opts.zindex = target_zindex + (infront and 1 or -1)
+end
+
 return M

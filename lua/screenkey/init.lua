@@ -232,6 +232,28 @@ local function create_autocmds()
         end,
         desc = "make the Screenkey window persistent",
     })
+
+    api.nvim_create_autocmd({ "FileType" }, {
+        group = grp,
+        pattern = "*",
+        callback = function(ev)
+            ---@param tx string
+            ---@param v string
+            ---@return boolean
+            local function cmp(tx, v)
+                return v:match(tx) ~= nil
+            end
+            local infront = Util.tbl_contains(Config.options.display_infront, ev.match, cmp)
+            local behind = Util.tbl_contains(Config.options.display_behind, ev.match, cmp)
+            -- NOTE: I don't want to deal with conflicts (for now)
+            if (infront and behind) or (not infront and not behind) then
+                return
+            end
+            Util.update_zindex(ev.buf, infront)
+            M.toggle()
+            M.toggle()
+        end,
+    })
 end
 
 vim.on_key(function(key, typed)
