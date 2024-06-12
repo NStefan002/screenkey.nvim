@@ -1,6 +1,6 @@
 ---@class screenkey.config
 --- see ':h nvim_open_win()'
----@field win_opts? table
+---@field win_opts? vim.api.keyset.win_config
 --- compress input when repeated <compress_after> times
 ---@field compress_after? integer
 --- clear the input after `<clear_after>` seconds of inactivity
@@ -24,7 +24,7 @@
 
 ---@class screenkey.config.full : screenkey.config
 --- see ':h nvim_open_win()'
----@field win_opts table
+---@field win_opts vim.api.keyset.win_config
 --- compress input when repeated <compress_after> times
 ---@field compress_after integer
 --- clear the input after `<clear_after>` seconds of inactivity
