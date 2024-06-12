@@ -250,8 +250,7 @@ local function create_autocmds()
                 return
             end
             Util.update_zindex(ev.buf, infront)
-            M.toggle()
-            M.toggle()
+            M.redraw()
         end,
     })
 end
@@ -295,6 +294,15 @@ function M.toggle()
     else
         close_window()
     end
+end
+
+function M.redraw()
+    if not active then
+        return
+    end
+    close_window()
+    create_window()
+    display_text()
 end
 
 ---@return string
