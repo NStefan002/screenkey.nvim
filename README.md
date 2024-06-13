@@ -169,7 +169,7 @@ or
 > If you're using a terminal inside of the Neovim, and you want screenkey to automatically stop displaying your keys when you're
 > inside of the terminal, see `disable` option in the plugin configuration.
 
-🙏 I took inspiration (and some code) from
+## 🙏 I took inspiration (and some code) from
 
 -   [nvim-best-practices](https://github.com/nvim-neorocks/nvim-best-practices)
 -   [harpoon v2](https://github.com/ThePrimeagen/harpoon/tree/harpoon2)

@@ -255,6 +255,14 @@ local function create_autocmds()
             M.redraw()
         end,
     })
+    -- TODO: do this instead of the previous one (currently doesn't work, don't know why)
+    -- api.nvim_create_autocmd({ "WinNew", "BufWinEnter" }, {
+    --     group = grp,
+    --     pattern = "*",
+    --     callback = function(ev)
+    --         P(ev.event)
+    --     end,
+    -- })
 end
 
 vim.on_key(function(key, typed)
