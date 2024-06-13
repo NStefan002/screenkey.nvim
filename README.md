@@ -20,26 +20,25 @@ https://github.com/NStefan002/screenkey.nvim/assets/100767853/29ea0949-4fd3-4d00
 ```lua
 {
     "NStefan002/screenkey.nvim",
-    cmd = "Screenkey",
-    version = "*",
-    config = true,
+    lazy = false,
+    version = "*", -- or branch = "dev", to use the latest commit
 }
 ```
 
 [packer](https://github.com/wbthomason/packer.nvim):
 
 ```lua
-use({
-    "NStefan002/screenkey.nvim",
-    config = function()
-        require("screenkey").setup()
-    end,
-})
+use({ "NStefan002/screenkey.nvim", tag = "*" })
 ```
 
 [rocks.nvim](https://github.com/nvim-neorocks/rocks.nvim)
 
 `:Rocks install screenkey.nvim`
+
+> [!NOTE]
+>
+> -   There is no need to call the `setup` function, only call it if you need to change some options
+> -   There is no need to lazy load `Screenkey`, it lazy loads by default.
 
 ## ⚙️ Configuration
 
@@ -124,11 +123,12 @@ use({
 
 ## ❓ How to use
 
--   `:Screenkey` to toggle the screenkey
+-   `:Screenkey toggle` (or just `Screenkey`) to toggle the screenkey
 -   Don't worry about leaking your passwords when using `sudo` while streaming/recording because you forgot to turn off your display-key application,
     `Screenkey` will only show pieces of information about your input in Neovim.
 
--   This plugin exposes `get_keys` function that you can use for example in a statusline component. You can use `vim.g.screenkey_statusline_component` to toggle this feature on/off. For [lualine](https://github.com/nvim-lualine/lualine.nvim) it would look something like this:
+-   This plugin exposes `get_keys` function that you can use in a statusline component. You can use `:Screenkey toggle_statusline_component` or change
+    `vim.g.screenkey_statusline_component` to toggle this feature on/off. For [lualine](https://github.com/nvim-lualine/lualine.nvim) it would look something like this:
 
 ```lua
 vim.g.screenkey_statusline_component = true
@@ -151,10 +151,28 @@ require("lualine").setup({
 })
 ```
 
--   Run `:checkhealth screenkey` to diagnose possible problems
+-   Run `:checkhealth screenkey` to diagnose possible configuration problems
+
+-   `Screenkey` exposes `redraw` function that redraws the `Screenkey` window, could be used like this:
+
+```lua
+require("screenkey").redraw()
+```
+
+or
+
+```
+:Screenkey redraw
+```
 
 > [!NOTE]
-> If you're using a terminal inside of the Neovim, and you want screenkey to automatically stop displaying your keys when you're inside of the terminal, see `disable` option in the plugin configuration.
+> If you're using a terminal inside of the Neovim, and you want screenkey to automatically stop displaying your keys when you're
+> inside of the terminal, see `disable` option in the plugin configuration.
+
+🙏 I took inspiration (and some code) from
+
+-   [nvim-best-practices](https://github.com/nvim-neorocks/nvim-best-practices)
+-   [harpoon v2](https://github.com/ThePrimeagen/harpoon/tree/harpoon2)
 
 ## 👀 Similar projects
 
