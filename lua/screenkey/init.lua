@@ -2,6 +2,7 @@ local M = {}
 local api = vim.api
 local Util = require("screenkey.util")
 local Config = require("screenkey.config")
+local Log = require("screenkey.logger")
 
 local active = false
 local bufnr, winnr = -1, -1
@@ -28,6 +29,7 @@ local function create_window()
     )
 
     if winnr == 0 then
+        Log:log("failed to create window")
         error("Screenkey: failed to create window")
     end
 
@@ -221,11 +223,10 @@ local function create_autocmds()
                 and not exiting
                 and (ev.event == "TabEnter" or ev.match == tostring(winnr))
             then
+                Log:log("TabEnter/WinClosed: reopening window")
                 exiting = true
                 vim.schedule(function()
-                    close_window()
-                    create_window()
-                    display_text()
+                    M.redraw()
                     exiting = false
                 end)
             end
@@ -249,6 +250,7 @@ local function create_autocmds()
             if (infront and behind) or (not infront and not behind) then
                 return
             end
+            Log:log(("FileType %s: reopening window"):format(ev.match))
             Util.update_zindex(ev.buf, infront)
             M.redraw()
         end,

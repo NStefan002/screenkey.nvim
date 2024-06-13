@@ -112,8 +112,21 @@ function M.update_zindex(bufnr, infront)
     if target_win_id == -1 then
         return
     end
-    local target_zindex = api.nvim_win_get_config(target_win_id).zindex or 50
+    local target_win_config = api.nvim_win_get_config(target_win_id)
+    require("screenkey.logger"):log(target_win_config)
+    local target_zindex = target_win_config.zindex or 50
     Config.options.win_opts.zindex = target_zindex + (infront and 1 or -1)
+end
+
+---@param str string string to split
+---@param sep? string separator (whitespace by default)
+function M.split(str, sep)
+    sep = sep or "%s"
+    local t = {}
+    for s in string.gmatch(str, "([^" .. sep .. "]+)") do
+        table.insert(t, s)
+    end
+    return t
 end
 
 return M

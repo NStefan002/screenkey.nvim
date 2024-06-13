@@ -64,8 +64,9 @@ M.options = M.defaults
 ---@param opts? screenkey.config
 function M.setup(opts)
     opts = opts or {}
-    local ok, _ = M.validate_config(opts)
+    local ok, err = M.validate_config(opts)
     if not ok then
+        require("screenkey.logger"):log(err)
         vim.notify(
             "Invalid configuration for screenkey.nvim, run ':checkhealth screenkey' for more information",
             vim.log.levels.ERROR
