@@ -31,6 +31,19 @@ body:
 
   - type: textarea
     attributes:
+      label: "Screenkey log output"
+      description: |
+        1. `:Screenkey log start`
+        2. If possible, redo the sequence that causes problems
+        3. `:Screenkey log show`
+        4. Copy the contents of the displayed buffer
+      placeholder: |
+        **Paste the log output here**
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
       label: "Expected behavior"
       description: "Describe the behavior you expect or leave this field empty if it's very obvious."
     validations:
