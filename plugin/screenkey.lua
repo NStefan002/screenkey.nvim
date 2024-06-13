@@ -63,7 +63,7 @@ end
 
 local function screenkey_cmd_completion(arg_lead, cmdline, _)
     -- get the subcommand
-    local subcmd_key, subcmd_arg_lead = cmdline:match("^Rocks[!]*%s(%S+)%s(.*)$")
+    local subcmd_key, subcmd_arg_lead = cmdline:match("^Screenkey*%s(%S+)%s(.*)$")
     if subcmd_key and subcmd_arg_lead and subcmds[subcmd_key] and subcmds[subcmd_key].complete then
         -- the subcommand has completions, return them
         return subcmds[subcmd_key].complete(subcmd_arg_lead)
