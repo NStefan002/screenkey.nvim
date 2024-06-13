@@ -40,6 +40,69 @@ local subcmds = {
             require("screenkey").redraw()
         end,
     },
+    log = {
+        impl = function(args, data)
+            if #args == 0 then
+                vim.notify(
+                    ("Screenkey %s: no arguments provided"):format(data.fargs[1]),
+                    vim.log.levels.ERROR
+                )
+                return
+            end
+            if #args > 2 then
+                vim.notify(
+                    ("Screenkey %s: too many arguments"):format(data.fargs[1]),
+                    vim.log.levels.ERROR
+                )
+                return
+            end
+
+            local Log = require("screenkey.logger")
+            if args[1] == "max_lines" then
+                if #args ~= 2 then
+                    vim.notify(
+                        "Screenkey log max_lines: Should be -> Screenkey log max_lines <number>",
+                        vim.log.levels.ERROR
+                    )
+                    return
+                end
+                Log:set_max_lines(tonumber(args[2]) or 50)
+                return
+            elseif #args > 1 then
+                vim.notify(
+                    ("Screenkey %s: too many arguments"):format(data.fargs[1]),
+                    vim.log.levels.ERROR
+                )
+                return
+            end
+
+            if args[1] == "show" then
+                Log:show()
+            elseif args[1] == "start" then
+                Log:enable()
+            elseif args[1] == "stop" then
+                Log:disable()
+            else
+                vim.notify(
+                    ("Screenkey %s: Unknown command %s"):format(data.fargs[1], args[1]),
+                    vim.log.levels.ERROR
+                )
+            end
+        end,
+        complete = function(subcmd_arg_lead)
+            local log_args = {
+                "start",
+                "stop",
+                "show",
+                "max_lines",
+            }
+            return vim.iter(log_args)
+                :filter(function(log_arg)
+                    return log_arg:find(subcmd_arg_lead) ~= nil
+                end)
+                :totable()
+        end,
+    },
 }
 
 local function screenkey_cmd(data)
