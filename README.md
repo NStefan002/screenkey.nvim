@@ -108,6 +108,7 @@ use({ "NStefan002/screenkey.nvim", tag = "*" })
 | `clear_after`         | clear the input after `<clear_after>` seconds of inactivity                                                                                                                                                                                                                                                                                         |
 | `disable`             | temporarily disable screenkey (for example when inside of the terminal)                                                                                                                                                                                                                                                                             |
 | `disable.filetypes`   | for example: `toggleterm` or `toml`                                                                                                                                                                                                                                                                                                                 |
+| `disable.events`      | disable `User` events                                                                                                                                                                                                                                                                                                                               |
 | `disable.buftypes`    | see `:h 'buftype'`, for example: `terminal`                                                                                                                                                                                                                                                                                                         |
 | `group_mappings`      | for example: `<leader>sf` opens up a fuzzy finder, if the `group_mappings` option is set to `true`, every time you open up a fuzzy finder with `<leader>sf`, Screenkey will show `␣sf` instead of `␣ s f` to indicate that the used key combination was a defined mapping.                                                                          |
 | `show_leader`         | if this option is set to `true`, in the last example instead of `␣ s f` Screenkey will display `<leader> s f` (of course, if the `<space>` is `<leader>`), if the current key is not a defined mapping, Screenkey will display `<space>` as `␣`                                                                                                     |
@@ -168,6 +169,23 @@ or
 > [!NOTE]
 > If you're using a terminal inside of the Neovim, and you want screenkey to automatically stop displaying your keys when you're
 > inside of the terminal, see `disable` option in the plugin configuration.
+
+-   For fully custom statusline users, screenkey will fire `User` events if `vim.g.screenkey_statusline_component` is enabled. There are two patterns: `ScreenkeyUpdated` on keypress and `ScreenkeyCleared` when clearing screenkey after inactivity (see `clear_after` option). If you are experiencing performance issues and do not rely on these events, you can disable them with the `disable.events` option. Example usage with [heirline](https://github.com/rebelot/heirline.nvim):
+
+```lua
+require("heirline").setup({
+    statusline = {
+        {
+            provider = function() return require("screenkey").get_keys() end,
+            update = {
+                "User",
+                pattern = "Screenkey*",
+                callback = vim.schedule_wrap(function() vim.cmd("redrawstatus") end),
+            },
+        },
+    },
+})
+```
 
 ## 🙏 I took inspiration (and some code) from
 

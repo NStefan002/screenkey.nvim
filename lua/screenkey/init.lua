@@ -68,6 +68,9 @@ local function create_timer()
                 if active then
                     clear_screenkey_buffer()
                 end
+                if not Config.options.disable.events and vim.g.screenkey_statusline_component then
+                    vim.api.nvim_exec_autocmds("User", { pattern = "ScreenkeyCleared" })
+                end
             end
         end)
     )
@@ -266,7 +269,8 @@ local function create_autocmds()
 end
 
 vim.on_key(function(key, typed)
-    if not active and not vim.g.screenkey_statusline_component then
+    local statusline_enabled = vim.g.screenkey_statusline_component
+    if not active and not statusline_enabled then
         kill_timer()
         return
     end
@@ -287,6 +291,9 @@ vim.on_key(function(key, typed)
     end
     if active then
         display_text()
+    end
+    if not Config.options.disable.events and statusline_enabled then
+        vim.api.nvim_exec_autocmds("User", { pattern = "ScreenkeyUpdated" })
     end
 end, ns_id)
 
