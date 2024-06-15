@@ -6,12 +6,12 @@ It is useful for screencasts, presentations, and live coding sessions.
 
 ## 📺 Showcase
 
-https://github.com/NStefan002/screenkey.nvim/assets/100767853/29ea0949-4fd3-4d00-b5a3-2c249bb84360
+<https://github.com/NStefan002/screenkey.nvim/assets/100767853/29ea0949-4fd3-4d00-b5a3-2c249bb84360>
 
 ## ⚡️ Requirements
 
--   Neovim version >= 0.10.0
--   a [Nerd Font](https://www.nerdfonts.com/) **_(optional, but recommended)_**
+- Neovim version >= 0.10.0
+- a [Nerd Font](https://www.nerdfonts.com/) **_(optional, but recommended)_**
 
 ## 📋 Installation
 
@@ -37,12 +37,12 @@ use({ "NStefan002/screenkey.nvim", tag = "*" })
 
 > [!NOTE]
 >
-> -   There is no need to call the `setup` function, only call it if you need to change some options
-> -   There is no need to lazy load `Screenkey`, it lazy loads by default.
+> - There is no need to call the `setup` function, only call it if you need to change some options
+> - There is no need to lazy load `Screenkey`, it lazy loads by default.
 
 ## ⚙️ Configuration
 
--   Default settings
+- Default settings
 
 ```lua
 {
@@ -124,12 +124,13 @@ use({ "NStefan002/screenkey.nvim", tag = "*" })
 
 ## ❓ How to use
 
--   `:Screenkey toggle` (or just `Screenkey`) to toggle the screenkey
--   Don't worry about leaking your passwords when using `sudo` while streaming/recording because you forgot to turn off your display-key application,
-    `Screenkey` will only show pieces of information about your input in Neovim.
+- `:Screenkey toggle` (or just `Screenkey`) to toggle the screenkey
+- Don't worry about leaking your passwords when using `sudo` while streaming/recording because you forgot to turn off your
+display-key application, `Screenkey` will only show pieces of information about your input in Neovim.
 
--   This plugin exposes `get_keys` function that you can use in a statusline component. You can use `:Screenkey toggle_statusline_component` or change
-    `vim.g.screenkey_statusline_component` to toggle this feature on/off. For [lualine](https://github.com/nvim-lualine/lualine.nvim) it would look something like this:
+- This plugin exposes `get_keys` function that you can use in a statusline component. You can use `:Screenkey toggle_statusline_component`
+or change `vim.g.screenkey_statusline_component` to toggle this feature on/off. For [lualine](https://github.com/nvim-lualine/lualine.nvim)
+it would look something like this:
 
 ```lua
 vim.g.screenkey_statusline_component = true
@@ -152,9 +153,9 @@ require("lualine").setup({
 })
 ```
 
--   Run `:checkhealth screenkey` to diagnose possible configuration problems
+- Run `:checkhealth screenkey` to diagnose possible configuration problems
 
--   `Screenkey` exposes `redraw` function that redraws the `Screenkey` window, could be used like this:
+- `Screenkey` exposes `redraw` function that redraws the `Screenkey` window, could be used like this:
 
 ```lua
 require("screenkey").redraw()
@@ -162,25 +163,30 @@ require("screenkey").redraw()
 
 or
 
-```
-:Screenkey redraw
-```
+`:Screenkey redraw`
 
 > [!NOTE]
-> If you're using a terminal inside of the Neovim, and you want screenkey to automatically stop displaying your keys when you're
-> inside of the terminal, see `disable` option in the plugin configuration.
+> If you're using a terminal inside of the Neovim, and you want screenkey to automatically stop displaying your
+keys when you're > inside of the terminal, see `disable` option in the plugin configuration.
 
--   For fully custom statusline users, screenkey will fire `User` events if `vim.g.screenkey_statusline_component` is enabled. There are two patterns: `ScreenkeyUpdated` on keypress and `ScreenkeyCleared` when clearing screenkey after inactivity (see `clear_after` option). If you are experiencing performance issues and do not rely on these events, you can disable them with the `disable.events` option. Example usage with [heirline](https://github.com/rebelot/heirline.nvim):
+- For fully custom statusline users, screenkey will fire `User` events if `vim.g.screenkey_statusline_component` is enabled.
+There are two patterns: `ScreenkeyUpdated` on keypress and `ScreenkeyCleared` when clearing screenkey after inactivity
+(see `clear_after` option). If you are experiencing performance issues and do not rely on these events, you can disable
+them with the `disable.events` option. Example usage with [heirline](https://github.com/rebelot/heirline.nvim):
 
 ```lua
 require("heirline").setup({
     statusline = {
         {
-            provider = function() return require("screenkey").get_keys() end,
+            provider = function()
+                return require("screenkey").get_keys()
+            end,
             update = {
                 "User",
                 pattern = "Screenkey*",
-                callback = vim.schedule_wrap(function() vim.cmd("redrawstatus") end),
+                callback = vim.schedule_wrap(function()
+                    vim.cmd("redrawstatus")
+                end),
             },
         },
     },
@@ -189,9 +195,9 @@ require("heirline").setup({
 
 ## 🙏 I took inspiration (and some code) from
 
--   [nvim-best-practices](https://github.com/nvim-neorocks/nvim-best-practices)
--   [harpoon v2](https://github.com/ThePrimeagen/harpoon/tree/harpoon2)
+- [nvim-best-practices](https://github.com/nvim-neorocks/nvim-best-practices)
+- [harpoon v2](https://github.com/ThePrimeagen/harpoon/tree/harpoon2)
 
 ## 👀 Similar projects
 
--   [keys.nvim](https://github.com/tamton-aquib/keys.nvim):
+- [keys.nvim](https://github.com/tamton-aquib/keys.nvim):
