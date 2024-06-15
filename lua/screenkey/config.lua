@@ -16,6 +16,7 @@ M.defaults = {
     disable = {
         filetypes = {},
         buftypes = {},
+        events = false,
     },
     show_leader = true,
     group_mappings = false,
@@ -102,6 +103,7 @@ function M.validate_config(config)
         ok, err = Util.validate({
             filetypes = { config.disable.filetypes, "table", true },
             buftypes = { config.disable.buftypes, "table", true },
+            events = { config.disable.events, "boolean", true },
         }, config.disable, "screenkey.config.disable")
         if not ok then
             table.insert(errors, err)

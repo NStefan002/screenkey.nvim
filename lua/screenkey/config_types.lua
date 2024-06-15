@@ -5,8 +5,8 @@
 ---@field compress_after? integer
 --- clear the input after `<clear_after>` seconds of inactivity
 ---@field clear_after? number
---- disable screenkey for certain filetypes and/or buftypes
----@field disable? table<"filetypes" | "buftypes", string[]>
+--- disable screenkey events or for certain filetypes and/or buftypes
+---@field disable? { filetypes: string[], buftypes: string[], events: boolean }
 --- show '<leader>' in mappings
 ---@field show_leader? boolean
 --- display mappings in groups
@@ -29,8 +29,8 @@
 ---@field compress_after integer
 --- clear the input after `<clear_after>` seconds of inactivity
 ---@field clear_after number
---- disable screenkey for certain filetypes and/or buftypes
----@field disable table<"filetypes" | "buftypes", string[]>
+--- disable screenkey events or for certain filetypes and/or buftypes
+---@field disable { filetypes: string[], buftypes: string[], events: boolean }
 --- show '<leader>' in mappings
 ---@field show_leader boolean
 --- display mappings in groups
