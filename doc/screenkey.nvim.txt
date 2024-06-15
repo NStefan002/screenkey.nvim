@@ -1,4 +1,4 @@
-*screenkey.nvim.txt*       For Neovim >= 0.10.0      Last change: 2024 June 13
+*screenkey.nvim.txt*       For Neovim >= 0.10.0      Last change: 2024 June 15
 
 ==============================================================================
 Table of Contents                           *screenkey.nvim-table-of-contents*
@@ -140,6 +140,8 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
 
   disable.filetypes    for example: toggleterm or toml
 
+  disable.events       disable User events
+
   disable.buftypes     see :h 'buftype', for example: terminal
 
   group_mappings       for example: <leader>sf opens up a fuzzy finder, if the
@@ -230,6 +232,23 @@ or
   [!NOTE] If you’re using a terminal inside of the Neovim, and you want
   screenkey to automatically stop displaying your keys when you’re inside of
   the terminal, see `disable` option in the plugin configuration.
+- For fully custom statusline users, screenkey will fire `User` events if `vim.g.screenkey_statusline_component` is enabled. There are two patterns: `ScreenkeyUpdated` on keypress and `ScreenkeyCleared` when clearing screenkey after inactivity (see `clear_after` option). If you are experiencing performance issues and do not rely on these events, you can disable them with the `disable.events` option. Example usage with heirline <https://github.com/rebelot/heirline.nvim>
+
+>lua
+    require("heirline").setup({
+        statusline = {
+            {
+                provider = function() return require("screenkey").get_keys() end,
+                update = {
+                    "User",
+                    pattern = "Screenkey*",
+                    callback = vim.schedule_wrap(function() vim.cmd("redrawstatus") end),
+                },
+            },
+        },
+    })
+<
+
 
 I TOOK INSPIRATION (AND SOME CODE) FROM*screenkey.nvim-screenkey.nvim-i-took-inspiration-(and-some-code)-from*
 
