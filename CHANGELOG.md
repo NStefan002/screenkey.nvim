@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/NStefan002/screenkey.nvim/compare/v2.0.0...v2.1.0) (2024-06-15)
+
+
+### Features
+
+* fire user events ([0df9640](https://github.com/NStefan002/screenkey.nvim/commit/0df9640f04ca9668a1084128a21a40b0a70089a2))
+
 ## [2.0.0](https://github.com/NStefan002/screenkey.nvim/compare/v1.4.1...v2.0.0) (2024-06-13)
 
 
