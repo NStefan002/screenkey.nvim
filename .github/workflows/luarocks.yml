@@ -2,9 +2,7 @@ name: LuaRocks release
 on:
   push:
     tags: # Will upload to luarocks.org when a tag is pushed
-      - "*"
-  pull_request: # Will test a local install without uploading to luarocks.org
-  workflow_dispatch:
+      - 'v*.*.*'
 
 jobs:
   luarocks-release:
@@ -13,7 +11,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        if: env.LUAROCKS_API_KEY != null
       - name: LuaRocks Upload
         uses: nvim-neorocks/luarocks-tag-release@v5
+        if: env.LUAROCKS_API_KEY != null
         env:
           LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
