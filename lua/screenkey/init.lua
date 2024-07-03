@@ -16,17 +16,7 @@ local function create_window()
     if bufnr == -1 or not api.nvim_buf_is_valid(bufnr) then
         bufnr = api.nvim_create_buf(false, true)
     end
-    winnr = api.nvim_open_win(
-        bufnr,
-        false,
-        vim.tbl_deep_extend("keep", {
-            title = "Screenkey",
-            title_pos = "center",
-            style = "minimal",
-            focusable = false,
-            noautocmd = true,
-        }, Config.options.win_opts)
-    )
+    winnr = api.nvim_open_win(bufnr, false, Config.options.win_opts)
 
     if winnr == 0 then
         Log:log("failed to create window")

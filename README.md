@@ -54,6 +54,11 @@ use({ "NStefan002/screenkey.nvim", tag = "*" })
         width = 40,
         height = 3,
         border = "single",
+        title = "Screenkey",
+        title_pos = "center",
+        style = "minimal",
+        focusable = false,
+        noautocmd = true,
     },
     compress_after = 3,
     clear_after = 3,
@@ -103,7 +108,7 @@ use({ "NStefan002/screenkey.nvim", tag = "*" })
 
 | option                | explanation                                                                                                                                                                                                                                                                                                                                         |
 | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `win_opts`            | see `:h nvim_open_win`, **note1:** other options from `nvim_open_win` help can be provided (such as `win`, `bufpos`, `zindex` etc.), the ones listed above are just defaults, **note2:** currently, the only options that cannot be changed and will be ignored if you specify them are: `title`, `title_pos`, `style`, `focusable` and `noatocmd`) |
+| `win_opts`            | see `:h nvim_open_win`, **note1:** other options from `nvim_open_win` help can be provided (such as `win`, `bufpos`, `zindex` etc.), the ones listed above are just defaults) |
 | `compress after`      | compress input when repeated <compress_after> times (for example `jjjj` will be compressed to `j..x4`)                                                                                                                                                                                                                                              |
 | `clear_after`         | clear the input after `<clear_after>` seconds of inactivity                                                                                                                                                                                                                                                                                         |
 | `disable`             | temporarily disable screenkey (for example when inside of the terminal)                                                                                                                                                                                                                                                                             |
