@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/NStefan002/screenkey.nvim/compare/v2.1.0...v2.2.0) (2024-07-03)
+
+
+### Features
+
+* **config:** allow users to set all of the win_opts ([1a7d6d5](https://github.com/NStefan002/screenkey.nvim/commit/1a7d6d590c0a06edb2ab9c54603304c859366111))
+
 ## [2.1.0](https://github.com/NStefan002/screenkey.nvim/compare/v2.0.0...v2.1.0) (2024-06-15)
 
 
