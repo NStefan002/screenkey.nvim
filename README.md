@@ -65,6 +65,7 @@ use({ "NStefan002/screenkey.nvim", tag = "*" })
     disable = {
         filetypes = {},
         buftypes = {},
+        events = false,
     },
     show_leader = true,
     group_mappings = false,
