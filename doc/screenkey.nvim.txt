@@ -85,6 +85,7 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
         disable = {
             filetypes = {},
             buftypes = {},
+            events = false,
         },
         show_leader = true,
         group_mappings = false,
