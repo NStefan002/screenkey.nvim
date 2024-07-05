@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/NStefan002/screenkey.nvim/compare/v2.2.0...v2.2.1) (2024-07-05)
+
+
+### Bug Fixes
+
+* **command:** `*` not needed in regex ([ecd1887](https://github.com/NStefan002/screenkey.nvim/commit/ecd1887649c56e8a339f08444f2fb0cf7f556753))
+
 ## [2.2.0](https://github.com/NStefan002/screenkey.nvim/compare/v2.1.0...v2.2.0) (2024-07-03)
 
 
