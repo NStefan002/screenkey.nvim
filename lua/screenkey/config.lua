@@ -29,6 +29,10 @@ M.defaults = {
     display_infront = {},
     display_behind = {},
 
+    filter = function(keys)
+        return keys
+    end,
+
     keys = {
         ["<TAB>"] = "󰌒",
         ["<CR>"] = "󰌑",
@@ -97,6 +101,7 @@ function M.validate_config(config)
         group_mappings = { config.group_mappings, "boolean", true },
         display_infront = { config.display_infront, "table", true },
         display_behind = { config.display_behind, "table", true },
+        filter = { config.filter, "function", true },
         keys = { config.keys, "table", true },
     }, config, "screenkey.config")
 

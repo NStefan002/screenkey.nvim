@@ -191,6 +191,7 @@ local function compress_output()
 end
 
 local function display_text()
+    queued_keys = Config.options.filter(queued_keys)
     local text = compress_output()
     -- center text inside of screenkey window
     local padding =
