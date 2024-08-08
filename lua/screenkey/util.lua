@@ -60,12 +60,8 @@ function M.is_mapping(key)
     local mode = api.nvim_get_mode()
     local mappings = api.nvim_get_keymap(mode.mode)
     for _, mapping in ipairs(mappings) do
-        if
-            ---@diagnostic disable-next-line: undefined-field
-            key:upper() == mapping.lhs:upper()
-            ---@diagnostic disable-next-line: undefined-field
-            or key:upper() == vim.fn.keytrans(mapping.lhs):upper()
-        then
+        ---@diagnostic disable-next-line: undefined-field
+        if key == mapping.lhs or key == vim.fn.keytrans(mapping.lhs) then
             return true
         end
     end

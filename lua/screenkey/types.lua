@@ -19,6 +19,8 @@
 --- contains a buffer with the following filetypes, display
 --- the screenkey behind the floating window
 ---@field display_behind? string[]
+--- filter the keys before displaying them
+---@field filter? fun(keys: screenkey.queued_key[]): screenkey.queued_key[]
 --- how to display the special keys
 ---@field keys? table<string, string>
 
@@ -43,5 +45,11 @@
 --- contains a buffer with the following filetypes, display
 --- the screenkey behind the floating window
 ---@field display_behind string[]
+--- filter the keys before displaying them
+---@field filter fun(keys: screenkey.queued_key[]): screenkey.queued_key[]
 --- how to display the special keys
 ---@field keys table<string, string>
+
+---@class screenkey.queued_key
+---@field key string
+---@field is_mapping boolean

@@ -8,6 +8,7 @@ local active = false
 local bufnr, winnr = -1, -1
 local ns_id = api.nvim_create_namespace("screenkey")
 local grp = -1
+---@type screenkey.queued_key[]
 local queued_keys = {}
 local time = 0 -- time in seconds
 local timer = nil
@@ -80,11 +81,12 @@ end
 --- corresponding symbols.
 --- see `:h keytrans()`
 ---@param in_key string
----@return string[]
+---@return screenkey.queued_key[]
 local function transform_input(in_key)
     in_key = vim.fn.keytrans(in_key)
+    local is_mapping = Util.is_mapping(in_key)
     local split = Util.split_key(in_key)
-    ---@type string[]
+    ---@type screenkey.queued_key[]
     local transformed_keys = {}
 
     for _, k in pairs(split) do
@@ -100,14 +102,20 @@ local function transform_input(in_key)
             local leader = vim.g.mapleader or ""
             if
                 Config.options.show_leader
-                and Util.is_mapping(in_key)
+                and is_mapping
                 and (k:upper() == leader:upper() or k:upper() == vim.fn.keytrans(leader):upper())
             then
-                table.insert(transformed_keys, Config.options.keys["<leader>"])
+                table.insert(
+                    transformed_keys,
+                    { key = Config.options.keys["<leader>"], is_mapping = true }
+                )
             elseif #k == 1 then
-                table.insert(transformed_keys, k)
+                table.insert(transformed_keys, { key = k, is_mapping = is_mapping })
             elseif Config.options.keys[k:upper()] then
-                table.insert(transformed_keys, Config.options.keys[k:upper()])
+                table.insert(
+                    transformed_keys,
+                    { key = Config.options.keys[k:upper()], is_mapping = true }
+                )
             else
                 local modifier = k:match("^<([CMAD])%-.+>$")
                 local key = k:match("^<.-%-.*(.)>$")
@@ -118,28 +126,38 @@ local function transform_input(in_key)
                         key = key:lower()
                     end
                     if modifier == "C" then
-                        table.insert(
-                            transformed_keys,
-                            string.format("%s+%s", Config.options.keys["CTRL"], key)
-                        )
+                        table.insert(transformed_keys, {
+                            key = string.format("%s+%s", Config.options.keys["CTRL"], key),
+                            is_mapping = is_mapping,
+                        })
                     elseif modifier == "A" or modifier == "M" then
-                        table.insert(
-                            transformed_keys,
-                            string.format("%s+%s", Config.options.keys["ALT"], key)
-                        )
+                        table.insert(transformed_keys, {
+                            key = string.format("%s+%s", Config.options.keys["ALT"], key),
+                            is_mapping = is_mapping,
+                        })
                     elseif modifier == "D" then
-                        table.insert(
-                            transformed_keys,
-                            string.format("%s+%s", Config.options.keys["SUPER"], key)
-                        )
+                        table.insert(transformed_keys, {
+                            key = string.format("%s+%s", Config.options.keys["SUPER"], key),
+                            is_mapping = is_mapping,
+                        })
                     end
                 end
             end
         end
     end
 
-    if Config.options.group_mappings and #transformed_keys > 0 then
-        return { table.concat(transformed_keys, "") }
+    if Config.options.group_mappings and #transformed_keys > 0 and is_mapping then
+        return {
+            {
+                key = table.concat(
+                    vim.tbl_map(function(k)
+                        return k.key
+                    end, transformed_keys),
+                    ""
+                ),
+                is_mapping = true,
+            },
+        }
     else
         return transformed_keys
     end
@@ -149,9 +167,11 @@ end
 local function compress_output()
     local compressed_keys = {}
 
-    local last_key = queued_keys[1]
+    local last_key = queued_keys[1] and queued_keys[1].key or ""
+
     local duplicates = 0
-    for _, key in ipairs(queued_keys) do
+    for _, queued_key in ipairs(queued_keys) do
+        local key = queued_key.key
         if key == last_key then
             duplicates = duplicates + 1
         else
@@ -280,6 +300,7 @@ vim.on_key(function(key, typed)
         table.insert(queued_keys, k)
     end
     if active then
+        queued_keys = Config.options.filter(queued_keys)
         display_text()
     end
     if not Config.options.disable.events and statusline_enabled then
