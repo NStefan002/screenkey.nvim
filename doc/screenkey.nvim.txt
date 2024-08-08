@@ -1,4 +1,4 @@
-*screenkey.nvim.txt*       For Neovim >= 0.10.0      Last change: 2024 July 05
+*screenkey.nvim.txt*      For Neovim >= 0.10.0     Last change: 2024 August 08
 
 ==============================================================================
 Table of Contents                           *screenkey.nvim-table-of-contents*
@@ -38,7 +38,7 @@ INSTALLATION                      *screenkey.nvim-screenkey.nvim-installation*
 lazy <https://github.com/folke/lazy.nvim>
 
 >lua
-    {
+    return {
         "NStefan002/screenkey.nvim",
         lazy = false,
         version = "*", -- or branch = "dev", to use the latest commit
@@ -65,7 +65,7 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
 - Default settings
 
 >lua
-    {
+    require("screenkey").setup({
         win_opts = {
             row = vim.o.lines - vim.o.cmdheight - 1,
             col = vim.o.columns - 1,
@@ -91,6 +91,9 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
         group_mappings = false,
         display_infront = {},
         display_behind = {},
+        filter = function(keys)
+            return keys
+        end,
         keys = {
             ["<TAB>"] = "󰌒",
             ["<CR>"] = "󰌑",
@@ -124,7 +127,7 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
             ["SUPER"] = "󰘳",
             ["<leader>"] = "<leader>",
         },
-    }
+    })
 <
 
   ---------------------------------------------------------------------------------------
@@ -170,6 +173,13 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
                        behind of that window (if necessary), Note: you can define
                        filetypes as lua regex, for example "Telescope*" to match every
                        filetype that starts with Telescope
+
+  filter               function that takes an array of key-is_mapping (string-boolean)
+                       pairs (keys) as its argument and returns a filtered array of same
+                       pairs, allowing customization of which keys should be displayed,
+                       Note: this feature is experimental and subject to change (see #38
+                       for the progress of this feature and see below for the example of
+                       how to use it)
 
   keys                 how to display the special keys
   ---------------------------------------------------------------------------------------
@@ -255,6 +265,21 @@ or
                 },
             },
         },
+    })
+<
+
+- Oneexample of how you could use the `filter` function:
+
+>lua
+    -- filter out j and k keys, but only if they are not part of a mapping
+    require("screenkey").setup({
+        filter = function(keys)
+            return vim.iter(keys)
+                :filter(function(k)
+                    return (k.key ~= "j" and k.key ~= "k") or k.is_mapping
+                end)
+                :totable()
+        end,
     })
 <
 
