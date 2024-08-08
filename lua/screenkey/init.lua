@@ -216,7 +216,15 @@ local function display_text()
     local padding =
         string.rep(" ", math.floor((Config.options.win_opts.width - api.nvim_strwidth(text)) / 2))
     local line = math.floor(Config.options.win_opts.height / 2)
-    api.nvim_buf_set_lines(bufnr, line, line + 1, false, { string.format("%s%s", padding, text) })
+    vim.schedule(function()
+        api.nvim_buf_set_lines(
+            bufnr,
+            line,
+            line + 1,
+            false,
+            { string.format("%s%s", padding, text) }
+        )
+    end)
 end
 
 local function create_autocmds()
