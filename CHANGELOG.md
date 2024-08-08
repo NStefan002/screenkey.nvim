@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.1](https://github.com/NStefan002/screenkey.nvim/compare/v2.3.0...v2.3.1) (2024-08-08)
+
+
+### Bug Fixes
+
+* screenkey + `getcharstr` inside of expression mappings ([#36](https://github.com/NStefan002/screenkey.nvim/issues/36)) ([4f03ed0](https://github.com/NStefan002/screenkey.nvim/commit/4f03ed00211a9c1ac6ce25ca734794a101466ed3))
+
 ## [2.3.0](https://github.com/NStefan002/screenkey.nvim/compare/v2.2.1...v2.3.0) (2024-08-08)
 
 
