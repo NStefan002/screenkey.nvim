@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.3.0](https://github.com/NStefan002/screenkey.nvim/compare/v2.2.1...v2.3.0) (2024-08-08)
+
+
+### Features
+
+* rework the `filter` function ([8d1298e](https://github.com/NStefan002/screenkey.nvim/commit/8d1298e735d8612747d8f07074a2f71c85765647))
+* users can now implement `filter` function ([4fa463e](https://github.com/NStefan002/screenkey.nvim/commit/4fa463ec93910ab5fa48c4797b28b7d7056fd78e))
+
+
+### Bug Fixes
+
+* **util:** `is_mapping` no longer produces false results ([9a5d22e](https://github.com/NStefan002/screenkey.nvim/commit/9a5d22e67cbbdb41eaf63887eecc80bacfba676c))
+
 ## [2.2.1](https://github.com/NStefan002/screenkey.nvim/compare/v2.2.0...v2.2.1) (2024-07-05)
 
 
