@@ -217,6 +217,9 @@ local function display_text()
         string.rep(" ", math.floor((Config.options.win_opts.width - api.nvim_strwidth(text)) / 2))
     local line = math.floor(Config.options.win_opts.height / 2)
     vim.schedule(function()
+        if not active then
+            return
+        end
         api.nvim_buf_set_lines(
             bufnr,
             line,
