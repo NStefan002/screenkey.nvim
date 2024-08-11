@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.2](https://github.com/NStefan002/screenkey.nvim/compare/v2.3.1...v2.3.2) (2024-08-11)
+
+
+### Bug Fixes
+
+* invalid bufnr in scheduled function ([a90c0bb](https://github.com/NStefan002/screenkey.nvim/commit/a90c0bbbbe2ae17facaaa89ec7b475b612393101))
+
 ## [2.3.1](https://github.com/NStefan002/screenkey.nvim/compare/v2.3.0...v2.3.1) (2024-08-08)
 
 
