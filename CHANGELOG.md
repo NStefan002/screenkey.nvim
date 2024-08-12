@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.3](https://github.com/NStefan002/screenkey.nvim/compare/v2.3.2...v2.3.3) (2024-08-12)
+
+
+### Bug Fixes
+
+* show UNICODE keys (see [#37](https://github.com/NStefan002/screenkey.nvim/issues/37)) ([430bc60](https://github.com/NStefan002/screenkey.nvim/commit/430bc60cc703f7bfbd10853cac14cc8b6ee82679))
+
 ## [2.3.2](https://github.com/NStefan002/screenkey.nvim/compare/v2.3.1...v2.3.2) (2024-08-11)
 
 
