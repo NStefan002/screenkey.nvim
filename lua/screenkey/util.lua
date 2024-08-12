@@ -69,6 +69,12 @@ function M.is_mapping(key)
     return false
 end
 
+---@param key string
+---@return boolean
+function M.is_special_key(key)
+    return key:match("^<([CMAD])%-.+>$") ~= nil
+end
+
 ---@param opts table
 ---@param user_config table
 ---@param path string

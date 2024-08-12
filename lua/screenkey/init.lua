@@ -85,7 +85,7 @@ end
 local function transform_input(in_key)
     in_key = vim.fn.keytrans(in_key)
     local is_mapping = Util.is_mapping(in_key)
-    local split = Util.split_key(in_key)
+    local split = api.nvim_strwidth(in_key) > 1 and Util.split_key(in_key) or { in_key }
     ---@type screenkey.queued_key[]
     local transformed_keys = {}
 
@@ -109,14 +109,7 @@ local function transform_input(in_key)
                     transformed_keys,
                     { key = Config.options.keys["<leader>"], is_mapping = true }
                 )
-            elseif #k == 1 then
-                table.insert(transformed_keys, { key = k, is_mapping = is_mapping })
-            elseif Config.options.keys[k:upper()] then
-                table.insert(
-                    transformed_keys,
-                    { key = Config.options.keys[k:upper()], is_mapping = true }
-                )
-            else
+            elseif Util.is_special_key(k) then
                 local modifier = k:match("^<([CMAD])%-.+>$")
                 local key = k:match("^<.-%-.*(.)>$")
                 local shift = k:match("^<.-%-(S)%-.>$") ~= nil
@@ -142,6 +135,11 @@ local function transform_input(in_key)
                         })
                     end
                 end
+            else
+                table.insert(
+                    transformed_keys,
+                    { key = Config.options.keys[k:upper()] or k, is_mapping = is_mapping }
+                )
             end
         end
     end
