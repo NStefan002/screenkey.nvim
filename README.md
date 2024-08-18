@@ -175,6 +175,23 @@ or
 
 `:Screenkey redraw`
 
+- `Screenkey` exposes `is_active` function that returns `true` if the `Screenkey` window is active,
+`false` otherwise, could be used like this:
+
+```lua
+local screenkey = require("screenkey")
+local notify = require("notify")
+local toggleScreenKey = function()
+    vim.cmd("Screenkey toggle")
+    -- change notification position
+    notify.setup({
+        top_down = screenkey.is_active(),
+    })
+end
+
+vim.keymap.set("n", "<leader>tsk", toggleScreenKey, { desc = "[T]oggle [S]creen[K]ey" })
+```
+
 > [!NOTE]
 > If you're using a terminal inside of the Neovim, and you want screenkey to automatically stop displaying your
 > keys when you're > inside of the terminal, see `disable` option in the plugin configuration.
