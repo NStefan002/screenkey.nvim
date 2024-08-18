@@ -347,4 +347,9 @@ function M.get_keys()
     return vim.g.screenkey_statusline_component and compress_output() or ""
 end
 
+---@return boolean
+function M.is_active()
+    return active
+end
+
 return M
