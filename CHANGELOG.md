@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/NStefan002/screenkey.nvim/compare/v2.3.3...v2.4.0) (2024-08-18)
+
+
+### Features
+
+* expose active state ([7019de5](https://github.com/NStefan002/screenkey.nvim/commit/7019de50780a4f3ccb7a5f4bbef44fa843f7cccc))
+
 ## [2.3.3](https://github.com/NStefan002/screenkey.nvim/compare/v2.3.2...v2.3.3) (2024-08-12)
 
 
