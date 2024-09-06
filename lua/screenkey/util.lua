@@ -131,4 +131,11 @@ function M.split(str, sep)
     return t
 end
 
+---rounds x to the nearest integer
+---@param x number
+---@return integer
+function M.round(x)
+    return math.floor(x + 0.5)
+end
+
 return M

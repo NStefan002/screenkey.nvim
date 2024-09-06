@@ -285,6 +285,23 @@ local function create_autocmds()
     --         P(ev.event)
     --     end,
     -- })
+
+    local old_width, old_height = vim.o.columns, vim.o.lines
+    api.nvim_create_autocmd({ "VimResized" }, {
+        group = grp,
+        pattern = "*",
+        callback = function()
+            local new_width, new_height = vim.o.columns, vim.o.lines
+            local width_ratio = new_width / old_width
+            local height_ratio = new_height / old_height
+
+            Config.options.win_opts.col = Util.round(Config.options.win_opts.col * width_ratio)
+            Config.options.win_opts.row = Util.round(Config.options.win_opts.row * height_ratio)
+            M.redraw()
+
+            old_width, old_height = new_width, new_height
+        end,
+    })
 end
 
 vim.on_key(function(key, typed)
