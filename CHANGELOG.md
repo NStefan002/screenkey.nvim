@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.1](https://github.com/NStefan002/screenkey.nvim/compare/v2.4.0...v2.4.1) (2024-09-06)
+
+
+### Bug Fixes
+
+* handle editor resizing (closes [#25](https://github.com/NStefan002/screenkey.nvim/issues/25)) ([408661f](https://github.com/NStefan002/screenkey.nvim/commit/408661f96d6e17090eee9251e0566cd934729737))
+
 ## [2.4.0](https://github.com/NStefan002/screenkey.nvim/compare/v2.3.3...v2.4.0) (2024-08-18)
 
 
