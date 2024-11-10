@@ -5,7 +5,7 @@ version = "scm-1"
 local user = "NStefan002"
 
 source = {
-    url = "git+https://github.com/" .. user .. package,
+    url = "git+https://github.com/" .. user .. "/" .. package,
 }
 description = {
     homepage = "https://github.com/" .. user .. "/" .. package,
