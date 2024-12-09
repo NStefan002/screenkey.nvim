@@ -139,4 +139,40 @@ function M.round(x)
     return math.floor(x + 0.5)
 end
 
+---@return boolean
+function M.which_key_loaded()
+    return package.loaded["which-key"] ~= nil
+end
+
+---Which-key uses `nvim_feedkeys()`, and that produces some issues with screenkey
+---[See #7](https://github.com/NStefan002/screenkey.nvim/issues/47)
+---@param keys screenkey.queued_key[]
+---@param last_key string[]
+---@return screenkey.queued_key[]
+function M.remove_which_key_extra_keys(keys, last_key)
+    ---@type screenkey.queued_key[]
+    local result = {}
+
+    local should_remove = true
+    for i = #last_key, 1, -1 do
+        if i > #keys then
+            should_remove = false
+            break
+        end
+
+        if last_key[i] ~= vim.fn.keytrans(keys[i].key) then
+            should_remove = false
+            break
+        end
+    end
+
+    if should_remove then
+        for i = 1, #keys - #last_key do
+            table.insert(result, keys[i])
+        end
+    end
+
+    return result
+end
+
 return M

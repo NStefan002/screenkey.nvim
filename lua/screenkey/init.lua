@@ -86,6 +86,9 @@ local function transform_input(in_key)
     in_key = vim.fn.keytrans(in_key)
     local is_mapping = Util.is_mapping(in_key)
     local split = api.nvim_strwidth(in_key) > 1 and Util.split_key(in_key) or { in_key }
+    if Util.which_key_loaded() and #split > 1 then
+        queued_keys = Util.remove_which_key_extra_keys(queued_keys, split)
+    end
     ---@type screenkey.queued_key[]
     local transformed_keys = {}
 
