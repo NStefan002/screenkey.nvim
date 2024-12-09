@@ -59,6 +59,7 @@ end
 function M.is_mapping(key)
     local mode = api.nvim_get_mode()
     local mappings = api.nvim_get_keymap(mode.mode)
+    vim.list_extend(mappings, api.nvim_buf_get_keymap(0, mode.mode))
     for _, mapping in ipairs(mappings) do
         ---@diagnostic disable-next-line: undefined-field
         if key == mapping.lhs or key == vim.fn.keytrans(mapping.lhs) then
