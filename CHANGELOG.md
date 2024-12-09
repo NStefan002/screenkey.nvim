@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.2](https://github.com/NStefan002/screenkey.nvim/compare/v2.4.1...v2.4.2) (2024-12-09)
+
+
+### Bug Fixes
+
+* **util:** check for buffer-local mappings ([aa4c7d9](https://github.com/NStefan002/screenkey.nvim/commit/aa4c7d9a8e96df43da7d8eff7b8d8edc0c21f2ac))
+
 ## [2.4.1](https://github.com/NStefan002/screenkey.nvim/compare/v2.4.0...v2.4.1) (2024-09-06)
 
 
