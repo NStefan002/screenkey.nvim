@@ -198,7 +198,7 @@ local function compress_output()
 
     -- remove old entries
     local text = table.concat(compressed_keys, " ")
-    while #text > Config.options.win_opts.width - 2 do
+    while api.nvim_strwidth(text) > Config.options.win_opts.width - 2 do
         local removed = table.remove(compressed_keys, 1)
         -- HACK: don't touch this, please
         local num_removed = tonumber(string.match(removed:match("%.%.x%d$") or "1", "%d$"))
