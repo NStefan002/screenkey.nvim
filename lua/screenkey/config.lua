@@ -1,6 +1,6 @@
 local M = {}
 
----@type screenkey.config.full
+---@type screenkey.config
 M.defaults = {
     win_opts = {
         row = vim.o.lines - vim.o.cmdheight - 1,
@@ -68,10 +68,10 @@ M.defaults = {
     },
 }
 
----@type screenkey.config.full
+---@type screenkey.config
 M.options = M.defaults
 
----@param opts? screenkey.config
+---@param opts? screenkey.config.partial
 function M.setup(opts)
     opts = opts or {}
     local ok, err = M.validate_config(opts)
@@ -85,7 +85,7 @@ function M.setup(opts)
     M.options = vim.tbl_deep_extend("force", M.defaults, opts)
 end
 
----@param config screenkey.config
+---@param config screenkey.config.partial
 ---@return boolean, string?
 function M.validate_config(config)
     local Util = require("screenkey.util")

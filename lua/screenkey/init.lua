@@ -337,7 +337,7 @@ vim.on_key(function(key, typed)
     end
 end, ns_id)
 
----@param opts? screenkey.config
+---@param opts? screenkey.config.partial
 function M.setup(opts)
     Config.setup(opts)
 end

@@ -1,30 +1,4 @@
----@class screenkey.config
---- see ':h nvim_open_win()'
----@field win_opts? vim.api.keyset.win_config
---- compress input when repeated <compress_after> times
----@field compress_after? integer
---- clear the input after `<clear_after>` seconds of inactivity
----@field clear_after? number
---- disable screenkey events or for certain filetypes and/or buftypes
----@field disable? { filetypes: string[], buftypes: string[], events: boolean }
---- show '<leader>' in mappings
----@field show_leader? boolean
---- display mappings in groups
----@field group_mappings? boolean
---- if screenkey is overlapping with the floating window that
---- contains a buffer with the following filetypes, display
---- the screenkey in front of the floating window
----@field display_infront? string[]
---- if screenkey is overlapping with the floating window that
---- contains a buffer with the following filetypes, display
---- the screenkey behind the floating window
----@field display_behind? string[]
---- filter the keys before displaying them
----@field filter? fun(keys: screenkey.queued_key[]): screenkey.queued_key[]
---- how to display the special keys
----@field keys? table<string, string>
-
----@class screenkey.config.full : screenkey.config
+---@class (exact) screenkey.config
 --- see ':h nvim_open_win()'
 ---@field win_opts vim.api.keyset.win_config
 --- compress input when repeated <compress_after> times
@@ -49,6 +23,8 @@
 ---@field filter fun(keys: screenkey.queued_key[]): screenkey.queued_key[]
 --- how to display the special keys
 ---@field keys table<string, string>
+
+---@class (exact) screenkey.config.partial : screenkey.config, {}
 
 ---@class screenkey.queued_key
 ---@field key string
