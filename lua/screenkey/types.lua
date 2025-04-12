@@ -23,6 +23,8 @@
 ---@field filter? fun(keys: screenkey.queued_key[]): screenkey.queued_key[]
 --- how to display the special keys
 ---@field keys? table<string, string>
+--- custom highlight groups for the floating window and text
+---@field highlights? { Float: screenkey.highlight, FloatBorder: screenkey.highlight, ScreenKey: screenkey.highlight }
 
 ---@class screenkey.config.full : screenkey.config
 --- see ':h nvim_open_win()'
@@ -49,7 +51,30 @@
 ---@field filter fun(keys: screenkey.queued_key[]): screenkey.queued_key[]
 --- how to display the special keys
 ---@field keys table<string, string>
+--- custom highlight groups for the floating window and text
+---@field highlights { Float: screenkey.highlight, FloatBorder: screenkey.highlight, ScreenKey: screenkey.highlight }
 
 ---@class screenkey.queued_key
 ---@field key string
 ---@field is_mapping boolean
+
+---@class screenkey.highlight
+---@field fg? string|{ from: string }        Color for foreground (e.g., "#ff0000") or reference to another highlight group
+---@field bg? string|{ from: string }        Color for background (e.g., "#000000") or reference to another highlight group
+---@field sp? string|{ from: string }        Color for special (e.g., underline) or reference to another highlight group
+---@field blend? number                      Blend level (0-100)
+---@field bold? boolean
+---@field italic? boolean
+---@field standout? boolean
+---@field underline? boolean
+---@field undercurl? boolean
+---@field underdouble? boolean
+---@field underdotted? boolean
+---@field underdashed? boolean
+---@field strikethrough? boolean
+---@field reverse? boolean
+---@field nocombine? boolean
+---@field link? string                       Link to another highlight group
+---@field default? boolean                   Set as default
+---@field inherit? string                    Inherit from another highlight group
+---@field from? string                       Copy attributes from another highlight group

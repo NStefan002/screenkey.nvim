@@ -3,10 +3,12 @@ local api = vim.api
 local Util = require("screenkey.util")
 local Config = require("screenkey.config")
 local Log = require("screenkey.logger")
+local hl = require("screenkey.highlight")
 
 local active = false
 local bufnr, winnr = -1, -1
 local ns_id = api.nvim_create_namespace("screenkey")
+local hl_ns_id = api.nvim_create_namespace("screenkey_highlight")
 local grp = -1
 ---@type screenkey.queued_key[]
 local queued_keys = {}
@@ -17,13 +19,24 @@ local function create_window()
     if bufnr == -1 or not api.nvim_buf_is_valid(bufnr) then
         bufnr = api.nvim_create_buf(false, true)
     end
+
+    Log:log("Setting highlight groups in namespace " .. hl_ns_id)
+    hl.set(hl_ns_id, "NormalFloat", Config.options.highlights.Float)
+    hl.set(hl_ns_id, "FloatBorder", Config.options.highlights.FloatBorder)
+    hl.set(hl_ns_id, "Normal", Config.options.highlights.ScreenKey)
+
     winnr = api.nvim_open_win(bufnr, false, Config.options.win_opts)
 
     if winnr == 0 then
         Log:log("failed to create window")
+        Log:log("Failed to create window")
         error("Screenkey: failed to create window")
     end
 
+    api.nvim_win_set_hl_ns(winnr, hl_ns_id)
+    Log:log("Applied highlight namespace to window " .. winnr)
+
+    api.nvim_buf_add_highlight(bufnr, hl_ns_id, "Normal", 0, 0, -1)
     api.nvim_set_option_value("filetype", "screenkey", { buf = bufnr })
 end
 
@@ -45,6 +58,7 @@ local function clear_screenkey_buffer()
         table.insert(rep, "")
     end
     api.nvim_buf_set_lines(bufnr, 0, -1, false, rep)
+    api.nvim_buf_add_highlight(bufnr, hl_ns_id, "Normal", 0, 0, -1)
 end
 
 local function create_timer()
@@ -225,6 +239,8 @@ local function display_text()
             false,
             { string.format("%s%s", padding, text) }
         )
+        -- Reapply highlight after setting text
+        api.nvim_buf_add_highlight(bufnr, hl_ns_id, "Normal", line, 0, -1)
     end)
 end
 
@@ -292,6 +308,7 @@ local function create_autocmds()
         pattern = "*",
         callback = function()
             local new_width, new_height = vim.o.columns, vim.o.lines
+            local old_width, old_height = vim.o.columns, vim.o.lines
             local width_ratio = new_width / old_width
             local height_ratio = new_height / old_height
 
@@ -301,6 +318,18 @@ local function create_autocmds()
 
             old_width, old_height = new_width, new_height
         end,
+    })
+
+    api.nvim_create_autocmd({ "ColorScheme" }, {
+        group = grp,
+        pattern = "*",
+        callback = function()
+            if active then
+                Log:log("Colorscheme changed: updating highlights")
+                M.redraw()
+            end
+        end,
+        desc = "update Screenkey highlights on colorscheme change",
     })
 end
 

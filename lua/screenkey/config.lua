@@ -66,6 +66,11 @@ M.defaults = {
         ["SUPER"] = "󰘳",
         ["<leader>"] = "<leader>",
     },
+    highlights = {
+        Float = { inherit = "NormalFloat" },
+        FloatBorder = { inherit = "FloatBorder" },
+        ScreenKey = { bg = { from = "NormalFloat" }, fg = { from = "Comment" } },
+    },
 }
 
 ---@type screenkey.config.full
@@ -103,6 +108,7 @@ function M.validate_config(config)
         display_behind = { config.display_behind, "table", true },
         filter = { config.filter, "function", true },
         keys = { config.keys, "table", true },
+        highlights = { config.highlights, "table", true },
     }, config, "screenkey.config")
 
     if not ok then
@@ -128,6 +134,94 @@ function M.validate_config(config)
         ok, err = Util.validate(validation, config.keys, "screenkey.config.keys")
         if not ok then
             table.insert(errors, err)
+        end
+    end
+
+    if config.highlights then
+        local valid_hl_attrs = {
+            fg = true,
+            bg = true,
+            sp = true,
+            blend = true,
+            bold = true,
+            italic = true,
+            standout = true,
+            underline = true,
+            undercurl = true,
+            underdouble = true,
+            underdotted = true,
+            underdashed = true,
+            strikethrough = true,
+            reverse = true,
+            nocombine = true,
+            link = true,
+            default = true,
+            inherit = true,
+            from = true,
+        }
+        ok, err = Util.validate({
+            Float = { config.highlights.Float, "table", true },
+            FloatBorder = { config.highlights.FloatBorder, "table", true },
+            ScreenKey = { config.highlights.ScreenKey, "table", true },
+        }, config.highlights, "screenkey.config.highlights")
+        if not ok then
+            table.insert(errors, err)
+        else
+            for name, hl in pairs(config.highlights) do
+                for attr, value in pairs(hl) do
+                    if not valid_hl_attrs[attr] then
+                        table.insert(
+                            errors,
+                            string.format("Invalid highlight attribute '%s' for %s", attr, name)
+                        )
+                    elseif attr == "fg" or attr == "bg" or attr == "sp" then
+                        if type(value) ~= "string" or not value:match("^#[0-9a-fA-F]{6}$") then
+                            table.insert(
+                                errors,
+                                string.format(
+                                    "Invalid color value '%s' for %s.%s (must be #RRGGBB)",
+                                    tostring(value),
+                                    name,
+                                    attr
+                                )
+                            )
+                        end
+                    elseif attr == "blend" then
+                        if type(value) ~= "number" or value < 0 or value > 100 then
+                            table.insert(
+                                errors,
+                                string.format(
+                                    "Invalid blend value '%s' for %s (must be 0-100)",
+                                    tostring(value),
+                                    name
+                                )
+                            )
+                        end
+                    elseif attr == "inherit" or attr == "from" or attr == "link" then
+                        if type(value) ~= "string" then
+                            table.insert(
+                                errors,
+                                string.format(
+                                    "Invalid %s value '%s' for %s (must be a string)",
+                                    attr,
+                                    tostring(value),
+                                    name
+                                )
+                            )
+                        end
+                    elseif type(value) ~= "boolean" then
+                        table.insert(
+                            errors,
+                            string.format(
+                                "Invalid %s value '%s' for %s (must be boolean)",
+                                attr,
+                                tostring(value),
+                                name
+                            )
+                        )
+                    end
+                end
+            end
         end
     end
 
