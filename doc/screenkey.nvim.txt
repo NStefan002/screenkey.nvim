@@ -127,6 +127,11 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
             ["SUPER"] = "󰘳",
             ["<leader>"] = "<leader>",
         },
+        highlights = {
+	    Float = { inherit = "NormalFloat" },
+	    FloatBorder = { inherit = "FloatBorder" },
+	    ScreenKey = { bg = { from = "NormalFloat" }, fg = { from = "Comment" } },
+        },
     })
 <
 

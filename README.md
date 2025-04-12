@@ -107,6 +107,11 @@ require("screenkey").setup({
         ["SUPER"] = "󰘳",
         ["<leader>"] = "<leader>",
     },
+    highlights = {
+        Float = { inherit = "NormalFloat" },
+        FloatBorder = { inherit = "FloatBorder" },
+        ScreenKey = { bg = { from = "NormalFloat" }, fg = { from = "Comment" } },
+    },
 })
 ```
 
