@@ -28,11 +28,10 @@ M.defaults = {
     -- TODO: group_text = false
     display_infront = {},
     display_behind = {},
-
     filter = function(keys)
         return keys
     end,
-
+    separator = " ",
     keys = {
         ["<TAB>"] = "󰌒",
         ["<CR>"] = "󰌑",
@@ -102,6 +101,7 @@ function M.validate_config(config)
         display_infront = { config.display_infront, "table", true },
         display_behind = { config.display_behind, "table", true },
         filter = { config.filter, "function", true },
+        separator = { config.separator, "string", true },
         keys = { config.keys, "table", true },
     }, config, "screenkey.config")
 
