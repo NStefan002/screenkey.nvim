@@ -21,7 +21,7 @@ It is useful for screencasts, presentations, and live coding sessions.
 return {
     "NStefan002/screenkey.nvim",
     lazy = false,
-    version = "*", -- or branch = "dev", to use the latest commit
+    version = "*", -- or branch = "main", to use the latest commit
 }
 ```
 
