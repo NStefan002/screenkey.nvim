@@ -1,6 +1,6 @@
 local M = {}
 
----@type screenkey.config.full
+---@type screenkey.config
 M.defaults = {
     win_opts = {
         row = vim.o.lines - vim.o.cmdheight - 1,
@@ -28,11 +28,10 @@ M.defaults = {
     -- TODO: group_text = false
     display_infront = {},
     display_behind = {},
-
     filter = function(keys)
         return keys
     end,
-
+    separator = " ",
     keys = {
         ["<TAB>"] = "󰌒",
         ["<CR>"] = "󰌑",
@@ -68,10 +67,10 @@ M.defaults = {
     },
 }
 
----@type screenkey.config.full
+---@type screenkey.config
 M.options = M.defaults
 
----@param opts? screenkey.config
+---@param opts? screenkey.config.partial
 function M.setup(opts)
     opts = opts or {}
     local ok, err = M.validate_config(opts)
@@ -85,7 +84,7 @@ function M.setup(opts)
     M.options = vim.tbl_deep_extend("force", M.defaults, opts)
 end
 
----@param config screenkey.config
+---@param config screenkey.config.partial
 ---@return boolean, string?
 function M.validate_config(config)
     local Util = require("screenkey.util")
@@ -102,6 +101,7 @@ function M.validate_config(config)
         display_infront = { config.display_infront, "table", true },
         display_behind = { config.display_behind, "table", true },
         filter = { config.filter, "function", true },
+        separator = { config.separator, "string", true },
         keys = { config.keys, "table", true },
     }, config, "screenkey.config")
 

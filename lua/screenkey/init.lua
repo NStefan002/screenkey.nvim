@@ -86,6 +86,9 @@ local function transform_input(in_key)
     in_key = vim.fn.keytrans(in_key)
     local is_mapping = Util.is_mapping(in_key)
     local split = api.nvim_strwidth(in_key) > 1 and Util.split_key(in_key) or { in_key }
+    if Util.which_key_loaded() and #split > 1 then
+        queued_keys = Util.remove_which_key_extra_keys(queued_keys, split)
+    end
     ---@type screenkey.queued_key[]
     local transformed_keys = {}
 
@@ -194,15 +197,15 @@ local function compress_output()
     end
 
     -- remove old entries
-    local text = table.concat(compressed_keys, " ")
-    while #text > Config.options.win_opts.width - 2 do
+    local text = table.concat(compressed_keys, Config.options.separator)
+    while api.nvim_strwidth(text) > Config.options.win_opts.width - 2 do
         local removed = table.remove(compressed_keys, 1)
         -- HACK: don't touch this, please
         local num_removed = tonumber(string.match(removed:match("%.%.x%d$") or "1", "%d$"))
         for _ = 1, num_removed do
             table.remove(queued_keys, 1)
         end
-        text = table.concat(compressed_keys, " ")
+        text = table.concat(compressed_keys, Config.options.separator)
     end
 
     return text
@@ -334,7 +337,7 @@ vim.on_key(function(key, typed)
     end
 end, ns_id)
 
----@param opts? screenkey.config
+---@param opts? screenkey.config.partial
 function M.setup(opts)
     Config.setup(opts)
 end
