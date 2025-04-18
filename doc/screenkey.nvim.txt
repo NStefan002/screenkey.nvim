@@ -1,4 +1,4 @@
-*screenkey.nvim.txt*      For Neovim >= 0.10.0      Last change: 2025 April 17
+*screenkey.nvim.txt*      For Neovim >= 0.10.0      Last change: 2025 April 18
 
 ==============================================================================
 Table of Contents                           *screenkey.nvim-table-of-contents*
@@ -94,6 +94,7 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
         filter = function(keys)
             return keys
         end,
+        separator = " ",
         keys = {
             ["<TAB>"] = "󰌒",
             ["<CR>"] = "󰌑",
@@ -180,6 +181,8 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
                        Note: this feature is experimental and subject to change (see #38
                        for the progress of this feature and see below for the example of
                        how to use it)
+
+  separator            string of any length that separates the keys, space by default
 
   keys                 how to display the special keys
   ---------------------------------------------------------------------------------------
