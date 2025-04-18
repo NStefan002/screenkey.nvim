@@ -1,4 +1,4 @@
----@class (exact) screenkey.config
+---@class (exact) screenkey.config.full
 --- see ':h nvim_open_win()'
 ---@field win_opts vim.api.keyset.win_config
 --- compress input when repeated <compress_after> times
@@ -26,7 +26,7 @@
 --- how to display the special keys
 ---@field keys table<string, string>
 
----@class (exact) screenkey.config.partial : screenkey.config, {}
+---@class (exact) screenkey.config : screenkey.config.full, {}
 
 ---@class screenkey.queued_key
 ---@field key string
