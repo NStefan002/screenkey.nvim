@@ -1,38 +1,39 @@
 local api = vim.api
-local Util = require("screenkey.util")
+local utils = require("screenkey.utils")
 
 ---@class ScreenkeyLogger
 ---@field lines string[]
 ---@field max_lines number
 ---@field enabled boolean
-local ScreenkeyLogger = {}
-ScreenkeyLogger.__index = ScreenkeyLogger
+local M = {}
 
 ---@return ScreenkeyLogger
-function ScreenkeyLogger.new()
-    local self = {
+function M:new()
+    local obj = {
         lines = {},
         max_lines = 50,
         enabled = false,
     }
-    return setmetatable(self, ScreenkeyLogger)
+    setmetatable(obj, self)
+    self.__index = self
+    return obj
 end
 
-function ScreenkeyLogger:disable()
+function M:disable()
     self.enabled = false
 end
 
-function ScreenkeyLogger:enable()
+function M:enable()
     self.enabled = true
 end
 
 ---@param m integer
-function ScreenkeyLogger:set_max_lines(m)
+function M:set_max_lines(m)
     self.max_lines = m
 end
 
 ---@param ... any
-function ScreenkeyLogger:log(...)
+function M:log(...)
     if not self.enabled then
         return
     end
@@ -40,7 +41,7 @@ function ScreenkeyLogger:log(...)
     local vararg = { ... }
     for _, v in ipairs(vararg) do
         local item = vim.inspect(v)
-        local lines = Util.split(item, "\n")
+        local lines = utils.split(item, "\n")
         for _, line in ipairs(lines) do
             table.insert(self.lines, line)
         end
@@ -51,11 +52,11 @@ function ScreenkeyLogger:log(...)
     end
 end
 
-function ScreenkeyLogger:clear()
+function M:clear()
     self.lines = {}
 end
 
-function ScreenkeyLogger:show()
+function M:show()
     local bufnr = api.nvim_create_buf(false, true)
     local width = math.floor(vim.o.columns / 2)
     local height = math.floor((vim.o.lines - vim.o.cmdheight) / 2)
@@ -76,4 +77,4 @@ function ScreenkeyLogger:show()
     api.nvim_buf_set_lines(bufnr, 0, -1, false, self.lines)
 end
 
-return ScreenkeyLogger.new()
+return M:new()

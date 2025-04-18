@@ -1,6 +1,6 @@
 local M = {}
 
----@type screenkey.config
+---@type screenkey.config.full
 M.defaults = {
     win_opts = {
         row = vim.o.lines - vim.o.cmdheight - 1,
@@ -25,7 +25,6 @@ M.defaults = {
     },
     show_leader = true,
     group_mappings = false,
-    -- TODO: group_text = false
     display_infront = {},
     display_behind = {},
     filter = function(keys)
@@ -67,10 +66,10 @@ M.defaults = {
     },
 }
 
----@type screenkey.config
+---@type screenkey.config.full
 M.options = M.defaults
 
----@param opts? screenkey.config.partial
+---@param opts? screenkey.config
 function M.setup(opts)
     opts = opts or {}
     local ok, err = M.validate_config(opts)
@@ -84,14 +83,14 @@ function M.setup(opts)
     M.options = vim.tbl_deep_extend("force", M.defaults, opts)
 end
 
----@param config screenkey.config.partial
+---@param config screenkey.config
 ---@return boolean, string?
 function M.validate_config(config)
-    local Util = require("screenkey.util")
+    local utils = require("screenkey.utils")
 
     ---@type string[]
     local errors = {}
-    local ok, err = Util.validate({
+    local ok, err = utils.validate({
         win_opts = { config.win_opts, "table", true },
         compress_after = { config.compress_after, "number", true },
         clear_after = { config.clear_after, "number", true },
@@ -110,7 +109,7 @@ function M.validate_config(config)
     end
 
     if config.disable then
-        ok, err = Util.validate({
+        ok, err = utils.validate({
             filetypes = { config.disable.filetypes, "table", true },
             buftypes = { config.disable.buftypes, "table", true },
             events = { config.disable.events, "boolean", true },
@@ -125,7 +124,7 @@ function M.validate_config(config)
         for key, value in pairs(M.defaults.keys) do
             validation[key] = { value, "string", true }
         end
-        ok, err = Util.validate(validation, config.keys, "screenkey.config.keys")
+        ok, err = utils.validate(validation, config.keys, "screenkey.config.keys")
         if not ok then
             table.insert(errors, err)
         end

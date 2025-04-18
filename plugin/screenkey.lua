@@ -2,6 +2,21 @@
 ---@field impl fun(args:string[], data: table) The command implementation
 ---@field complete? fun(subcmd_arg_lead: string): string[] Command completions callback, taking the lead of the subcommand's arguments
 
+local api = vim.api
+
+-- initialize the global variables (only once)
+if vim.g.screenkey_ns_id ~= nil then
+    -- already initialized
+    return
+end
+
+---@type integer
+vim.g.screenkey_ns_id = api.nvim_create_namespace("screenkey")
+---@type integer
+vim.g.screenkey_bufnr = -1
+---@type integer
+vim.g.screenkey_winnr = -1
+
 ---@type table<string, ScreenkeySubcmd>
 local subcmds = {
     toggle_statusline_component = {
@@ -57,7 +72,7 @@ local subcmds = {
                 return
             end
 
-            local Log = require("screenkey.logger")
+            local log = require("screenkey.logger")
             if args[1] == "max_lines" then
                 if #args ~= 2 then
                     vim.notify(
@@ -66,7 +81,7 @@ local subcmds = {
                     )
                     return
                 end
-                Log:set_max_lines(tonumber(args[2]) or 50)
+                log:set_max_lines(tonumber(args[2]) or 50)
                 return
             elseif #args > 1 then
                 vim.notify(
@@ -77,11 +92,11 @@ local subcmds = {
             end
 
             if args[1] == "show" then
-                Log:show()
+                log:show()
             elseif args[1] == "start" then
-                Log:enable()
+                log:enable()
             elseif args[1] == "stop" then
-                Log:disable()
+                log:disable()
             else
                 vim.notify(
                     ("Screenkey %s: Unknown command %s"):format(data.fargs[1], args[1]),
@@ -143,7 +158,7 @@ local function screenkey_cmd_completion(arg_lead, cmdline, _)
     end
 end
 
-vim.api.nvim_create_user_command("Screenkey", screenkey_cmd, {
+api.nvim_create_user_command("Screenkey", screenkey_cmd, {
     desc = "Toggle Screenkey or invoke some other Screenkey functionality.",
     complete = screenkey_cmd_completion,
     nargs = "*",

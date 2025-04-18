@@ -1,6 +1,7 @@
-local M = {}
 local api = vim.api
-local Config = require("screenkey.config")
+local config = require("screenkey.config")
+
+local M = {}
 
 ---@param t table Table to check
 ---@param value any Value to compare or predicate function reference
@@ -18,62 +19,18 @@ function M.tbl_contains(t, value, f)
     return false
 end
 
----@param key string
----@return string[] split
-function M.split_key(key)
-    local split = {}
-    local tmp = ""
-    local diamond_open = false
-    for i = 1, #key do
-        local curr_char = key:sub(i, i)
-        tmp = tmp .. curr_char
-        if curr_char == "<" then
-            diamond_open = true
-        elseif curr_char == ">" then
-            diamond_open = false
-        end
-        if not diamond_open then
-            table.insert(split, tmp)
-            tmp = ""
-        end
-    end
-    return split
-end
-
 function M.should_disable()
     local filetype = api.nvim_get_option_value("filetype", { buf = 0 })
-    if M.tbl_contains(Config.options.disable.filetypes, filetype) then
+    if M.tbl_contains(config.options.disable.filetypes, filetype) then
         return true
     end
 
     local buftype = api.nvim_get_option_value("buftype", { buf = 0 })
-    if M.tbl_contains(Config.options.disable.buftypes, buftype) then
+    if M.tbl_contains(config.options.disable.buftypes, buftype) then
         return true
     end
 
     return false
-end
-
----@param key string
----@return boolean
-function M.is_mapping(key)
-    local mode = api.nvim_get_mode()
-    local mappings = api.nvim_get_keymap(mode.mode)
-    vim.list_extend(mappings, api.nvim_buf_get_keymap(0, mode.mode))
-    for _, mapping in ipairs(mappings) do
-        ---@diagnostic disable-next-line: undefined-field
-        if key == mapping.lhs or key == vim.fn.keytrans(mapping.lhs) then
-            return true
-        end
-    end
-
-    return false
-end
-
----@param key string
----@return boolean
-function M.is_special_key(key)
-    return key:match("^<([CMAD])%-.+>$") ~= nil
 end
 
 ---@param opts table
@@ -118,7 +75,7 @@ function M.update_zindex(bufnr, infront)
     local target_win_config = api.nvim_win_get_config(target_win_id)
     require("screenkey.logger"):log(target_win_config)
     local target_zindex = target_win_config.zindex or 50
-    Config.options.win_opts.zindex = target_zindex + (infront and 1 or -1)
+    config.options.win_opts.zindex = target_zindex + (infront and 1 or -1)
 end
 
 ---@param str string string to split
@@ -139,40 +96,15 @@ function M.round(x)
     return math.floor(x + 0.5)
 end
 
----@return boolean
-function M.which_key_loaded()
-    return package.loaded["which-key"] ~= nil
-end
-
----Which-key uses `nvim_feedkeys()`, and that produces some issues with screenkey
----[See #7](https://github.com/NStefan002/screenkey.nvim/issues/47)
----@param keys screenkey.queued_key[]
----@param last_key string[]
----@return screenkey.queued_key[]
-function M.remove_which_key_extra_keys(keys, last_key)
-    ---@type screenkey.queued_key[]
-    local result = {}
-
-    local should_remove = true
-    for i = #last_key, 1, -1 do
-        if i > #keys then
-            should_remove = false
-            break
-        end
-
-        if last_key[i] ~= vim.fn.keytrans(keys[i].key) then
-            should_remove = false
-            break
-        end
+---@param bufnr integer
+---@param first integer first line index (inclusive, 0-indexed)
+---@param last integer last line index (exclusive, 0-indexed)
+function M.clear_buf_lines(bufnr, first, last)
+    local repl = {}
+    for _ = first, last - 1 do
+        table.insert(repl, "")
     end
-
-    if should_remove then
-        for i = 1, #keys - #last_key do
-            table.insert(result, keys[i])
-        end
-    end
-
-    return result
+    api.nvim_buf_set_lines(bufnr, first, last, false, repl)
 end
 
 return M
