@@ -1,5 +1,32 @@
 # Changelog
 
+## [3.0.0](https://github.com/NStefan002/screenkey.nvim/compare/v2.4.2...v3.0.0) (2025-04-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **types:** rename `config` types
+
+### Features
+
+* **separator:** introduce separator between displayed keys ([9366ee3](https://github.com/NStefan002/screenkey.nvim/commit/9366ee3374a18d4a099d117194b0502ef9584b1e))
+
+
+### Bug Fixes
+
+* partial fix for [#47](https://github.com/NStefan002/screenkey.nvim/issues/47) ([a2f9f29](https://github.com/NStefan002/screenkey.nvim/commit/a2f9f29519f5d1d7309e6ef8f21dc9cdb0cd0866))
+* use `nvim_strwidth` instead of `#` ([1dddfce](https://github.com/NStefan002/screenkey.nvim/commit/1dddfcea0ee26989f55f4574d128c86b3d64a1d5))
+
+
+### Reverts
+
+* "refactor(types)!: rename `config` types" ([01dc077](https://github.com/NStefan002/screenkey.nvim/commit/01dc077eb0f26568c98f35a7508fb1e8f24ec58f))
+
+
+### Code Refactoring
+
+* **types:** rename `config` types ([f309701](https://github.com/NStefan002/screenkey.nvim/commit/f3097016862133290e02edf517c52705479fe24e))
+
 ## [2.4.2](https://github.com/NStefan002/screenkey.nvim/compare/v2.4.1...v2.4.2) (2024-12-09)
 
 
