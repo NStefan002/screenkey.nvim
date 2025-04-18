@@ -74,6 +74,7 @@ require("screenkey").setup({
     filter = function(keys)
         return keys
     end,
+    separator = " ",
     keys = {
         ["<TAB>"] = "󰌒",
         ["<CR>"] = "󰌑",
@@ -124,6 +125,7 @@ require("screenkey").setup({
 | `display_infront`[^1] | if the floating window containing the buffer of the same `filetype` as in `display_infront` is opened, screenkey window will be reopened in front of that window (if necessary), **Note:** you can define filetypes as lua regex, for example `"Telescope*"` to match every filetype that starts with `Telescope` |
 | `display_behind`[^2]  | if the floating window containing the buffer of the same `filetype` as in `display_behind` is opened, screenkey window will be reopened behind of that window (if necessary), **Note:** you can define filetypes as lua regex, for example `"Telescope*"` to match every filetype that starts with `Telescope`    |
 | `filter`              | function that takes an array of `key`-`is_mapping` (`string`-`boolean`) pairs (`keys`) as its argument and returns a filtered array of same pairs, allowing customization of which keys should be displayed, **Note:** this feature is experimental and subject to change (see [#38](https://github.com/NStefan002/screenkey.nvim/issues/38) for the progress of this feature and see below for the example of how to use it)                                                                                                                                |
+| `separator`           | string of any length that separates the keys, space by default                                                                                                                                                                                                                                                |
 | `keys`                | how to display the special keys                                                                                                                                                                                                                                                                                   |
 
 [^1]:
