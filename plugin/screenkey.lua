@@ -106,6 +106,15 @@ local subcmds = {
 }
 
 local function screenkey_cmd(data)
+    vim.notify(
+        [[
+Screenkey: If you want to use the latest commit,
+move to the `main` branch instead of `dev`.
+The `dev` branch will be removed when the 3.0
+version is released.]],
+        vim.log.levels.WARN
+    )
+
     local fargs = data.fargs
     -- NOTE: :Screenkey is the same as :Screenkey toggle
     if #fargs == 0 then
