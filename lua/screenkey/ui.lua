@@ -158,7 +158,7 @@ function M:display_text(queued_keys)
         return
     end
 
-    local text = key_utils.compress_output(queued_keys)
+    local text = key_utils.to_string(queued_keys)
     -- center text inside of screenkey window
     local padding =
         string.rep(" ", math.floor((config.options.win_opts.width - api.nvim_strwidth(text)) / 2))

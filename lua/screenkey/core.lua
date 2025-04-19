@@ -74,10 +74,9 @@ function M:on_key()
             self:create_timer()
         end
         local transformed_keys = key_utils.transform_input(typed)
-        for _, k in pairs(transformed_keys) do
-            table.insert(self.queued_keys, k)
-        end
+        self.queued_keys = key_utils.append_new_keys(self.queued_keys, transformed_keys)
         self.queued_keys = config.options.filter(self.queued_keys)
+        self.queued_keys = key_utils.remove_extra_keys(self.queued_keys)
         if ui:is_active() then
             ui:display_text(self.queued_keys)
         end

@@ -31,3 +31,4 @@
 ---@class screenkey.queued_key
 ---@field key string
 ---@field is_mapping boolean
+---@field consecutive_repeats integer

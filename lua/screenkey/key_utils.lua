@@ -55,10 +55,11 @@ function M.transform_input(in_key)
                 and is_mapping
                 and (k:upper() == leader:upper() or k:upper() == vim.fn.keytrans(leader):upper())
             then
-                table.insert(
-                    transformed_keys,
-                    { key = config.options.keys["<leader>"], is_mapping = true }
-                )
+                table.insert(transformed_keys, {
+                    key = config.options.keys["<leader>"],
+                    is_mapping = true,
+                    consecutive_repeats = 1,
+                })
             elseif M.is_special_key(k) then
                 local modifier = k:match("^<([CMAD])%-.+>$")
                 local key = k:match("^<.-%-.*(.)>$")
@@ -72,24 +73,28 @@ function M.transform_input(in_key)
                         table.insert(transformed_keys, {
                             key = string.format("%s+%s", config.options.keys["CTRL"], key),
                             is_mapping = is_mapping,
+                            consecutive_repeats = 1,
                         })
                     elseif modifier == "A" or modifier == "M" then
                         table.insert(transformed_keys, {
                             key = string.format("%s+%s", config.options.keys["ALT"], key),
                             is_mapping = is_mapping,
+                            consecutive_repeats = 1,
                         })
                     elseif modifier == "D" then
                         table.insert(transformed_keys, {
                             key = string.format("%s+%s", config.options.keys["SUPER"], key),
                             is_mapping = is_mapping,
+                            consecutive_repeats = 1,
                         })
                     end
                 end
             else
-                table.insert(
-                    transformed_keys,
-                    { key = config.options.keys[k:upper()] or k, is_mapping = is_mapping }
-                )
+                table.insert(transformed_keys, {
+                    key = config.options.keys[k:upper()] or k,
+                    is_mapping = is_mapping,
+                    consecutive_repeats = 1,
+                })
             end
         end
     end
@@ -104,6 +109,7 @@ function M.transform_input(in_key)
                     ""
                 ),
                 is_mapping = true,
+                consecutive_repeats = 1,
             },
         }
     else
@@ -111,53 +117,68 @@ function M.transform_input(in_key)
     end
 end
 
----TODO: return should be screenkey.queued_key[]
 ---@param queued_keys screenkey.queued_key[]
----@return string
-function M.compress_output(queued_keys)
-    local compressed_keys = {}
-
-    local last_key = queued_keys[1] and queued_keys[1].key or ""
-
-    local duplicates = 0
-    for _, queued_key in ipairs(queued_keys) do
-        local key = queued_key.key
-        if key == last_key then
-            duplicates = duplicates + 1
+---@param new_keys screenkey.queued_key[]
+---@return screenkey.queued_key[]
+function M.append_new_keys(queued_keys, new_keys)
+    for _, k in ipairs(new_keys) do
+        if #queued_keys > 0 and k.key == queued_keys[#queued_keys].key then
+            queued_keys[#queued_keys].consecutive_repeats = queued_keys[#queued_keys].consecutive_repeats + 1
         else
-            if duplicates >= config.options.compress_after then
-                table.insert(compressed_keys, string.format("%s..x%d", last_key, duplicates))
-            else
-                for _ = 1, duplicates do
-                    table.insert(compressed_keys, last_key)
-                end
+            table.insert(queued_keys, k)
+        end
+    end
+
+    return queued_keys
+end
+
+---@param queued_keys screenkey.queued_key[]
+function M.to_string(queued_keys)
+    local str = ""
+
+    for _, k in ipairs(queued_keys) do
+        if k.consecutive_repeats >= config.options.compress_after then
+            str = ("%s%s%s..x%d"):format(
+                str,
+                str == "" and "" or config.options.separator, -- don't add separator before first key
+                k.key,
+                k.consecutive_repeats
+            )
+        else
+            for _ = 1, k.consecutive_repeats do
+                str = ("%s%s%s"):format(
+                    str,
+                    str == "" and "" or config.options.separator, -- don't add separator before first key
+                    k.key
+                )
             end
-            last_key = key
-            duplicates = 1
-        end
-    end
-    -- check the last key
-    if duplicates >= config.options.compress_after then
-        table.insert(compressed_keys, string.format("%s..x%d", last_key, duplicates))
-    else
-        for _ = 1, duplicates do
-            table.insert(compressed_keys, last_key)
         end
     end
 
-    -- remove old entries
-    local text = table.concat(compressed_keys, config.options.separator)
+    return str
+end
+
+---@param queued_keys screenkey.queued_key[]
+---@return screenkey.queued_key[]
+function M.remove_extra_keys(queued_keys)
+    if #queued_keys == 0 then
+        return queued_keys
+    end
+
+    local text = M.to_string(queued_keys)
     while api.nvim_strwidth(text) > config.options.win_opts.width - 2 do
-        local removed = table.remove(compressed_keys, 1)
-        -- HACK: don't touch this, please
-        local num_removed = tonumber(string.match(removed:match("%.%.x%d$") or "1", "%d$"))
-        for _ = 1, num_removed do
+        if queued_keys[1].consecutive_repeats >= config.options.compress_after then
             table.remove(queued_keys, 1)
+        else
+            queued_keys[1].consecutive_repeats = queued_keys[1].consecutive_repeats - 1
+            if queued_keys[1].consecutive_repeats == 0 then
+                table.remove(queued_keys, 1)
+            end
         end
-        text = table.concat(compressed_keys, config.options.separator)
+        text = M.to_string(queued_keys)
     end
 
-    return text
+    return queued_keys
 end
 
 ---@param key string
