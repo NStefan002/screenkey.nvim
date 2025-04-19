@@ -77,8 +77,8 @@ function M:on_key()
         for _, k in pairs(transformed_keys) do
             table.insert(self.queued_keys, k)
         end
+        self.queued_keys = config.options.filter(self.queued_keys)
         if ui:is_active() then
-            self.queued_keys = config.options.filter(self.queued_keys)
             ui:display_text(self.queued_keys)
         end
         if not config.options.disable.events and vim.g.screenkey_statusline_component then
