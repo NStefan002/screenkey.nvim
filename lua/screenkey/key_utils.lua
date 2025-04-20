@@ -123,7 +123,8 @@ end
 function M.append_new_keys(queued_keys, new_keys)
     for _, k in ipairs(new_keys) do
         if #queued_keys > 0 and k.key == queued_keys[#queued_keys].key then
-            queued_keys[#queued_keys].consecutive_repeats = queued_keys[#queued_keys].consecutive_repeats + 1
+            queued_keys[#queued_keys].consecutive_repeats = queued_keys[#queued_keys].consecutive_repeats
+                + 1
         else
             table.insert(queued_keys, k)
         end
