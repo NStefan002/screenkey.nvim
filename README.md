@@ -10,20 +10,20 @@ It is useful for screencasts, presentations, and live coding sessions.
 
 ## 📜 Table of Contents
 
-- [🧠 Why?](#-why?)
+- [🧠 Why](#-why)
 - [📺 Showcase](#-showcase)
-- [⚡️ Requirements](#-requirements)
+- [🔥 Requirements](#-requirements)
 - [📋 Installation](#-installation)
-- [⚙️ Configuration](#-configuration)
+- [🔧 Configuration](#-configuration)
 - [🛠 Usage](#-usage)
   - [Commands](#commands)
   - [API](#api)
   - [Statusline integration](#statusline-integration)
-  - [Random examples (mostly not useful, but could give you some ideas)](#random-examples-(mostly-not-useful,-but-could-give-you-some-ideas))
-- [🙏 I took inspiration (and some code) from](#-i-took-inspiration-(and-some-code)-from)
+  - [Random examples](#random-examples)
+- [🙏 Inspiration](#-inspiration)
 - [👀 Similar projects](#-similar-projects)
 
-## 🧠 Why?
+## 🧠 Why
 
 - Don't worry about leaking your passwords (e.g. when using `sudo`) while
   streaming/recording because you forgot to turn off your display-key
@@ -37,7 +37,7 @@ It is useful for screencasts, presentations, and live coding sessions.
 
 <https://github.com/NStefan002/screenkey.nvim/assets/100767853/29ea0949-4fd3-4d00-b5a3-2c249bb84360>
 
-## ⚡️ Requirements
+## 🔥 Requirements
 
 - Neovim version >= 0.10.0
 - a [Nerd Font](https://www.nerdfonts.com/) ***(optional, but recommended)***
@@ -69,7 +69,7 @@ use({ "NStefan002/screenkey.nvim", tag = "*" })
 > - There is no need to call the `setup` function, only call it if you need to change some options
 > - There is no need to lazy load `Screenkey`, it lazy loads by default.
 
-## ⚙️ Configuration
+## 🔧 Configuration
 
 - Default settings
 
@@ -241,7 +241,10 @@ require("heirline").setup({
 })
 ```
 
-### Random examples (mostly not useful, but could give you some ideas)
+### Random examples
+
+> [!NOTE]
+> These are mostly not useful, but could give you some ideas.
 
 - `nvim-notify` integration: if the `screenkey` window is open, the notification will
   be displayed from top down, otherwise it will be displayed from bottom up.
@@ -286,7 +289,7 @@ require("screenkey").setup({
 })
 ```
 
-## 🙏 I took inspiration (and some code) from
+## 🙏 Inspiration
 
 - [nvim-best-practices](https://github.com/nvim-neorocks/nvim-best-practices)
 - [harpoon v2](https://github.com/ThePrimeagen/harpoon/tree/harpoon2)
