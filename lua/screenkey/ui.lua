@@ -7,6 +7,7 @@ local utils = require("screenkey.utils")
 ---@class screenkey.ui
 ---@field private active boolean
 ---@field private augrp integer
+---@field private extm_id integer
 local M = {}
 
 ---@return screenkey.ui
@@ -14,6 +15,7 @@ function M:new()
     local obj = {
         active = false,
         augrp = -1,
+        extm_id = -1,
     }
     setmetatable(obj, self)
     self.__index = self
@@ -21,7 +23,14 @@ function M:new()
 end
 
 ---@private
-function M.open_win()
+function M.set_highlights()
+    for hl_grp, opts in pairs(config.options.hl_groups) do
+        api.nvim_set_hl(vim.g.screenkey_ns_id, hl_grp, opts)
+    end
+end
+
+---@private
+function M:open_win()
     if vim.g.screenkey_bufnr == -1 or not api.nvim_buf_is_valid(vim.g.screenkey_bufnr) then
         vim.g.screenkey_bufnr = api.nvim_create_buf(false, true)
     end
@@ -33,7 +42,10 @@ function M.open_win()
         log:log("failed to create window")
         error("Screenkey: failed to create window")
     end
+    utils.clear_buf_lines(vim.g.screenkey_bufnr, 0, config.options.win_opts.height)
     api.nvim_set_option_value("filetype", "screenkey", { buf = vim.g.screenkey_bufnr })
+    self.set_highlights()
+    api.nvim_win_set_hl_ns(vim.g.screenkey_winnr, vim.g.screenkey_ns_id)
     log:log(
         ("created window %d for buffer %d"):format(vim.g.screenkey_winnr, vim.g.screenkey_bufnr)
     )
@@ -158,21 +170,25 @@ function M:display_text(queued_keys)
         return
     end
 
-    local text = key_utils.to_string(queued_keys)
-    -- center text inside of screenkey window
-    local padding =
-        string.rep(" ", math.floor((config.options.win_opts.width - api.nvim_strwidth(text)) / 2))
+    local colored_keys = key_utils.colorize_keys(queued_keys)
     local line = math.floor(config.options.win_opts.height / 2)
+    -- center text inside of the screenkey window
+    local col = math.floor(
+        (config.options.win_opts.width - api.nvim_strwidth(key_utils.to_string(queued_keys))) / 2
+    )
     vim.schedule(function()
         if not self.active then
             return
         end
-        api.nvim_buf_set_lines(
+        local extm_opts = self.extm_id == -1
+                and { virt_text = colored_keys, virt_text_win_col = col }
+            or { virt_text = colored_keys, virt_text_win_col = col, id = self.extm_id }
+        self.extm_id = api.nvim_buf_set_extmark(
             vim.g.screenkey_bufnr,
+            vim.g.screenkey_ns_id,
             line,
-            line + 1,
-            false,
-            { string.format("%s%s", padding, text) }
+            0,
+            extm_opts
         )
     end)
 end

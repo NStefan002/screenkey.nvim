@@ -204,4 +204,42 @@ function M.is_special_key(key)
     return key:match("^<([CMAD])%-.+>$") ~= nil
 end
 
+--- NOTE: subject to change in the future
+
+---@param queued_keys screenkey.queued_key[]
+---@return screenkey.colored_key[]
+function M.colorize_keys(queued_keys)
+    ---@type screenkey.colored_key[]
+    local colorized_keys = {}
+    for i, qkey in ipairs(queued_keys) do
+        if qkey.consecutive_repeats < config.options.compress_after then
+            for j = 1, qkey.consecutive_repeats do
+                table.insert(colorized_keys, {
+                    qkey.key,
+                    qkey.is_mapping and "screenkey.hl.map" or "screenkey.hl.key",
+                })
+                if i < #queued_keys or j < qkey.consecutive_repeats then
+                    table.insert(colorized_keys, {
+                        config.options.separator,
+                        "screenkey.hl.sep",
+                    })
+                end
+            end
+        else
+            table.insert(colorized_keys, {
+                M.to_string({ qkey }),
+                qkey.is_mapping and "screenkey.hl.map" or "screenkey.hl.key",
+            })
+            if i < #queued_keys then
+                table.insert(colorized_keys, {
+                    config.options.separator,
+                    "screenkey.hl.sep",
+                })
+            end
+        end
+    end
+
+    return colorized_keys
+end
+
 return M

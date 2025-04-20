@@ -16,6 +16,11 @@ M.defaults = {
         focusable = false,
         noautocmd = true,
     },
+    hl_groups = {
+        ["screenkey.hl.key"] = { link = "Normal" },
+        ["screenkey.hl.map"] = { link = "Normal" },
+        ["screenkey.hl.sep"] = { link = "Normal" },
+    },
     compress_after = 3,
     clear_after = 3,
     disable = {
@@ -92,6 +97,7 @@ function M.validate_config(config)
     local errors = {}
     local ok, err = utils.validate({
         win_opts = { config.win_opts, "table", true },
+        hl_groups = { config.hl_groups, "table", true },
         compress_after = { config.compress_after, "number", true },
         clear_after = { config.clear_after, "number", true },
         disable = { config.disable, "table", true },
