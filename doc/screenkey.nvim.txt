@@ -4,11 +4,13 @@
 Table of Contents                           *screenkey.nvim-table-of-contents*
 
 1. Screenkey.nvim                              |screenkey.nvim-screenkey.nvim|
+  - Table of Contents        |screenkey.nvim-screenkey.nvim-table-of-contents|
+  - Why?                                  |screenkey.nvim-screenkey.nvim-why?|
   - Showcase                          |screenkey.nvim-screenkey.nvim-showcase|
   - Requirements                  |screenkey.nvim-screenkey.nvim-requirements|
   - Installation                  |screenkey.nvim-screenkey.nvim-installation|
   - Configuration                |screenkey.nvim-screenkey.nvim-configuration|
-  - How to use                      |screenkey.nvim-screenkey.nvim-how-to-use|
+  - Usage                                |screenkey.nvim-screenkey.nvim-usage|
   - I took inspiration (and some code) from|screenkey.nvim-screenkey.nvim-i-took-inspiration-(and-some-code)-from|
   - Similar projects          |screenkey.nvim-screenkey.nvim-similar-projects|
 
@@ -19,6 +21,37 @@ Screenkey is a Neovim plugin that displays the keys you are typing in a
 floating window, just like screenkey
 <https://www.thregr.org/wavexx/software/screenkey/> does. It is useful for
 screencasts, presentations, and live coding sessions.
+
+
+  [!WARNING] This README tracks the `main` branch and may include _unstable_ or
+  _in-progress_ features. For the stable version, **please switch to the latest
+  tag release**, and refer to the `README.md` in that tag.
+
+TABLE OF CONTENTS            *screenkey.nvim-screenkey.nvim-table-of-contents*
+
+- |screenkey.nvim-why?|
+- |screenkey.nvim-showcase|
+- |screenkey.nvim-requirements|
+- |screenkey.nvim-installation|
+- |screenkey.nvim-configuration|
+- |screenkey.nvim-usage|
+    - |screenkey.nvim-commands|
+    - |screenkey.nvim-api|
+    - |screenkey.nvim-statusline-integration|
+    - |screenkey.nvim-random-examples-(mostly-not-useful,-but-could-give-you-some-ideas)|
+- |screenkey.nvim-i-took-inspiration-(and-some-code)-from|
+- |screenkey.nvim-similar-projects|
+
+
+WHY?                                      *screenkey.nvim-screenkey.nvim-why?*
+
+- Don’t worry about leaking your passwords (e.g. when using `sudo`) while
+    streaming/recording because you forgot to turn off your display-key
+    application, `Screenkey` will only show pieces of information about your
+    input in Neovim.
+- You can use `Screenkey` to show your keys in a presentation or a screencast, so your audience can follow along.
+- You can use `Screenkey` to show your keys in a live coding session, so
+    your neovim-newbie friends can understand what you are doing.
 
 
 SHOWCASE                              *screenkey.nvim-screenkey.nvim-showcase*
@@ -205,18 +238,34 @@ filetype that matches the display_behind condition), nothing will happen
 
 [2] Same as above
 
-HOW TO USE                          *screenkey.nvim-screenkey.nvim-how-to-use*
+USAGE                                    *screenkey.nvim-screenkey.nvim-usage*
 
-- `:Screenkey toggle` (or just `Screenkey`) to toggle the screenkey
-- Don’t worry about leaking your passwords when using `sudo` while
-    streaming/recording because you forgot to turn off your display-key
-    application, `Screenkey` will only show pieces of information about your input
-    in Neovim.
-- This plugin exposes `get_keys` function that you can use in a statusline
-    component. You can use `:Screenkey toggle_statusline_component` or change
-    `vim.g.screenkey_statusline_component` to toggle this feature on/off. For
-    lualine <https://github.com/nvim-lualine/lualine.nvim> it would look something
-    like this:
+
+COMMANDS ~
+
+- `:Screenkey toggle` (or just `Screenkey`) - toggle `screenkey` on/off
+- `:Screenkey redraw` - force `screenkey` to redraw
+- `:Screenkey toggle_statusline_component` - toggle statusline component feature on/off (see |screenkey.nvim-statusline-integration|)
+- `:Screenkey log <arg>` - used for debugging, `<arg>` is one of the following:
+    - `on` - turn on logging
+    - `off` - turn off logging
+    - `max_lines` - set the maximum number of lines in the log file
+    - `show` - show the log file in a floating window
+- `:checkhealth screenkey` - run to diagnose possible configuration problems
+
+
+API ~
+
+`Screenkey` exposes a few functions that you can use in your own code:
+
+- `setup(opts)` - override default options
+- `toggle()` - toggle `screenkey` on/off
+- `redraw()` - redraw `screenkey` window
+- `is_active()` - check if `screenkey` is active
+- `get_keys()` - get the keys that are currently being displayed (useful for statusline or some other custom component)
+
+
+STATUSLINE INTEGRATION ~
 
 >lua
     vim.g.screenkey_statusline_component = true
@@ -239,40 +288,7 @@ HOW TO USE                          *screenkey.nvim-screenkey.nvim-how-to-use*
     })
 <
 
-- Run `:checkhealth screenkey` to diagnose possible configuration problems
-- `Screenkey` exposes `redraw` function that redraws the `Screenkey` window,
-    could be used like this:
-
->lua
-    require("screenkey").redraw()
-<
-
-or
-
-`:Screenkey redraw`
-
-- `Screenkey` exposes `is_active` function that returns `true` if the `Screenkey` window is active,
-    `false` otherwise, could be used like this:
-
->lua
-    local screenkey = require("screenkey")
-    local notify = require("notify")
-    local toggleScreenKey = function()
-        vim.cmd("Screenkey toggle")
-        -- change notification position
-        notify.setup({
-            top_down = screenkey.is_active(),
-        })
-    end
-    
-    vim.keymap.set("n", "<leader>tsk", toggleScreenKey, { desc = "[T]oggle [S]creen[K]ey" })
-<
-
-
-  [!NOTE] If you’re using a terminal inside of the Neovim, and you want
-  screenkey to automatically stop displaying your keys when you’re > inside of
-  the terminal, see `disable` option in the plugin configuration.
-- For fully custom statusline users, screenkey will fire `User` events if `vim.g.screenkey_statusline_component` is enabled.
+- For fully custom statusline users, `screenkey` will fire `User` events if `vim.g.screenkey_statusline_component` is enabled.
     There are two patterns: `ScreenkeyUpdated` on keypress and `ScreenkeyCleared` when clearing screenkey after inactivity
     (see `clear_after` option). If you are experiencing performance issues and do not rely on these events, you can disable
     them with the `disable.events` option. Example usage with heirline <https://github.com/rebelot/heirline.nvim>
@@ -296,15 +312,46 @@ or
     })
 <
 
-- Oneexample of how you could use the `filter` function:
+
+RANDOMEXAMPLES (MOSTLY NOT USEFUL, BUT COULD GIVE YOU SOME IDEAS) ~
+
+- `nvim-notify` integration: if the `screenkey` window is open, the notification will
+    be displayed from top down, otherwise it will be displayed from bottom up.
 
 >lua
-    -- filter out j and k keys, but only if they are not part of a mapping
+    local screenkey = require("screenkey")
+    local notify = require("notify")
+    local function toggleScreenKey()
+        vim.cmd("Screenkey toggle")
+        -- change notification position
+        notify.setup({
+            top_down = screenkey.is_active(),
+        })
+    end
+    
+    vim.keymap.set("n", "<leader>tsk", toggleScreenKey, { desc = "[T]oggle [S]creen[K]ey" })
+<
+
+- If you’re using terminal inside of Neovim, and you don’t `screenkey` to show your keys while typing in the terminal,
+    you can use the `disable.buftypes` option to disable `screenkey` when inside of the terminal.
+
+>lua
+    require("screenkey").setup({
+        disable = {
+            buftypes = { "terminal" },
+        },
+    })
+<
+
+- Use `filter` function to avoid displaying some keys (e.g. `h`, `j`, `k`, `l`).
+
+>lua
     require("screenkey").setup({
         filter = function(keys)
+            local ignore = { "h", "j", "k", "l" }
             return vim.iter(keys)
                 :filter(function(k)
-                    return (k.key ~= "j" and k.key ~= "k") or k.is_mapping
+                    return not vim.tbl_contains(ignore, k.key)
                 end)
                 :totable()
         end,
@@ -321,6 +368,7 @@ I TOOK INSPIRATION (AND SOME CODE) FROM*screenkey.nvim-screenkey.nvim-i-took-ins
 SIMILAR PROJECTS              *screenkey.nvim-screenkey.nvim-similar-projects*
 
 - keys.nvim <https://github.com/tamton-aquib/keys.nvim>
+- showkeys <https://github.com/nvzone/showkeys>
 
 Generated by panvimdoc <https://github.com/kdheepak/panvimdoc>
 
