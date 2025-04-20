@@ -7,10 +7,10 @@
   this is `true` and `config.options.group_mappings` is `true` then the
   insert mode mappings will be grouped and separated from 'typed' text)
 - [ ] better mapping detection system (mainly for builtin mappings)
-- [ ] `hl_groups` - allow user to customize the predefined highlight groups such as:
-  - [ ] `screenkey.hl.mapping` - highlight group for mappings
-  - [ ] `screenkey.hl.key` - highlight group for non-mapping keys
-  - [ ] `screenkey.hl.sep` - highlight group for the separator
+- [x] `hl_groups` - allow user to customize the predefined highlight groups such as:
+  - [x] `screenkey.hl.map` - highlight group for mappings
+  - [x] `screenkey.hl.key` - highlight group for non-mapping keys
+  - [x] `screenkey.hl.sep` - highlight group for the separator
 - [ ] `colorize` - similar as `filter` but for coloring of the keys
 
 ## Bugs
