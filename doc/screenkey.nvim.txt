@@ -80,6 +80,11 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
             focusable = false,
             noautocmd = true,
         },
+        hl_groups = {
+            ["screenkey.hl.key"] = { link = "Normal" },
+            ["screenkey.hl.map"] = { link = "Normal" },
+            ["screenkey.hl.sep"] = { link = "Normal" },
+        },
         compress_after = 3,
         clear_after = 3,
         disable = {
@@ -131,12 +136,15 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
     })
 <
 
-  ---------------------------------------------------------------------------------------
+  ----------------------------------------------------------------------------------------
   option               explanation
-  -------------------- ------------------------------------------------------------------
+  -------------------- -------------------------------------------------------------------
   win_opts             see :h nvim_open_win, note1: other options from nvim_open_win help
-                       can be provided (such as win, bufpos, zindex etc.), the ones
-                       listed above are just defaults)
+                       can be provided (such as win, bufpos, zindex etc.), the ones listed
+                       above are just defaults)
+
+  hl_groups            highlight groups used to color different types of displayed text:
+                       mappings, keys and separators
 
   compress after       compress input when repeated times (for example jjjj will be
                        compressed to j..x4)
@@ -158,10 +166,10 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
                        ␣ s f to indicate that the used key combination was a defined
                        mapping.
 
-  show_leader          if this option is set to true, in the last example instead of
-                       ␣ s f Screenkey will display <leader> s f (of course, if the
-                       <space> is <leader>), if the current key is not a defined mapping,
-                       Screenkey will display <space> as ␣
+  show_leader          if this option is set to true, in the last example instead of ␣ s f
+                       Screenkey will display <leader> s f (of course, if the <space> is
+                       <leader>), if the current key is not a defined mapping, Screenkey
+                       will display <space> as ␣
 
   display_infront[1]   if the floating window containing the buffer of the same filetype
                        as in display_infront is opened, screenkey window will be reopened
@@ -185,7 +193,7 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
   separator            string of any length that separates the keys, space by default
 
   keys                 how to display the special keys
-  ---------------------------------------------------------------------------------------
+  ----------------------------------------------------------------------------------------
 
 [1] This is currently an experimental feature. Please report any issues
 you encounter. Use it responsibly, do not set too many conditions, as it
