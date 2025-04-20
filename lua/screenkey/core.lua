@@ -98,8 +98,7 @@ end
 
 ---@return string
 function M:get_keys()
-    return vim.g.screenkey_statusline_component and key_utils.compress_output(self.queued_keys)
-        or ""
+    return vim.g.screenkey_statusline_component and key_utils.to_string(self.queued_keys) or ""
 end
 
 return M:new()
