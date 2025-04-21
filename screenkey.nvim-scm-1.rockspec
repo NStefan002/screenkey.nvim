@@ -14,7 +14,9 @@ description = {
     summary = "Screencast your keys in Neovim",
 }
 dependencies = {}
-test_dependencies = {}
+test_dependencies = {
+    "nlua",
+}
 build = {
     type = "builtin",
     copy_directories = {
