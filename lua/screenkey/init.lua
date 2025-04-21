@@ -23,6 +23,15 @@ function M.is_active()
     return ui:is_active()
 end
 
+function M.toggle_statusline_component()
+    core:toggle_statusline_component()
+end
+
+---@return boolean
+function M.statusline_component_is_active()
+    return core:statusline_component_is_active()
+end
+
 ---@return string
 function M.get_keys()
     return core:get_keys()

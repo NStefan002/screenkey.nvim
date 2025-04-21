@@ -7,6 +7,7 @@ local utils = require("screenkey.utils")
 
 ---@class screenkey.core
 ---@field private queued_keys screenkey.queued_key[]
+---@field private statusline_component_active boolean
 ---@field private time integer
 ---@field private timer uv_timer_t
 local M = {}
@@ -15,6 +16,7 @@ local M = {}
 function M:new()
     local obj = {
         queued_keys = {},
+        statusline_component_active = false,
         time = 0,
         timer = nil,
     }
@@ -36,7 +38,7 @@ function M:create_timer()
                 if ui:is_active() then
                     utils.clear_buf_lines(vim.g.screenkey_bufnr, 0, config.options.win_opts.height)
                 end
-                if not config.options.disable.events and vim.g.screenkey_statusline_component then
+                if not config.options.disable.events and self.statusline_component_active then
                     api.nvim_exec_autocmds("User", { pattern = "ScreenkeyCleared" })
                 end
             end
@@ -58,7 +60,7 @@ end
 ---@return fun(key: string, typed: string): string?
 function M:on_key()
     return function(key, typed)
-        if not ui:is_active() and not vim.g.screenkey_statusline_component then
+        if not ui:is_active() and not self.statusline_component_active then
             self:kill_timer()
             return
         end
@@ -80,7 +82,7 @@ function M:on_key()
         if ui:is_active() then
             ui:display_text(self.queued_keys)
         end
-        if not config.options.disable.events and vim.g.screenkey_statusline_component then
+        if not config.options.disable.events and self.statusline_component_active then
             api.nvim_exec_autocmds("User", { pattern = "ScreenkeyUpdated" })
         end
     end
@@ -96,9 +98,18 @@ function M:redraw()
     ui:display_text(self.queued_keys)
 end
 
+function M:toggle_statusline_component()
+    self.statusline_component_active = not self.statusline_component_active
+end
+
+---@return boolean
+function M:statusline_component_is_active()
+    return self.statusline_component_active
+end
+
 ---@return string
 function M:get_keys()
-    return vim.g.screenkey_statusline_component and key_utils.to_string(self.queued_keys) or ""
+    return self.statusline_component_active and key_utils.to_string(self.queued_keys) or ""
 end
 
 return M:new()

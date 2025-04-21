@@ -28,7 +28,7 @@ local subcmds = {
                 )
                 return
             end
-            vim.g.screenkey_statusline_component = not vim.g.screenkey_statusline_component
+            require("screenkey").toggle_statusline_component()
         end,
     },
     toggle = {
