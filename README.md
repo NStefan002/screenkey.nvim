@@ -192,15 +192,17 @@ require("screenkey").setup({
 - `toggle()` - toggle `screenkey` on/off
 - `redraw()` - redraw `screenkey` window
 - `is_active()` - check if `screenkey` is active
-- `get_keys()` - get the keys that are currently being displayed (useful for statusline or some other custom component)
+- `toggle_statusline_component()` - toggle statusline component feature on/off
+- `statusline_component_is_active` - check if statusline component is active
+- `get_keys()` - get the keys that are currently being displayed (works only if the statusline component is active)
 
 ### Statusline integration
 
-```lua
-vim.g.screenkey_statusline_component = true
+- Lualine integration:
 
-vim.keymap.set("n", "<leader>ssc", function()
-    vim.g.screenkey_statusline_component = not vim.g.screenkey_statusline_component
+```lua
+vim.keymap.set("n", "<leader>ts", function()
+    require("screenkey").toggle_statusline_component()
 end, { desc = "Toggle screenkey statusline component" })
 
 require("lualine").setup({
@@ -217,9 +219,12 @@ require("lualine").setup({
 })
 ```
 
-- For fully custom statusline users, `screenkey` will fire `User` events if `vim.g.screenkey_statusline_component` is enabled.
-  There are two patterns: `ScreenkeyUpdated` on keypress and `ScreenkeyCleared` when clearing screenkey after inactivity
-  (see `clear_after` option). If you are experiencing performance issues and do not rely on these events, you can disable
+- For fully custom statusline users, `screenkey` will fire `User` events if `screenkey`'s statusline component is enabled.
+  There are two patterns:
+  1. `ScreenkeyUpdated` - fired on every key press
+  2. `ScreenkeyCleared` - fired when clearing screenkey after some period of inactivity (see `clear_after` option)
+
+  If you are experiencing performance issues and do not rely on these events, you can disable
   them with the `disable.events` option. Example usage with [heirline](https://github.com/rebelot/heirline.nvim):
 
 ```lua
@@ -291,6 +296,7 @@ require("screenkey").setup({
 
 ## 🙏 Inspiration
 
+- [screenkey](https://gitlab.com/screenkey/screenkey)
 - [nvim-best-practices](https://github.com/nvim-neorocks/nvim-best-practices)
 - [harpoon v2](https://github.com/ThePrimeagen/harpoon/tree/harpoon2)
 
