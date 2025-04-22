@@ -97,6 +97,8 @@ local subcmds = {
                 log:enable()
             elseif args[1] == "stop" then
                 log:disable()
+            elseif args[1] == "clear" then
+                log:clear()
             else
                 vim.notify(
                     ("Screenkey %s: Unknown command %s"):format(data.fargs[1], args[1]),
@@ -109,6 +111,7 @@ local subcmds = {
                 "start",
                 "stop",
                 "show",
+                "clear",
                 "max_lines",
             }
             return vim.iter(log_args)
