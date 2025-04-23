@@ -177,7 +177,7 @@ require("screenkey").setup({
 - `:Screenkey toggle` (or just `Screenkey`) - toggle `screenkey` on/off
 - `:Screenkey redraw` - force `screenkey` to redraw
 <!-- TODO: add link to examples -->
-- `:Screenkey toggle_statusline_component` - toggle statusline component feature on/off (see [Statusline integration](#statusline-integration))
+- `:Screenkey toggle_statusline_component` - toggle statusline component feature on/off (see [Statusline integration](#-statusline-integration))
 - `:Screenkey log <arg>` - used for debugging, `<arg>` is one of the following:
   - `on` - turn on logging
   - `off` - turn off logging
