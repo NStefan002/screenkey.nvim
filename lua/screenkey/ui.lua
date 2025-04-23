@@ -97,7 +97,6 @@ function M:create_autocmds()
             end
             log:log(("FileType %s: reopening window"):format(ev.match))
             utils.update_zindex(ev.buf, infront)
-            M:redraw()
         end,
     })
     -- TODO: do this instead of the previous one (currently doesn't work, don't know why)

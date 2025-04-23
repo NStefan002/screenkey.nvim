@@ -75,7 +75,7 @@ function M.update_zindex(bufnr, infront)
     local target_win_config = api.nvim_win_get_config(target_win_id)
     require("screenkey.logger"):log(target_win_config)
     local target_zindex = target_win_config.zindex or 50
-    config.options.win_opts.zindex = target_zindex + (infront and 1 or -1)
+    api.nvim_win_set_config(vim.g.screenkey_winnr, { zindex = target_zindex + 1 })
 end
 
 ---@param str string string to split
