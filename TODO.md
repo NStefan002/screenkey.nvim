@@ -22,7 +22,8 @@
 - [ ] tests
 - [ ] more logging
 - [ ] `Contributing.md`
-- [ ] update the `README.md` with the new changes
+- [x] update the `README.md` with the new changes
 - [ ] organize the examples in the `README.md`
 - [ ] add example of the window title/border coloring to the `README.md`
 - [ ] create `highlight` section for examples in the `README.md` (previous point should be included in this section)
+- [x] change `disable.events` to be a separate option (e.g. `emit_events`)
