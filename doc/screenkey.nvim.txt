@@ -37,6 +37,7 @@ TABLE OF CONTENTS            *screenkey.nvim-screenkey.nvim-table-of-contents*
 - |screenkey.nvim-usage|
     - |screenkey.nvim-commands|
     - |screenkey.nvim-api|
+    - |screenkey.nvim-customizing-colors|
     - |screenkey.nvim-statusline-integration|
     - |screenkey.nvim-random-examples|
 - |screenkey.nvim-inspiration|
@@ -348,7 +349,7 @@ STATUSLINE INTEGRATION ~
 <
 
 
-RANDOMEXAMPLES ~
+RANDOM EXAMPLES ~
 
 
   [!NOTE] These are mostly not useful, but could give you some ideas.
