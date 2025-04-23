@@ -148,7 +148,7 @@ require("screenkey").setup({
 | option                | explanation                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `win_opts`            | see `:h nvim_open_win`, **note1:** other options from `nvim_open_win` help can be provided (such as `win`, `bufpos`, `zindex` etc.), the ones listed above are just defaults)                                                                                                                                                                                                                                                 |
-| `hl_groups`           | highlight groups used to color different types of displayed text: **mappings**, **keys** and **separators**                                                                                                                                                                                                                                                                                                                   |
+| `hl_groups`           | highlight groups used to color different types of displayed text: **mappings**, **keys** and **separators** (see ':h nvim_set_hl()')                                                                                                                                                                                                                                                                                          |
 | `compress after`      | compress input when repeated <compress_after> times (for example `jjjj` will be compressed to `j..x4`)                                                                                                                                                                                                                                                                                                                        |
 | `clear_after`         | clear the input after `<clear_after>` seconds of inactivity                                                                                                                                                                                                                                                                                                                                                                   |
 | `emit_events`         | disable `User` events                                                                                                                                                                                                                                                                                                                                                                                                         |
@@ -195,6 +195,34 @@ require("screenkey").setup({
 - `toggle_statusline_component()` - toggle statusline component feature on/off
 - `statusline_component_is_active` - check if statusline component is active
 - `get_keys()` - get the keys that are currently being displayed (works only if the statusline component is active)
+
+### Customizing colors
+
+You can customize the colors of the keys `screenkey` displays by using the `hl_groups` option. Example:
+
+```lua
+hl_groups = {
+    ["screenkey.hl.key"] = { link = "DiffAdd" },
+    ["screenkey.hl.map"] = { link = "DiffDelete" },
+    ["screenkey.hl.sep"] = { bg = "red", fg = "blue" },
+}
+```
+
+You can customize the colors of the `screenkey` window title and border by
+using the `win_opts` option. Example of highlighting title (it's basically the
+same thing for border, see `:h nvim_open_win()`):
+
+```lua
+win_opts = {
+    title = {
+        { "Sc", "DiagnosticOk" },
+        { "re", "DiagnosticWarn" },
+        { "en", "DiagnosticInfo" },
+        { "key", "DiagnosticError" },
+    }
+    -- or title = { { "MY CUSTOM TITLE", "MY_CUSTOM_HIGHLIGHT_GROUP" } }
+}
+```
 
 ### Statusline integration
 
