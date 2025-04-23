@@ -30,6 +30,11 @@ function M.should_disable()
         return true
     end
 
+    local mode = api.nvim_get_mode().mode
+    if M.tbl_contains(config.options.disable.modes, mode) then
+        return true
+    end
+
     return false
 end
 

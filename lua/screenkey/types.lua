@@ -9,8 +9,8 @@
 ---@field clear_after number
 --- weather or not to emit autocmd events, useful for fully custom statusline
 ---@field emit_events boolean
---- things to disable screenkey for
----@field disable { filetypes: string[], buftypes: string[] }
+--- disable screenkey in specific filetype (`:h 'filetype'`), buftype (`:h 'buftype'`) or mode (`:h mode()`)
+---@field disable { filetypes: string[], buftypes: string[], modes: string[] }
 --- show '<leader>' in mappings
 ---@field show_leader boolean
 --- display mappings in groups
