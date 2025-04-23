@@ -2,7 +2,7 @@
 
 ## Features
 
-- [ ] `disable.modes` option - list of vim-modes to disable screenkey in
+- [x] `disable.modes` option - list of vim-modes to disable screenkey in
 - [ ] `group_insert` - don't split keys when typing (if
   this is `true` and `config.options.group_mappings` is `true` then the
   insert mode mappings will be grouped and separated from 'typed' text)
