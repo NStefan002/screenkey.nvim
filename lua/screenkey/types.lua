@@ -7,8 +7,10 @@
 ---@field compress_after integer
 --- clear the input after `<clear_after>` seconds of inactivity
 ---@field clear_after number
---- disable screenkey events or for certain filetypes and/or buftypes
----@field disable { filetypes: string[], buftypes: string[], events: boolean }
+--- weather or not to emit autocmd events, useful for fully custom statusline
+---@field emit_events boolean
+--- things to disable screenkey for
+---@field disable { filetypes: string[], buftypes: string[] }
 --- show '<leader>' in mappings
 ---@field show_leader boolean
 --- display mappings in groups

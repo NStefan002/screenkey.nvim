@@ -23,10 +23,10 @@ M.defaults = {
     },
     compress_after = 3,
     clear_after = 3,
+    emit_events = true,
     disable = {
         filetypes = {},
         buftypes = {},
-        events = false,
     },
     show_leader = true,
     group_mappings = false,
@@ -100,6 +100,7 @@ function M.validate_config(config)
         hl_groups = { config.hl_groups, "table", true },
         compress_after = { config.compress_after, "number", true },
         clear_after = { config.clear_after, "number", true },
+        emit_events = { config.emit_events, "boolean", true },
         disable = { config.disable, "table", true },
         show_leader = { config.show_leader, "boolean", true },
         group_mappings = { config.group_mappings, "boolean", true },
@@ -118,7 +119,6 @@ function M.validate_config(config)
         ok, err = utils.validate({
             filetypes = { config.disable.filetypes, "table", true },
             buftypes = { config.disable.buftypes, "table", true },
-            events = { config.disable.events, "boolean", true },
         }, config.disable, "screenkey.config.disable")
         if not ok then
             table.insert(errors, err)

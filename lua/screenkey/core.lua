@@ -38,7 +38,7 @@ function M:create_timer()
                 if ui:is_active() then
                     utils.clear_buf_lines(vim.g.screenkey_bufnr, 0, config.options.win_opts.height)
                 end
-                if not config.options.disable.events and self.statusline_component_active then
+                if config.options.emit_events and self.statusline_component_active then
                     api.nvim_exec_autocmds("User", { pattern = "ScreenkeyCleared" })
                 end
             end
@@ -82,7 +82,7 @@ function M:on_key()
         if ui:is_active() then
             ui:display_text(self.queued_keys)
         end
-        if not config.options.disable.events and self.statusline_component_active then
+        if config.options.emit_events and self.statusline_component_active then
             api.nvim_exec_autocmds("User", { pattern = "ScreenkeyUpdated" })
         end
     end
