@@ -16,10 +16,11 @@ It is useful for screencasts, presentations, and live coding sessions.
 - [📋 Installation](#-installation)
 - [🔧 Configuration](#-configuration)
 - [🛠 Usage](#-usage)
-  - [Commands](#commands)
-  - [API](#api)
-  - [Statusline integration](#statusline-integration)
-  - [Random examples](#random-examples)
+  - [💻 Commands](#-commands)
+  - [📦 API](#-api)
+  - [🎨 Customizing colors](#-customizing-colors)
+  - [🧩 Statusline integration](#-statusline-integration)
+  - [✨ Random examples](#-random-examples)
 - [🙏 Inspiration](#-inspiration)
 - [👀 Similar projects](#-similar-projects)
 
@@ -171,7 +172,7 @@ require("screenkey").setup({
 
 ## 🛠 Usage
 
-### Commands
+### 💻 Commands
 
 - `:Screenkey toggle` (or just `Screenkey`) - toggle `screenkey` on/off
 - `:Screenkey redraw` - force `screenkey` to redraw
@@ -184,7 +185,7 @@ require("screenkey").setup({
   - `show` - show the log file in a floating window
 - `:checkhealth screenkey` - run to diagnose possible configuration problems
 
-### API
+### 📦 API
 
 `Screenkey` exposes a few functions that you can use in your own code:
 
@@ -196,7 +197,7 @@ require("screenkey").setup({
 - `statusline_component_is_active` - check if statusline component is active
 - `get_keys()` - get the keys that are currently being displayed (works only if the statusline component is active)
 
-### Customizing colors
+### 🎨 Customizing colors
 
 You can customize the colors of the keys `screenkey` displays by using the `hl_groups` option. Example:
 
@@ -224,7 +225,7 @@ win_opts = {
 }
 ```
 
-### Statusline integration
+### 🧩 Statusline integration
 
 - Lualine integration:
 
@@ -275,7 +276,7 @@ require("heirline").setup({
 })
 ```
 
-### Random examples
+### ✨ Random examples
 
 > [!NOTE]
 > These are mostly not useful, but could give you some ideas.
