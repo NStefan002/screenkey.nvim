@@ -96,10 +96,10 @@ require("screenkey").setup({
     },
     compress_after = 3,
     clear_after = 3,
+    emit_events = true,
     disable = {
         filetypes = {},
         buftypes = {},
-        events = false,
     },
     show_leader = true,
     group_mappings = false,
@@ -151,9 +151,9 @@ require("screenkey").setup({
 | `hl_groups`           | highlight groups used to color different types of displayed text: **mappings**, **keys** and **separators**                                                                                                                                                                                                                                                                                                                   |
 | `compress after`      | compress input when repeated <compress_after> times (for example `jjjj` will be compressed to `j..x4`)                                                                                                                                                                                                                                                                                                                        |
 | `clear_after`         | clear the input after `<clear_after>` seconds of inactivity                                                                                                                                                                                                                                                                                                                                                                   |
-| `disable`             | temporarily disable screenkey (for example when inside of the terminal)                                                                                                                                                                                                                                                                                                                                                       |
+| `emit_events`         | disable `User` events                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `disable`             | temporarily disable screenkey (for specific filetype or buftype), see `:h 'filetype'` and `:h 'buftype'`                                                                                                                                                                                                                                                                                                                      |
 | `disable.filetypes`   | for example: `toggleterm` or `toml`                                                                                                                                                                                                                                                                                                                                                                                           |
-| `disable.events`      | disable `User` events                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `disable.buftypes`    | see `:h 'buftype'`, for example: `terminal`                                                                                                                                                                                                                                                                                                                                                                                   |
 | `group_mappings`      | for example: `<leader>sf` opens up a fuzzy finder, if the `group_mappings` option is set to `true`, every time you open up a fuzzy finder with `<leader>sf`, Screenkey will show `␣sf` instead of `␣ s f` to indicate that the used key combination was a defined mapping.                                                                                                                                                    |
 | `show_leader`         | if this option is set to `true`, in the last example instead of `␣ s f` Screenkey will display `<leader> s f` (of course, if the `<space>` is `<leader>`), if the current key is not a defined mapping, Screenkey will display `<space>` as `␣`                                                                                                                                                                               |
@@ -224,8 +224,9 @@ require("lualine").setup({
   1. `ScreenkeyUpdated` - fired on every key press
   2. `ScreenkeyCleared` - fired when clearing screenkey after some period of inactivity (see `clear_after` option)
 
-  If you are experiencing performance issues and do not rely on these events, you can disable
-  them with the `disable.events` option. Example usage with [heirline](https://github.com/rebelot/heirline.nvim):
+  If you are experiencing performance issues and do not rely on these events,
+  you can disable them by setting `emit_events` option to `false`. Example
+  usage with [heirline](https://github.com/rebelot/heirline.nvim):
 
 ```lua
 require("heirline").setup({
