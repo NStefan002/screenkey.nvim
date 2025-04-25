@@ -334,3 +334,7 @@ require("screenkey").setup({
 
 - [keys.nvim](https://github.com/tamton-aquib/keys.nvim)
 - [showkeys](https://github.com/nvzone/showkeys)
+
+## 🤝 Contributing
+
+If you want to contribute to `screenkey.nvim`, please read the [CONTRIBUTING](CONTRIBUTING.md).
