@@ -2,7 +2,7 @@
 --- see ':h nvim_open_win()'
 ---@field win_opts vim.api.keyset.win_config
 --- see ':h nvim_set_hl()'
----@field hl_groups table<string, vim.api.keyset.highlight>
+---@field hl_groups table<screenkey.hl_group, vim.api.keyset.highlight>
 --- compress input when repeated <compress_after> times
 ---@field compress_after integer
 --- clear the input after `<clear_after>` seconds of inactivity
@@ -37,6 +37,11 @@
 ---@field is_mapping boolean
 ---@field consecutive_repeats integer
 
+---@alias screenkey.hl_group
+---| "screenkey.hl.key"
+---| "screenkey.hl.map"
+---| "screenkey.hl.sep"
+
 ---@class screenkey.pair<T1, T2> { [1]: T1, [2]: T2 }
 
----@alias screenkey.colored_key screenkey.pair<string, string>
+---@alias screenkey.colored_key screenkey.pair<string, screenkey.hl_group>
