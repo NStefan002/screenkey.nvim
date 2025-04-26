@@ -11,6 +11,7 @@ live coding sessions.
 
 ## 📜 Table of Contents
 
+- [📜 Table of Contents](#-table-of-contents)
 - [🧠 Why](#-why)
 - [📺 Showcase](#-showcase)
 - [🔥 Requirements](#-requirements)
@@ -24,6 +25,7 @@ live coding sessions.
   - [✨ Random examples](#-random-examples)
 - [🙏 Inspiration](#-inspiration)
 - [👀 Similar projects](#-similar-projects)
+- [🤝 Contributing](#-contributing)
 
 ## 🧠 Why
 
