@@ -1,8 +1,7 @@
 # Contributing guide
 
-Thank you for considering contributing to `screenkey.nvim`! We welcome all
-contributions, whether it's fixing bugs, adding new features, improving
-documentation, or adding examples of usage.
+Thank you for considering contributing to `screenkey.nvim`! We welcome all contributions, whether it's fixing bugs,
+adding new features, improving documentation, or adding examples of usage.
 
 ## Table of contents
 
@@ -27,7 +26,8 @@ If you want to contribute to `screenkey.nvim`, and you don't have a specific ide
 
 ## Commit messages / PR title
 
-Please ensure your pull request title conforms to [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+Please ensure your pull request title conforms to
+[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
 ## CI
 
@@ -38,9 +38,8 @@ GitHub Actions will run the following checks on your PR:
 - `markdownlint` linting for markdown files
 - `stylua` formatting - checks if the lua files are formatted correctly
 
-If any CI check fails, review the logs, correct any issues in your code, and
-push the changes. If you're unsure, feel free to ask for assistance in the
-discussions or open an issue for guidance.
+If any CI check fails, review the logs, correct any issues in your code, and push the changes. If you're unsure, feel
+free to ask for assistance in the discussions or open an issue for guidance.
 
 ## Development
 
@@ -62,25 +61,21 @@ We use the following tools:
 
 ### Running tests
 
-We use [`busted`](https://lunarmodules.github.io/busted/) for testing,
-but with Neovim as the Lua interpreter.
+We use [`busted`](https://lunarmodules.github.io/busted/) for testing, but with Neovim as the Lua interpreter.
 
-You can run the test suite using `luarocks test` or `busted`. For more
-information on how to set up Neovim as a Lua interpreter, see
-[`nlua`](https://github.com/mfussenegger/nlua).
+You can run the test suite using `luarocks test` or `busted`. For more information on how to set up Neovim as a Lua
+interpreter, see [`nlua`](https://github.com/mfussenegger/nlua).
 
 ### Manual testing
 
-If you want to test your contributions to `screenkey.nvim` manually,
-we recommend you set [`NVIM_APPNAME`](https://neovim.io/doc/user/starting.html#%24NVIM_APPNAME)
-to something other than `nvim`, so that your test environment
-doesn't interfere with your regular Neovim installation or the plugins you use.
+If you want to test your contributions to `screenkey.nvim` manually, we recommend you set
+[`NVIM_APPNAME`](https://neovim.io/doc/user/starting.html#%24NVIM_APPNAME) to something other than `nvim`, so that your
+test environment doesn't interfere with your regular Neovim installation or the plugins you use.
 
 ## Adding examples of usage
 
-If you have an interesting use case for `screenkey.nvim`, or an unique
-configuration, please consider opening a issue with your example. Include
-screenshots or GIFs if possible, and
+If you have an interesting use case for `screenkey.nvim`, or an unique configuration, please consider opening a issue
+with your example. Include screenshots or GIFs if possible, and
 
 ## General tips when writing code
 

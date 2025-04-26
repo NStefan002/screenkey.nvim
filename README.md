@@ -1,12 +1,11 @@
 # Screenkey.nvim
 
-Screenkey is a Neovim plugin that displays the keys you are typing in a floating window,
-just like [screenkey](https://www.thregr.org/wavexx/software/screenkey/) does.
-It is useful for screencasts, presentations, and live coding sessions.
+Screenkey is a Neovim plugin that displays the keys you are typing in a floating window, just like
+[screenkey](https://www.thregr.org/wavexx/software/screenkey/) does. It is useful for screencasts, presentations, and
+live coding sessions.
 
-> [!WARNING]
-> This README tracks the `main` branch and may include *unstable* or *in-progress* features.
-> For the stable version, **please switch to the latest tag release**, and refer to the `README.md` in that tag.
+> [!WARNING] This README tracks the `main` branch and may include _unstable_ or _in-progress_ features. For the stable
+> version, **please switch to the latest tag release**, and refer to the `README.md` in that tag.
 
 ## 📜 Table of Contents
 
@@ -26,13 +25,11 @@ It is useful for screencasts, presentations, and live coding sessions.
 
 ## 🧠 Why
 
-- Don't worry about leaking your passwords (e.g. when using `sudo`) while
-  streaming/recording because you forgot to turn off your display-key
-  application, `Screenkey` will only show pieces of information about your
-  input in Neovim.
+- Don't worry about leaking your passwords (e.g. when using `sudo`) while streaming/recording because you forgot to turn
+  off your display-key application, `Screenkey` will only show pieces of information about your input in Neovim.
 - You can use `Screenkey` to show your keys in a presentation or a screencast, so your audience can follow along.
-- You can use `Screenkey` to show your keys in a live coding session, so
-  your neovim-newbie friends can understand what you are doing.
+- You can use `Screenkey` to show your keys in a live coding session, so your neovim-newbie friends can understand what
+  you are doing.
 
 ## 📺 Showcase
 
@@ -41,7 +38,7 @@ It is useful for screencasts, presentations, and live coding sessions.
 ## 🔥 Requirements
 
 - Neovim version >= 0.10.0
-- a [Nerd Font](https://www.nerdfonts.com/) ***(optional, but recommended)***
+- a [Nerd Font](https://www.nerdfonts.com/) _**(optional, but recommended)**_
 
 ## 📋 Installation
 
@@ -146,27 +143,29 @@ require("screenkey").setup({
 })
 ```
 
-| option                | explanation                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `win_opts`            | see `:h nvim_open_win`, **note1:** other options from `nvim_open_win` help can be provided (such as `win`, `bufpos`, `zindex` etc.), the ones listed above are just defaults)                                                                                                                                                                                                                                                 |
-| `hl_groups`           | highlight groups used to color different types of displayed text: **mappings**, **keys** and **separators** (see ':h nvim_set_hl()')                                                                                                                                                                                                                                                                                          |
-| `compress after`      | compress input when repeated <compress_after> times (for example `jjjj` will be compressed to `j..x4`)                                                                                                                                                                                                                                                                                                                        |
-| `clear_after`         | clear the input after `<clear_after>` seconds of inactivity                                                                                                                                                                                                                                                                                                                                                                   |
-| `emit_events`         | disable `User` events                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `disable`             | temporarily disable screenkey (for specific filetype or buftype), see `:h 'filetype'` and `:h 'buftype'`                                                                                                                                                                                                                                                                                                                      |
-| `disable.filetypes`   | for example: `toggleterm` or `toml`                                                                                                                                                                                                                                                                                                                                                                                           |
-| `disable.buftypes`    | see `:h 'buftype'`, for example: `terminal`                                                                                                                                                                                                                                                                                                                                                                                   |
-| `group_mappings`      | for example: `<leader>sf` opens up a fuzzy finder, if the `group_mappings` option is set to `true`, every time you open up a fuzzy finder with `<leader>sf`, Screenkey will show `␣sf` instead of `␣ s f` to indicate that the used key combination was a defined mapping.                                                                                                                                                    |
-| `show_leader`         | if this option is set to `true`, in the last example instead of `␣ s f` Screenkey will display `<leader> s f` (of course, if the `<space>` is `<leader>`), if the current key is not a defined mapping, Screenkey will display `<space>` as `␣`                                                                                                                                                                               |
-| `display_infront`[^1] | if the floating window containing the buffer of the same `filetype` as in `display_infront` is opened, screenkey window will be reopened in front of that window (if necessary), **Note:** you can define filetypes as lua regex, for example `"Telescope*"` to match every filetype that starts with `Telescope`                                                                                                             |
-| `display_behind`[^1]  | if the floating window containing the buffer of the same `filetype` as in `display_behind` is opened, screenkey window will be reopened behind of that window (if necessary), **Note:** you can define filetypes as lua regex, for example `"Telescope*"` to match every filetype that starts with `Telescope`                                                                                                                |
-| `filter`              | function that takes an array of objects of type `screenkey.queued_keys`[^2] (`keys`) as input and returns a filtered array of the same keys, allowing customization of which keys should be displayed, see below for example                                                                                                                                                                                                  |
-| `separator`           | string of any length that separates the keys, space by default                                                                                                                                                                                                                                                                                                                                                                |
-| `keys`                | how to display the special keys                                                                                                                                                                                                                                                                                                                                                                                               |
+| option                | explanation                                                                                                                                                                                                                                                                                                       |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `win_opts`            | see `:h nvim_open_win`, **note1:** other options from `nvim_open_win` help can be provided (such as `win`, `bufpos`, `zindex` etc.), the ones listed above are just defaults)                                                                                                                                     |
+| `hl_groups`           | highlight groups used to color different types of displayed text: **mappings**, **keys** and **separators** (see ':h nvim_set_hl()')                                                                                                                                                                              |
+| `compress after`      | compress input when repeated <compress_after> times (for example `jjjj` will be compressed to `j..x4`)                                                                                                                                                                                                            |
+| `clear_after`         | clear the input after `<clear_after>` seconds of inactivity                                                                                                                                                                                                                                                       |
+| `emit_events`         | disable `User` events                                                                                                                                                                                                                                                                                             |
+| `disable`             | temporarily disable screenkey (for specific filetype or buftype), see `:h 'filetype'` and `:h 'buftype'`                                                                                                                                                                                                          |
+| `disable.filetypes`   | for example: `toggleterm` or `toml`                                                                                                                                                                                                                                                                               |
+| `disable.buftypes`    | see `:h 'buftype'`, for example: `terminal`                                                                                                                                                                                                                                                                       |
+| `group_mappings`      | for example: `<leader>sf` opens up a fuzzy finder, if the `group_mappings` option is set to `true`, every time you open up a fuzzy finder with `<leader>sf`, Screenkey will show `␣sf` instead of `␣ s f` to indicate that the used key combination was a defined mapping.                                        |
+| `show_leader`         | if this option is set to `true`, in the last example instead of `␣ s f` Screenkey will display `<leader> s f` (of course, if the `<space>` is `<leader>`), if the current key is not a defined mapping, Screenkey will display `<space>` as `␣`                                                                   |
+| `display_infront`[^1] | if the floating window containing the buffer of the same `filetype` as in `display_infront` is opened, screenkey window will be reopened in front of that window (if necessary), **Note:** you can define filetypes as lua regex, for example `"Telescope*"` to match every filetype that starts with `Telescope` |
+| `display_behind`[^1]  | if the floating window containing the buffer of the same `filetype` as in `display_behind` is opened, screenkey window will be reopened behind of that window (if necessary), **Note:** you can define filetypes as lua regex, for example `"Telescope*"` to match every filetype that starts with `Telescope`    |
+| `filter`              | function that takes an array of objects of type `screenkey.queued_keys`[^2] (`keys`) as input and returns a filtered array of the same keys, allowing customization of which keys should be displayed, see below for example                                                                                      |
+| `separator`           | string of any length that separates the keys, space by default                                                                                                                                                                                                                                                    |
+| `keys`                | how to display the special keys                                                                                                                                                                                                                                                                                   |
 
 [^1]:
-    This is currently an experimental feature. Please report any issues you encounter. Use it responsibly, do not set too many conditions, as it can slow down the plugin.
-    Also, if the conflict occurs (e.g. two floating windows are present at the same time - one with the `filetype` that matches the `display_infront` condition and the other with the `filetype` that matches the `display_behind` condition), nothing will happen (this is subject to change)
+    This is currently an experimental feature. Please report any issues you encounter. Use it responsibly, do not set
+    too many conditions, as it can slow down the plugin. Also, if the conflict occurs (e.g. two floating windows are
+    present at the same time - one with the `filetype` that matches the `display_infront` condition and the other with
+    the `filetype` that matches the `display_behind` condition), nothing will happen (this is subject to change)
 
 [^2]: See `types.lua` file for type definitions.
 
@@ -175,9 +174,9 @@ require("screenkey").setup({
 ### 💻 Commands
 
 - `:Screenkey toggle` (or just `Screenkey`) - toggle `screenkey` on/off
-- `:Screenkey redraw` - force `screenkey` to redraw
-<!-- TODO: add link to examples -->
-- `:Screenkey toggle_statusline_component` - toggle statusline component feature on/off (see [Statusline integration](#-statusline-integration))
+- `:Screenkey redraw` - force `screenkey` to redraw <!-- TODO: add link to examples -->
+- `:Screenkey toggle_statusline_component` - toggle statusline component feature on/off (see
+  [Statusline integration](#-statusline-integration))
 - `:Screenkey log <arg>` - used for debugging, `<arg>` is one of the following:
   - `on` - turn on logging
   - `off` - turn off logging
@@ -209,9 +208,8 @@ hl_groups = {
 }
 ```
 
-You can customize the colors of the `screenkey` window title and border by
-using the `win_opts` option. Example of highlighting title (it's basically the
-same thing for border, see `:h nvim_open_win()`):
+You can customize the colors of the `screenkey` window title and border by using the `win_opts` option. Example of
+highlighting title (it's basically the same thing for border, see `:h nvim_open_win()`):
 
 ```lua
 win_opts = {
@@ -220,7 +218,7 @@ win_opts = {
         { "re", "DiagnosticWarn" },
         { "en", "DiagnosticInfo" },
         { "key", "DiagnosticError" },
-    }
+    },
     -- or title = { { "MY CUSTOM TITLE", "MY_CUSTOM_HIGHLIGHT_GROUP" } }
 }
 ```
@@ -248,14 +246,14 @@ require("lualine").setup({
 })
 ```
 
-- For fully custom statusline users, `screenkey` will fire `User` events if `screenkey`'s statusline component is enabled.
-  There are two patterns:
+- For fully custom statusline users, `screenkey` will fire `User` events if `screenkey`'s statusline component is
+  enabled. There are two patterns:
+
   1. `ScreenkeyUpdated` - fired on every key press
   2. `ScreenkeyCleared` - fired when clearing screenkey after some period of inactivity (see `clear_after` option)
 
-  If you are experiencing performance issues and do not rely on these events,
-  you can disable them by setting `emit_events` option to `false`. Example
-  usage with [heirline](https://github.com/rebelot/heirline.nvim):
+  If you are experiencing performance issues and do not rely on these events, you can disable them by setting
+  `emit_events` option to `false`. Example usage with [heirline](https://github.com/rebelot/heirline.nvim):
 
 ```lua
 require("heirline").setup({
@@ -278,11 +276,10 @@ require("heirline").setup({
 
 ### ✨ Random examples
 
-> [!NOTE]
-> These are mostly not useful, but could give you some ideas.
+> [!NOTE] These are mostly not useful, but could give you some ideas.
 
-- `nvim-notify` integration: if the `screenkey` window is open, the notification will
-  be displayed from top down, otherwise it will be displayed from bottom up.
+- `nvim-notify` integration: if the `screenkey` window is open, the notification will be displayed from top down,
+  otherwise it will be displayed from bottom up.
 
 ```lua
 local screenkey = require("screenkey")

@@ -3,9 +3,8 @@
 ## Features
 
 - [x] `disable.modes` option - list of vim-modes to disable screenkey in
-- [ ] `group_insert` - don't split keys when typing (if
-  this is `true` and `config.options.group_mappings` is `true` then the
-  insert mode mappings will be grouped and separated from 'typed' text)
+- [ ] `group_insert` - don't split keys when typing (if this is `true` and `config.options.group_mappings` is `true`
+      then the insert mode mappings will be grouped and separated from 'typed' text)
 - [ ] better mapping detection system (mainly for builtin mappings)
 - [x] `hl_groups` - allow user to customize the predefined highlight groups such as:
   - [x] `screenkey.hl.map` - highlight group for mappings
