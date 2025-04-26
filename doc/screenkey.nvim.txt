@@ -218,12 +218,10 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
                        filetypes as lua regex, for example "Telescope*" to match every
                        filetype that starts with Telescope
 
-  filter               function that takes an array of key-is_mapping (string-boolean)
-                       pairs (keys) as its argument and returns a filtered array of same
-                       pairs, allowing customization of which keys should be displayed,
-                       Note: this feature is experimental and subject to change (see #38
-                       for the progress of this feature and see below for the example of
-                       how to use it)
+  filter               function that takes an array of objects of type
+                       screenkey.queued_keys[3] (keys) as input and returns a filtered
+                       array of the same keys, allowing customization of which keys should
+                       be displayed, see below for example
 
   separator            string of any length that separates the keys, space by default
 
@@ -238,7 +236,15 @@ that matches the display_infront condition and the other with the
 filetype that matches the display_behind condition), nothing will happen
 (this is subject to change)
 
-[2] Same as above
+[2] This is currently an experimental feature. Please report any issues
+you encounter. Use it responsibly, do not set too many conditions, as it
+can slow down the plugin. Also, if the conflict occurs (e.g. two
+floating windows are present at the same time - one with the filetype
+that matches the display_infront condition and the other with the
+filetype that matches the display_behind condition), nothing will happen
+(this is subject to change)
+
+[3] See types.lua file for type definitions.
 
 USAGE                                    *screenkey.nvim-screenkey.nvim-usage*
 
