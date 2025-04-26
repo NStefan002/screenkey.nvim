@@ -30,9 +30,20 @@ end
 --- For this reason, we need to split the input into individual keys and transform them into the
 --- corresponding symbols.
 --- see `:h keytrans()`
+---
+--- If `group_mappings` or `show_leader` are not provided, use the value from `config.options`
 ---@param in_key string
+---@param group_mappings? boolean
+---@param show_leader? boolean
 ---@return screenkey.queued_key[]
-function M.transform_input(in_key)
+function M.transform_input(in_key, group_mappings, show_leader)
+    if group_mappings == nil then
+        group_mappings = config.options.group_mappings
+    end
+    if show_leader == nil then
+        show_leader = config.options.show_leader
+    end
+
     in_key = vim.fn.keytrans(in_key)
     local is_mapping = M.is_mapping(in_key)
     local split = api.nvim_strwidth(in_key) > 1 and M.split_key(in_key) or { in_key }
@@ -51,7 +62,7 @@ function M.transform_input(in_key)
         then
             local leader = vim.g.mapleader or ""
             if
-                config.options.show_leader
+                show_leader
                 and is_mapping
                 and (k:upper() == leader:upper() or k:upper() == vim.fn.keytrans(leader):upper())
             then
@@ -99,7 +110,7 @@ function M.transform_input(in_key)
         end
     end
 
-    if config.options.group_mappings and #transformed_keys > 0 and is_mapping then
+    if group_mappings and #transformed_keys > 0 and is_mapping then
         return {
             {
                 key = table.concat(
@@ -133,15 +144,24 @@ function M.append_new_keys(queued_keys, new_keys)
     return queued_keys
 end
 
+--- Convert a list of queued keys to a string.
+---
+--- If `compress_after` or `separator` are not provided, use the value from `config.options`
 ---@param queued_keys screenkey.queued_key[]
-function M.to_string(queued_keys)
+---@param compress_after? integer
+---@param separator? string
+---@return string
+function M.to_string(queued_keys, compress_after, separator)
+    compress_after = compress_after or config.options.compress_after
+    separator = separator or config.options.separator
+
     local str = ""
 
     for _, k in ipairs(queued_keys) do
-        if k.consecutive_repeats >= config.options.compress_after then
+        if k.consecutive_repeats >= compress_after then
             str = ("%s%s%s..x%d"):format(
                 str,
-                str == "" and "" or config.options.separator, -- don't add separator before first key
+                str == "" and "" or separator, -- don't add separator before first key
                 k.key,
                 k.consecutive_repeats
             )
@@ -149,7 +169,7 @@ function M.to_string(queued_keys)
             for _ = 1, k.consecutive_repeats do
                 str = ("%s%s%s"):format(
                     str,
-                    str == "" and "" or config.options.separator, -- don't add separator before first key
+                    str == "" and "" or separator, -- don't add separator before first key
                     k.key
                 )
             end
@@ -159,16 +179,25 @@ function M.to_string(queued_keys)
     return str
 end
 
+--- Remove extra keys from the list if the string representation of the keys
+--- exceeds the given width.
+---
+--- If `compress_after` or `width` are not provided, use the value from `config.options`
 ---@param queued_keys screenkey.queued_key[]
+---@param compress_after? integer
+---@param width? integer
 ---@return screenkey.queued_key[]
-function M.remove_extra_keys(queued_keys)
+function M.remove_extra_keys(queued_keys, compress_after, width)
     if #queued_keys == 0 then
         return queued_keys
     end
 
+    compress_after = compress_after or config.options.compress_after
+    width = width or config.options.win_opts.width
+
     local text = M.to_string(queued_keys)
-    while api.nvim_strwidth(text) > config.options.win_opts.width - 2 do
-        if queued_keys[1].consecutive_repeats >= config.options.compress_after then
+    while api.nvim_strwidth(text) > width - 2 do
+        if queued_keys[1].consecutive_repeats >= compress_after then
             table.remove(queued_keys, 1)
         else
             queued_keys[1].consecutive_repeats = queued_keys[1].consecutive_repeats - 1
@@ -206,13 +235,21 @@ end
 
 --- NOTE: subject to change in the future
 
+--- Creates a list of key-highlight pairs from the given queued keys.
+---
+--- If `compress_after` or `separator` are not provided, use the value from `config.options`
 ---@param queued_keys screenkey.queued_key[]
+---@param compress_after? integer
+---@param separator? string
 ---@return screenkey.colored_key[]
-function M.colorize_keys(queued_keys)
+function M.colorize_keys(queued_keys, compress_after, separator)
+    compress_after = compress_after or config.options.compress_after
+    separator = separator or config.options.separator
+
     ---@type screenkey.colored_key[]
     local colorized_keys = {}
     for i, qkey in ipairs(queued_keys) do
-        if qkey.consecutive_repeats < config.options.compress_after then
+        if qkey.consecutive_repeats < compress_after then
             for j = 1, qkey.consecutive_repeats do
                 table.insert(colorized_keys, {
                     qkey.key,
@@ -220,7 +257,7 @@ function M.colorize_keys(queued_keys)
                 })
                 if i < #queued_keys or j < qkey.consecutive_repeats then
                     table.insert(colorized_keys, {
-                        config.options.separator,
+                        separator,
                         "screenkey.hl.sep",
                     })
                 end
@@ -232,7 +269,7 @@ function M.colorize_keys(queued_keys)
             })
             if i < #queued_keys then
                 table.insert(colorized_keys, {
-                    config.options.separator,
+                    separator,
                     "screenkey.hl.sep",
                 })
             end
