@@ -4,8 +4,10 @@ Screenkey is a Neovim plugin that displays the keys you are typing in a floating
 [screenkey](https://www.thregr.org/wavexx/software/screenkey/) does. It is useful for screencasts, presentations, and
 live coding sessions.
 
-> [!WARNING] This README tracks the `main` branch and may include _unstable_ or _in-progress_ features. For the stable
-> version, **please switch to the latest tag release**, and refer to the `README.md` in that tag.
+<!-- prettier-ignore -->
+> [!WARNING]
+> This README tracks the `main` branch and may include *unstable* or *in-progress* features.
+> For the stable version, **please switch to the latest tag release**, and refer to the `README.md` in that tag.
 
 ## 📜 Table of Contents
 
@@ -38,7 +40,7 @@ live coding sessions.
 ## 🔥 Requirements
 
 - Neovim version >= 0.10.0
-- a [Nerd Font](https://www.nerdfonts.com/) _**(optional, but recommended)**_
+- a [Nerd Font](https://www.nerdfonts.com/) **_(optional, but recommended)_**
 
 ## 📋 Installation
 
@@ -62,6 +64,7 @@ use({ "NStefan002/screenkey.nvim", tag = "*" })
 
 `:Rocks install screenkey.nvim`
 
+<!-- prettier-ignore -->
 > [!NOTE]
 >
 > - There is no need to call the `setup` function, only call it if you need to change some options
@@ -104,6 +107,9 @@ require("screenkey").setup({
     display_infront = {},
     display_behind = {},
     filter = function(keys)
+        return keys
+    end,
+    colorize = function(keys)
         return keys
     end,
     separator = " ",
@@ -158,6 +164,7 @@ require("screenkey").setup({
 | `display_infront`[^1] | if the floating window containing the buffer of the same `filetype` as in `display_infront` is opened, screenkey window will be reopened in front of that window (if necessary), **Note:** you can define filetypes as lua regex, for example `"Telescope*"` to match every filetype that starts with `Telescope` |
 | `display_behind`[^1]  | if the floating window containing the buffer of the same `filetype` as in `display_behind` is opened, screenkey window will be reopened behind of that window (if necessary), **Note:** you can define filetypes as lua regex, for example `"Telescope*"` to match every filetype that starts with `Telescope`    |
 | `filter`              | function that takes an array of objects of type `screenkey.queued_keys`[^2] (`keys`) as input and returns a filtered array of the same keys, allowing customization of which keys should be displayed, see below for example                                                                                      |
+| `colorize`            | function that takes an array of `key`-`highlight` (`string`, `screenkey.hl_group`[^2]) pairs (`keys`) as input and returns a modified array with the desired highlight groups applied, this enables dynamic styling of keys based on user preferences, see below for example                                      |
 | `separator`           | string of any length that separates the keys, space by default                                                                                                                                                                                                                                                    |
 | `keys`                | how to display the special keys                                                                                                                                                                                                                                                                                   |
 
@@ -174,7 +181,8 @@ require("screenkey").setup({
 ### 💻 Commands
 
 - `:Screenkey toggle` (or just `Screenkey`) - toggle `screenkey` on/off
-- `:Screenkey redraw` - force `screenkey` to redraw <!-- TODO: add link to examples -->
+- `:Screenkey redraw` - force `screenkey` to redraw
+<!-- TODO: add link to examples -->
 - `:Screenkey toggle_statusline_component` - toggle statusline component feature on/off (see
   [Statusline integration](#-statusline-integration))
 - `:Screenkey log <arg>` - used for debugging, `<arg>` is one of the following:
@@ -276,7 +284,9 @@ require("heirline").setup({
 
 ### ✨ Random examples
 
-> [!NOTE] These are mostly not useful, but could give you some ideas.
+<!-- prettier-ignore -->
+> [!NOTE]
+> These are mostly not useful, but could give you some ideas.
 
 - `nvim-notify` integration: if the `screenkey` window is open, the notification will be displayed from top down,
   otherwise it will be displayed from bottom up.
