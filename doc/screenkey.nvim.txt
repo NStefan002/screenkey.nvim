@@ -30,6 +30,7 @@ screencasts, presentations, and live coding sessions.
 
 TABLE OF CONTENTS            *screenkey.nvim-screenkey.nvim-table-of-contents*
 
+- |screenkey.nvim-table-of-contents|
 - |screenkey.nvim-why|
 - |screenkey.nvim-showcase|
 - |screenkey.nvim-requirements|
@@ -43,6 +44,7 @@ TABLE OF CONTENTS            *screenkey.nvim-screenkey.nvim-table-of-contents*
     - |screenkey.nvim-random-examples|
 - |screenkey.nvim-inspiration|
 - |screenkey.nvim-similar-projects|
+- |screenkey.nvim-contributing|
 
 
 WHY                                        *screenkey.nvim-screenkey.nvim-why*
