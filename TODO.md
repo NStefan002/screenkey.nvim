@@ -10,7 +10,7 @@
   - [x] `screenkey.hl.map` - highlight group for mappings
   - [x] `screenkey.hl.key` - highlight group for non-mapping keys
   - [x] `screenkey.hl.sep` - highlight group for the separator
-- [ ] `colorize` - similar as `filter` but for coloring of the keys
+- [x] `colorize` - similar as `filter` but for coloring of the keys
 
 ## Bugs
 
@@ -20,9 +20,10 @@
 
 - [ ] tests
 - [ ] more logging
-- [ ] `Contributing.md`
+- [x] `Contributing.md`
 - [x] update the `README.md` with the new changes
 - [ ] organize the examples in the `README.md`
-- [ ] add example of the window title/border coloring to the `README.md`
-- [ ] create `highlight` section for examples in the `README.md` (previous point should be included in this section)
+- [ ] create `highlight` section for examples in the `README.md
+  - [x] add example of the window title/border coloring to the `README.md`
+  - [ ] add example of the key coloring to the `README.md`
 - [x] change `disable.events` to be a separate option (e.g. `emit_events`)
