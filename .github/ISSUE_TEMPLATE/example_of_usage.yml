@@ -5,18 +5,22 @@ body:
 
   - type: checkboxes
     attributes:
-      value: "*Steps before submitting:*"
+      label: "Steps before submitting"
+      description: "Please complete the following before submitting your example."
       options:
-        - label: "read [Contributing](CONTRIBUTING.md)"
-        - required: true
-        - label: "make sure your example hasn't been submitted before"
-        - required: true
-        - label: "include a screenshot and/or GIF"
-        - required: true
-        - label: "include a short description of how/when you use screenkey.nvim or what have you changed to make it unique/interesting"
-        - required: true
-        - label: "include a **working** configuration snippet"
-        - required: true
+        - label: "I have read [Contributing](CONTRIBUTING.md)."
+          required: true
+        - label: "I have made sure my example hasn't been submitted before."
+          required: true
+        - label: "I have included a screenshot and/or GIF."
+          required: true
+        - label: "I have included a short description of how/when I use screenkey.nvim, or what I changed to make it unique."
+          required: true
+        - label: "I have included a **working** configuration snippet."
+          required: true
+
+    validations:
+      required: true
 
   - type: textarea
     attributes:
@@ -49,8 +53,8 @@ body:
     attributes:
       label: "Other information"
       description: |
-        "[Optional] Include any other information that might be relevant."
-        "For example, who may be interested in using your config, why is it unique, how did you come up with it, etc."
+        [Optional] Include any other information that might be relevant.
+        For example: who might be interested in your config, why it's unique, how you came up with it, etc.
     validations:
       required: false
 
