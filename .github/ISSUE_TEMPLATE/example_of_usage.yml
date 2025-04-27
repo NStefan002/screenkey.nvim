@@ -1,0 +1,69 @@
+name: Submit your example of usage
+description: Share your unique configuration or usage of screenkey.nvim
+labels: [example]
+body:
+
+  - type: checkboxes
+    attributes:
+      value: "*Steps before submitting:*"
+      options:
+        - label: "read [Contributing](CONTRIBUTING.md)"
+        - required: true
+        - label: "make sure your example hasn't been submitted before"
+        - required: true
+        - label: "include a screenshot and/or GIF"
+        - required: true
+        - label: "include a short description of how/when you use screenkey.nvim or what have you changed to make it unique/interesting"
+        - required: true
+        - label: "include a **working** configuration snippet"
+        - required: true
+
+  - type: textarea
+    attributes:
+      label: "Description"
+      description: "Describe your example of usage."
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Configuration snippet"
+      description: "Include a working configuration snippet."
+      placeholder: |
+        ```lua
+        require('screenkey').setup {
+          -- your configuration here
+        }
+        ```
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Screenshot and/or GIF"
+      description: "Include a screenshot and/or GIF of your screenkey.nvim in action."
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Other information"
+      description: |
+        "[Optional] Include any other information that might be relevant."
+        "For example, who may be interested in using your config, why is it unique, how did you come up with it, etc."
+    validations:
+      required: false
+
+  - type: input
+    attributes:
+      label: "Neovim version (`nvim -v`)"
+      placeholder: "NVIM v0.10.0-dev-b0f92281"
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: "Terminal name/version"
+      placeholder: "wezterm 20240203-110809-5046fc22"
+    validations:
+      required: true
