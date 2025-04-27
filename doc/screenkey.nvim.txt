@@ -1,4 +1,4 @@
-*screenkey.nvim.txt*      For Neovim >= 0.10.0      Last change: 2025 April 26
+*screenkey.nvim.txt*      For Neovim >= 0.10.0      Last change: 2025 April 27
 
 ==============================================================================
 Table of Contents                           *screenkey.nvim-table-of-contents*
