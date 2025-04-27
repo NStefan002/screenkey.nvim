@@ -26,6 +26,26 @@ function M:new()
 end
 
 ---@private
+function M.should_disable()
+    local filetype = api.nvim_get_option_value("filetype", { buf = 0 })
+    if utils.tbl_contains(config.options.disable.filetypes, filetype) then
+        return true
+    end
+
+    local buftype = api.nvim_get_option_value("buftype", { buf = 0 })
+    if utils.tbl_contains(config.options.disable.buftypes, buftype) then
+        return true
+    end
+
+    local mode = api.nvim_get_mode().mode
+    if utils.tbl_contains(config.options.disable.modes, mode) then
+        return true
+    end
+
+    return false
+end
+
+---@private
 function M:create_timer()
     self.timer = vim.uv.new_timer()
     self.timer:start(
@@ -64,7 +84,7 @@ function M:on_key()
             self:kill_timer()
             return
         end
-        if utils.should_disable() then
+        if self.should_disable() then
             return
         end
         typed = typed or key

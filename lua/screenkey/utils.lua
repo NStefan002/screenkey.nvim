@@ -1,5 +1,4 @@
 local api = vim.api
-local config = require("screenkey.config")
 
 local M = {}
 
@@ -16,25 +15,6 @@ function M.tbl_contains(t, value, f)
             return true
         end
     end
-    return false
-end
-
-function M.should_disable()
-    local filetype = api.nvim_get_option_value("filetype", { buf = 0 })
-    if M.tbl_contains(config.options.disable.filetypes, filetype) then
-        return true
-    end
-
-    local buftype = api.nvim_get_option_value("buftype", { buf = 0 })
-    if M.tbl_contains(config.options.disable.buftypes, buftype) then
-        return true
-    end
-
-    local mode = api.nvim_get_mode().mode
-    if M.tbl_contains(config.options.disable.modes, mode) then
-        return true
-    end
-
     return false
 end
 
