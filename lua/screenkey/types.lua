@@ -25,6 +25,8 @@
 ---@field display_behind string[]
 --- filter the keys before displaying them
 ---@field filter fun(keys: screenkey.queued_key[]): screenkey.queued_key[]
+--- optionally change the highlight groups used to highlight mappings, regular keys and separators
+---@field colorize fun(keys: screenkey.colored_key[]): screenkey.colored_key[]
 --- string to display in-between the keys
 ---@field separator string
 --- how to display the special keys

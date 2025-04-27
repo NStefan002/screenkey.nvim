@@ -170,6 +170,7 @@ function M:display_text(queued_keys)
     end
 
     local colored_keys = key_utils.colorize_keys(queued_keys)
+    colored_keys = config.options.colorize(colored_keys)
     local line = math.floor(config.options.win_opts.height / 2)
     -- center text inside of the screenkey window
     local col = math.floor(
