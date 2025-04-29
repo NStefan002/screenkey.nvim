@@ -1,5 +1,47 @@
 # Changelog
 
+## [3.0.0](https://github.com/NStefan002/screenkey.nvim/compare/v2.4.2...v3.0.0) (2025-04-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* **events:** extract `emit_events` to be a separate option
+* **statusline:** rework stline component and add new API for working with it
+* **types:** rename `config` types
+
+### Features
+
+* **command:** add `:Screenkey log clear` command ([6d96d5b](https://github.com/NStefan002/screenkey.nvim/commit/6d96d5b47e3c820edd6e568d13770ede6396c6a0))
+* **config:** add `colorize` function, completes tasks in [#54](https://github.com/NStefan002/screenkey.nvim/issues/54) ([15a8552](https://github.com/NStefan002/screenkey.nvim/commit/15a8552ab27b5c9236d09a02dfcc5989ea52c7a7))
+* **disable:** users can now disable screenkey in specific modes ([390e379](https://github.com/NStefan002/screenkey.nvim/commit/390e3791b5bf9ebfb8f7f8bd91b014e2437527fb))
+* **events:** extract `emit_events` to be a separate option ([df80952](https://github.com/NStefan002/screenkey.nvim/commit/df80952043cda3cd7165191fc4d88c8312dadb8a))
+* **highlights:** define hlgroups for different types of keys ([208739a](https://github.com/NStefan002/screenkey.nvim/commit/208739a291738d7c2df32d0b6765656ff4ab82a7))
+* **keys:** `consecutive_repeats` field of the `queued_key` ([d494c6b](https://github.com/NStefan002/screenkey.nvim/commit/d494c6bbf884023627040560e3f1a530b50dd5ed))
+* **separator:** introduce separator between displayed keys ([9366ee3](https://github.com/NStefan002/screenkey.nvim/commit/9366ee3374a18d4a099d117194b0502ef9584b1e))
+* **statusline:** rework stline component and add new API for working with it ([37171c4](https://github.com/NStefan002/screenkey.nvim/commit/37171c430accedd6e5540a3b8ae47d76b137d799))
+* **types:** more precise types for highlights ([a8d95f2](https://github.com/NStefan002/screenkey.nvim/commit/a8d95f2bbd974404443707754a31d2c71393ccbd))
+
+
+### Bug Fixes
+
+* **core:** filter keys should be applied for statusline too ([961be36](https://github.com/NStefan002/screenkey.nvim/commit/961be36ca5f2d2d52eb265bd77284cc084f113ee))
+* **core:** statusline component bug ([9285cae](https://github.com/NStefan002/screenkey.nvim/commit/9285cae2004c7b0cb7b7136bc4af17aa7c176f47))
+* **lint:** `prettierd` conflicts with `markdownlint` rules ([689ae10](https://github.com/NStefan002/screenkey.nvim/commit/689ae10ed0acf140d5f6dd1bd68a7134b3121eca))
+* partial fix for [#47](https://github.com/NStefan002/screenkey.nvim/issues/47) ([a2f9f29](https://github.com/NStefan002/screenkey.nvim/commit/a2f9f29519f5d1d7309e6ef8f21dc9cdb0cd0866))
+* use `nvim_strwidth` instead of `#` ([1dddfce](https://github.com/NStefan002/screenkey.nvim/commit/1dddfcea0ee26989f55f4574d128c86b3d64a1d5))
+* **utils:** increment/decrement z-index accordingly ([bcdf8f8](https://github.com/NStefan002/screenkey.nvim/commit/bcdf8f8fd2ab5f44e1733a6fd9a6f09f86dbb500))
+* **util:** use `nvim_win_set_config()` instead of redrawing ([8adb110](https://github.com/NStefan002/screenkey.nvim/commit/8adb110adab9f5a30df8e3ac6241267b450186f1))
+
+
+### Reverts
+
+* "refactor(types)!: rename `config` types" ([01dc077](https://github.com/NStefan002/screenkey.nvim/commit/01dc077eb0f26568c98f35a7508fb1e8f24ec58f))
+
+
+### Code Refactoring
+
+* **types:** rename `config` types ([f309701](https://github.com/NStefan002/screenkey.nvim/commit/f3097016862133290e02edf517c52705479fe24e))
+
 ## [2.4.2](https://github.com/NStefan002/screenkey.nvim/compare/v2.4.1...v2.4.2) (2024-12-09)
 
 
