@@ -2,12 +2,6 @@ local eq = assert.are.same
 
 describe("Key utils tests", function()
     local key_utils = require("screenkey.key_utils")
-    local config = require("screenkey.config")
-
-    before_each(function()
-        -- reset options to default
-        config.setup()
-    end)
 
     it("split_key", function()
         eq({ "a", "b", "c" }, key_utils.split_key("abc"))
@@ -34,16 +28,13 @@ describe("Key utils tests", function()
     end)
 
     it("to_string", function()
-        config.options.separator = " "
-        config.options.compress_after = 4
         local queued_keys = {
             { key = "a", is_mapping = false, consecutive_repeats = 1 },
             { key = "b", is_mapping = false, consecutive_repeats = 2 },
             { key = "c", is_mapping = false, consecutive_repeats = 3 },
         }
-        eq("a b b c c c", key_utils.to_string(queued_keys))
-        config.options.compress_after = 2
-        eq("a b..x2 c..x3", key_utils.to_string(queued_keys))
+        eq("a b b c c c", key_utils.to_string(queued_keys, 4, " "))
+        eq("a b..x2 c..x3", key_utils.to_string(queued_keys, 2, " "))
     end)
 
     it("remove_extra_keys", function() end)
