@@ -25,13 +25,13 @@ end
 function M.validate(opts, user_config, path)
     local ok, err = pcall(vim.validate, opts)
     if not ok then
-        return false, string.format("%s: %s", path, err)
+        return false, string.format("- %s: %s", path, err)
     end
 
     local errors = {}
     for key, _ in pairs(user_config) do
         if not opts[key] then
-            table.insert(errors, string.format("'%s' is not a valid key of %s", key, path))
+            table.insert(errors, string.format("- '%s' is not a valid key of %s", key, path))
         end
     end
 
