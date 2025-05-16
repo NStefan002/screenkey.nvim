@@ -27,3 +27,5 @@
   - [x] add example of the window title/border coloring to the `README.md`
   - [ ] add example of the key coloring to the `README.md`
 - [x] change `disable.events` to be a separate option (e.g. `emit_events`)
+- [x] rework `logger` and add option to set the log level
+- [x] use `nvim_echo` to report messages (mainly in the `health` module)
