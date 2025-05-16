@@ -59,6 +59,38 @@ function M:open_win()
     )
 end
 
+-- TODO: maybe add logic to check if two windows (some other and screenkey) are overlapping
+
+--- Set the zindex of the screenkey window to be +-1 of the target window (which contains target_bufnr)
+---@private
+---@param target_bufnr integer
+---@param infront boolean if true move to front, else move to back
+function M:update_zindex(target_bufnr, infront)
+    if not self.active then
+        return
+    end
+
+    local win_ids = api.nvim_tabpage_list_wins(0)
+    local target_win_id = -1
+    for _, win_id in ipairs(win_ids) do
+        if api.nvim_win_get_buf(win_id) == target_bufnr then
+            target_win_id = win_id
+            break
+        end
+    end
+    if target_win_id == -1 then
+        return
+    end
+    local target_win_config = api.nvim_win_get_config(target_win_id)
+    local target_zindex = target_win_config.zindex or 50
+    api.nvim_win_set_config(
+        vim.g.screenkey_winnr,
+        { zindex = target_zindex + (infront and 1 or -1) }
+    )
+
+    log:debug(("target window (id: %d) zindex: %d"):format(target_win_id, target_zindex))
+end
+
 function M:create_autocmds()
     -- autocmds already set
     if self.augrp ~= -1 then
@@ -104,7 +136,7 @@ function M:create_autocmds()
             if (infront and behind) or (not infront and not behind) then
                 return
             end
-            utils.update_zindex(ev.buf, infront)
+            self:update_zindex(ev.buf, infront)
 
             log:debug(("FileType %s: reopening window"):format(ev.match))
         end,
