@@ -29,3 +29,4 @@
 - [x] change `disable.events` to be a separate option (e.g. `emit_events`)
 - [x] rework `logger` and add option to set the log level
 - [x] use `nvim_echo` to report messages (mainly in the `health` module)
+- [ ] remove deprecated `vim.validate()`
