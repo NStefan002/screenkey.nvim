@@ -22,10 +22,10 @@ local subcmds = {
     toggle_statusline_component = {
         impl = function(args, data)
             if #args > 0 then
-                vim.notify(
-                    ("Screenkey %s: command does not accept arguments"):format(data.fargs[1]),
-                    vim.log.levels.ERROR
-                )
+                require("screenkey.log"):notify(vim.log.levels.ERROR, {
+                    { "Command does not accept arguments: ", vim.log.levels.OFF },
+                    { (" Screenkey %s "):format(data.fargs[1]), vim.log.levels.INFO },
+                })
                 return
             end
             require("screenkey").toggle_statusline_component()
@@ -34,10 +34,10 @@ local subcmds = {
     toggle = {
         impl = function(args, data)
             if #args > 0 then
-                vim.notify(
-                    ("Screenkey %s: command does not accept arguments"):format(data.fargs[1]),
-                    vim.log.levels.ERROR
-                )
+                require("screenkey.log"):notify(vim.log.levels.ERROR, {
+                    { "Command does not accept arguments: ", vim.log.levels.OFF },
+                    { (" Screenkey %s "):format(data.fargs[1]), vim.log.levels.INFO },
+                })
                 return
             end
             require("screenkey").toggle()
@@ -46,10 +46,10 @@ local subcmds = {
     redraw = {
         impl = function(args, data)
             if #args > 0 then
-                vim.notify(
-                    ("Screenkey %s: command does not accept arguments"):format(data.fargs[1]),
-                    vim.log.levels.ERROR
-                )
+                require("screenkey.log"):notify(vim.log.levels.ERROR, {
+                    { "Command does not accept arguments: ", vim.log.levels.OFF },
+                    { (" Screenkey %s "):format(data.fargs[1]), vim.log.levels.INFO },
+                })
                 return
             end
             require("screenkey").redraw()
@@ -57,54 +57,15 @@ local subcmds = {
     },
     log = {
         impl = function(args, data)
-            if #args == 0 then
-                vim.notify(
-                    ("Screenkey %s: no arguments provided"):format(data.fargs[1]),
-                    vim.log.levels.ERROR
-                )
+            if #args ~= 0 then
+                require("screenkey.log"):notify(vim.log.levels.ERROR, {
+                    { "Command does not accept arguments: ", vim.log.levels.OFF },
+                    { (" Screenkey %s "):format(data.fargs[1]), vim.log.levels.INFO },
+                })
                 return
             end
-            if #args > 2 then
-                vim.notify(
-                    ("Screenkey %s: too many arguments"):format(data.fargs[1]),
-                    vim.log.levels.ERROR
-                )
-                return
-            end
-
-            local log = require("screenkey.logger")
-            if args[1] == "max_lines" then
-                if #args ~= 2 then
-                    vim.notify(
-                        "Screenkey log max_lines: Should be -> Screenkey log max_lines <number>",
-                        vim.log.levels.ERROR
-                    )
-                    return
-                end
-                log:set_max_lines(tonumber(args[2]) or 50)
-                return
-            elseif #args > 1 then
-                vim.notify(
-                    ("Screenkey %s: too many arguments"):format(data.fargs[1]),
-                    vim.log.levels.ERROR
-                )
-                return
-            end
-
-            if args[1] == "show" then
-                log:show()
-            elseif args[1] == "start" then
-                log:enable()
-            elseif args[1] == "stop" then
-                log:disable()
-            elseif args[1] == "clear" then
-                log:clear()
-            else
-                vim.notify(
-                    ("Screenkey %s: Unknown command %s"):format(data.fargs[1], args[1]),
-                    vim.log.levels.ERROR
-                )
-            end
+            local log = require("screenkey.log")
+            log:show()
         end,
         complete = function(subcmd_arg_lead)
             local log_args = {
@@ -135,7 +96,10 @@ local function screenkey_cmd(data)
     local args = #fargs > 1 and vim.list_slice(fargs, 2, #fargs) or {}
     local subcmd = subcmds[subcommand_key]
     if not subcmd then
-        vim.notify("Screenkey: Unknown command: " .. subcommand_key, vim.log.levels.ERROR)
+        require("screenkey.log"):notify(vim.log.levels.ERROR, {
+            { "Unknown command: ", vim.log.levels.OFF },
+            { (" Screenkey %s "):format(subcommand_key), vim.log.levels.INFO },
+        })
         return
     end
     -- invoke the subcommand

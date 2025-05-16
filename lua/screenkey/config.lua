@@ -73,6 +73,10 @@ M.defaults = {
         ["SUPER"] = "󰘳",
         ["<leader>"] = "<leader>",
     },
+    notify_method = "echo",
+    log = {
+        min_level = vim.log.levels.DEBUG,
+    },
 }
 
 ---@type screenkey.config.full
@@ -82,14 +86,18 @@ M.options = M.defaults
 function M.setup(opts)
     opts = opts or {}
     local ok, err = M.validate_config(opts)
+    local log = require("screenkey.log")
     if not ok then
-        require("screenkey.logger"):log(err)
-        vim.notify(
-            "Invalid configuration for screenkey.nvim, run ':checkhealth screenkey' for more information",
-            vim.log.levels.ERROR
-        )
+        log:notify(vim.log.levels.ERROR, {
+            { "invalid configuration, default settings will be used", vim.log.levels.INFO },
+            { "\n", vim.log.levels.OFF },
+            { "run ':checkhealth screenkey' for more details", vim.log.levels.INFO },
+        })
+        log:error(err)
+    else
+        log:info("options setup done without errors")
+        M.options = vim.tbl_deep_extend("force", M.defaults, opts)
     end
-    M.options = vim.tbl_deep_extend("force", M.defaults, opts)
 end
 
 ---@param config screenkey.config
@@ -114,6 +122,8 @@ function M.validate_config(config)
         colorize = { config.colorize, "function", true },
         separator = { config.separator, "string", true },
         keys = { config.keys, "table", true },
+        notify_method = { config.notify_method, "string", true },
+        log = { config.log, "table", true },
     }, config, "screenkey.config")
 
     if not ok then
@@ -137,6 +147,15 @@ function M.validate_config(config)
             validation[key] = { value, "string", true }
         end
         ok, err = utils.validate(validation, config.keys, "screenkey.config.keys")
+        if not ok then
+            table.insert(errors, err)
+        end
+    end
+
+    if config.log then
+        ok, err = utils.validate({
+            min_level = { config.log.min_level, "number", true },
+        }, config.log, "screenkey.config.log")
         if not ok then
             table.insert(errors, err)
         end

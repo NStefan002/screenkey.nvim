@@ -1,7 +1,7 @@
 local api = vim.api
 local config = require("screenkey.config")
 local key_utils = require("screenkey.key_utils")
-local log = require("screenkey.logger")
+local log = require("screenkey.log")
 local ui = require("screenkey.ui")
 local utils = require("screenkey.utils")
 
@@ -29,16 +29,19 @@ end
 function M.should_disable()
     local filetype = api.nvim_get_option_value("filetype", { buf = 0 })
     if utils.tbl_contains(config.options.disable.filetypes, filetype) then
+        log:debug("disabling screenkey for filetype", filetype)
         return true
     end
 
     local buftype = api.nvim_get_option_value("buftype", { buf = 0 })
     if utils.tbl_contains(config.options.disable.buftypes, buftype) then
+        log:debug("disabling screenkey for buftype", buftype)
         return true
     end
 
     local mode = api.nvim_get_mode().mode
     if utils.tbl_contains(config.options.disable.modes, mode) then
+        log:debug("disabling screenkey for mode", mode)
         return true
     end
 
@@ -56,15 +59,17 @@ function M:create_timer()
             if self.time >= config.options.clear_after then
                 self.queued_keys = {}
                 if ui:is_active() then
+                    log:debug("clearing screenkey buffer")
                     utils.clear_buf_lines(vim.g.screenkey_bufnr, 0, config.options.win_opts.height)
                 end
                 if config.options.emit_events and self.statusline_component_active then
+                    log:debug("emitting ScreenkeyCleared event")
                     api.nvim_exec_autocmds("User", { pattern = "ScreenkeyCleared" })
                 end
             end
         end)
     )
-    log:log("created timer")
+    log:info("created timer")
 end
 
 ---@private
@@ -73,12 +78,14 @@ function M:kill_timer()
         self.timer:stop()
         self.timer:close()
         self.timer = nil
-        log:log("killed timer")
+        log:info("killed timer")
     end
 end
 
 ---@return fun(key: string, typed: string): string?
 function M:on_key()
+    log:info("core.on_key")
+
     return function(key, typed)
         if not ui:is_active() and not self.statusline_component_active then
             self:kill_timer()
@@ -88,6 +95,7 @@ function M:on_key()
             return
         end
         typed = typed or key
+        log:trace("typed:", typed, "key:", key)
         if not typed or #typed == 0 then
             return
         end
@@ -103,32 +111,43 @@ function M:on_key()
             ui:display_text(self.queued_keys)
         end
         if config.options.emit_events and self.statusline_component_active then
+            log:trace("emitting ScreenkeyUpdated event")
             api.nvim_exec_autocmds("User", { pattern = "ScreenkeyUpdated" })
         end
     end
 end
 
 function M:toggle()
+    log:info("core.toggle")
+
     self.queued_keys = {}
     ui:toggle()
 end
 
 function M:redraw()
+    log:info("core.redraw")
+
     ui:redraw()
     ui:display_text(self.queued_keys)
 end
 
 function M:toggle_statusline_component()
+    log:info("core.toggle_statusline_component")
+
     self.statusline_component_active = not self.statusline_component_active
 end
 
 ---@return boolean
 function M:statusline_component_is_active()
+    log:info("core.statusline_component_is_active")
+
     return self.statusline_component_active
 end
 
 ---@return string
 function M:get_keys()
+    log:info("core.get_keys")
+
     return self.statusline_component_active and key_utils.to_string(self.queued_keys) or ""
 end
 

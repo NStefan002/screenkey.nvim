@@ -31,8 +31,18 @@
 ---@field separator string
 --- how to display the special keys
 ---@field keys table<string, string>
+--- how to display notifications
+---@field notify_method "none" | "notify" | "echo"
+--- logger settings
+---@field log screenkey.config.log.full
 
 ---@class (exact) screenkey.config : screenkey.config.full, {}
+---@field log screenkey.config.log
+
+---@class (exact) screenkey.config.log.full
+---@field min_level vim.log.levels
+
+---@class (exact) screenkey.config.log : screenkey.config.log.full, {}
 
 ---@class screenkey.queued_key
 ---@field key string
@@ -47,3 +57,5 @@
 ---@class screenkey.pair<T1, T2> { [1]: T1, [2]: T2 }
 
 ---@alias screenkey.colored_key screenkey.pair<string, screenkey.hl_group>
+
+---@alias screenkey.notification_message screenkey.pair<string, vim.log.levels>

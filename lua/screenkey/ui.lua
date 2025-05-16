@@ -1,7 +1,7 @@
 local api = vim.api
 local config = require("screenkey.config")
 local key_utils = require("screenkey.key_utils")
-local log = require("screenkey.logger")
+local log = require("screenkey.log")
 local utils = require("screenkey.utils")
 
 ---@class screenkey.ui
@@ -27,6 +27,8 @@ function M.set_highlights()
     for hl_grp, opts in pairs(config.options.hl_groups) do
         api.nvim_set_hl(vim.g.screenkey_ns_id, hl_grp, opts)
     end
+
+    log:info("highlight groups are set")
 end
 
 ---@private
@@ -39,14 +41,20 @@ function M:open_win()
             api.nvim_open_win(vim.g.screenkey_bufnr, false, config.options.win_opts)
     end
     if vim.g.screenkey_winnr == 0 then
-        log:log("failed to create window")
-        error("Screenkey: failed to create window")
+        log:error("failed to create window")
+
+        log:notify(vim.log.levels.ERROR, {
+            { "Internal error: ", vim.log.levels.OFF },
+            { " window failed to open ", vim.log.levels.ERROR },
+        })
+        return
     end
     utils.clear_buf_lines(vim.g.screenkey_bufnr, 0, config.options.win_opts.height)
     api.nvim_set_option_value("filetype", "screenkey", { buf = vim.g.screenkey_bufnr })
     self.set_highlights()
     api.nvim_win_set_hl_ns(vim.g.screenkey_winnr, vim.g.screenkey_ns_id)
-    log:log(
+
+    log:debug(
         ("created window %d for buffer %d"):format(vim.g.screenkey_winnr, vim.g.screenkey_bufnr)
     )
 end
@@ -68,12 +76,13 @@ function M:create_autocmds()
                 and not exiting
                 and (ev.event == "TabEnter" or ev.match == tostring(vim.g.screenkey_winnr))
             then
-                log:log("TabEnter/WinClosed: reopening window")
                 exiting = true
                 vim.schedule(function()
                     M:redraw()
                     exiting = false
                 end)
+
+                log:debug("TabEnter/WinClosed: reopening window")
             end
         end,
         desc = "make the Screenkey window persistent",
@@ -95,24 +104,19 @@ function M:create_autocmds()
             if (infront and behind) or (not infront and not behind) then
                 return
             end
-            log:log(("FileType %s: reopening window"):format(ev.match))
             utils.update_zindex(ev.buf, infront)
+
+            log:debug(("FileType %s: reopening window"):format(ev.match))
         end,
     })
-    -- TODO: do this instead of the previous one (currently doesn't work, don't know why)
-    -- api.nvim_create_autocmd({ "WinNew", "BufWinEnter" }, {
-    --     group = augrp,
-    --     pattern = "*",
-    --     callback = function(ev)
-    --         P(ev.event)
-    --     end,
-    -- })
 
     local old_width, old_height = vim.o.columns, vim.o.lines
     api.nvim_create_autocmd({ "VimResized" }, {
         group = self.augrp,
         pattern = "*",
         callback = function()
+            log:debug("VimResized: resizing window")
+
             local new_width, new_height = vim.o.columns, vim.o.lines
             local width_ratio = new_width / old_width
             local height_ratio = new_height / old_height
@@ -124,22 +128,29 @@ function M:create_autocmds()
             old_width, old_height = new_width, new_height
         end,
     })
+
+    log:info("autocmds are set")
 end
 
 ---@private
 function M.close_win()
     if vim.g.screenkey_bufnr ~= -1 and api.nvim_buf_is_valid(vim.g.screenkey_bufnr) then
         api.nvim_buf_delete(vim.g.screenkey_bufnr, { force = true })
+
+        log:debug(("closed buffer %d"):format(vim.g.screenkey_bufnr))
     end
     if vim.g.screenkey_winnr ~= -1 and api.nvim_win_is_valid(vim.g.screenkey_winnr) then
         api.nvim_win_close(vim.g.screenkey_winnr, true)
+
+        log:debug(("closed window %d"):format(vim.g.screenkey_winnr))
     end
-    log:log(("closed window %d and buffer %d"):format(vim.g.screenkey_winnr, vim.g.screenkey_bufnr))
     vim.g.screenkey_winnr = -1
     vim.g.screenkey_bufnr = -1
 end
 
 function M:toggle()
+    log:info("ui.toggle")
+
     self.active = not self.active
     self.queued_keys = {}
     if self.active then
@@ -151,6 +162,8 @@ function M:toggle()
 end
 
 function M:redraw()
+    log:info("ui.redraw")
+
     if not self.active then
         return
     end
@@ -160,6 +173,8 @@ end
 
 ---@return boolean
 function M:is_active()
+    log:info("ui.is_active")
+
     return self.active
 end
 
@@ -169,8 +184,14 @@ function M:display_text(queued_keys)
         return
     end
 
+    log:info("ui.display_text")
+
     local colored_keys = key_utils.colorize_keys(queued_keys)
+    log:debug("colored_keys:", colored_keys)
+
     colored_keys = config.options.colorize(colored_keys)
+    log:debug("colored_keys after `colorize`:", colored_keys)
+
     local line = math.floor(config.options.win_opts.height / 2)
     -- center text inside of the screenkey window
     local col = math.floor(
@@ -183,6 +204,7 @@ function M:display_text(queued_keys)
         local extm_opts = self.extm_id == -1
                 and { virt_text = colored_keys, virt_text_win_col = col }
             or { virt_text = colored_keys, virt_text_win_col = col, id = self.extm_id }
+        log:trace(("%s extmarks"):format(self.extm_id == -1 and "set" or "update"))
         self.extm_id = api.nvim_buf_set_extmark(
             vim.g.screenkey_bufnr,
             vim.g.screenkey_ns_id,
