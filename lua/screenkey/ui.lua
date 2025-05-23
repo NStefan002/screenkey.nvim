@@ -91,13 +91,14 @@ function M:update_zindex(target_bufnr, infront)
     log:debug(("target window (id: %d) zindex: %d"):format(target_win_id, target_zindex))
 end
 
+---@private
 function M:create_autocmds()
     -- autocmds already set
     if self.augrp ~= -1 then
         return
     end
 
-    self.augrp = api.nvim_create_augroup("Screenkey", {})
+    self.augrp = api.nvim_create_augroup("screenkey.ui", {})
 
     local exiting = false
     api.nvim_create_autocmd({ "TabEnter", "WinClosed" }, {
