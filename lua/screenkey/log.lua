@@ -5,6 +5,7 @@ local utils = require("screenkey.utils")
 ---@field private levels table<integer, string>
 ---@field private highlights table<integer, string>
 ---@field private lines string[]
+---@field private augrp integer
 local M = {}
 
 ---@return screenkey.log
@@ -27,6 +28,7 @@ function M:new()
             [vim.log.levels.OFF] = "Normal",
         },
         lines = {},
+        augrp = -1,
     }
     setmetatable(obj, self)
     self.__index = self
@@ -34,9 +36,62 @@ function M:new()
 end
 
 ---@private
+function M:write()
+    local filepath = require("screenkey.config").options.log.filepath
+    local file, err = io.open(filepath, "a")
+    if not file then
+        self:notify(vim.log.levels.ERROR, {
+            { "Error opening log file:\n", vim.log.levels.OFF },
+            { err, vim.log.levels.ERROR },
+        })
+        self:error(("Error opening log file:\n%s"):format(err))
+        return
+    end
+    file:write(table.concat(self.lines, "\n"))
+    file:write("\n")
+    file:close()
+end
+
+---@private
+--- Returns lines if the file exists, otherwise returns nil and error message
+---@return string[] | nil, string | nil
+function M.read()
+    local filepath = require("screenkey.config").options.log.filepath
+    local file, err = io.open(filepath, "r")
+    if not file then
+        return nil, err
+    end
+    local lines = {}
+    for line in file:lines() do
+        table.insert(lines, line)
+    end
+    file:close()
+    return lines, nil
+end
+
+---@private
+function M:create_autocmds()
+    -- autocmds already set
+    if self.augrp ~= -1 then
+        return
+    end
+
+    self.augrp = api.nvim_create_augroup("screenkey.log", {})
+    api.nvim_create_autocmd("ExitPre", {
+        group = self.augrp,
+        callback = function()
+            self:write()
+        end,
+        desc = "write screenkey log before neovim exits",
+    })
+end
+
+---@private
 ---@param lvl integer
 ---@param ... any
 function M:log(lvl, ...)
+    self:create_autocmds()
+
     local config = require("screenkey.config")
 
     if config.options.log.min_level > lvl then
@@ -113,7 +168,21 @@ function M:show()
         return
     end
     api.nvim_set_option_value("filetype", "screenkey_log", { buf = bufnr })
-    api.nvim_buf_set_lines(bufnr, 0, -1, false, self.lines)
+
+    local lines, err = self.read()
+    if not lines then
+        lines = {}
+        self:error(("Error while trying to read log file:\n%s"):format(err))
+    end
+    for _, line in ipairs(self.lines) do
+        table.insert(lines, line)
+    end
+    -- reverse order so the latest log entries appear at the top of the buffer
+    for i = 1, #lines / 2 do
+        lines[i], lines[#lines - i + 1] = lines[#lines - i + 1], lines[i]
+    end
+
+    api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
 end
 
 function M:trace(...)

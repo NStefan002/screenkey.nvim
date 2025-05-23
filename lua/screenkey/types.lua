@@ -41,6 +41,8 @@
 
 ---@class (exact) screenkey.config.log.full
 ---@field min_level vim.log.levels
+---@field save_to_file boolean
+---@field filepath string
 
 ---@class (exact) screenkey.config.log : screenkey.config.log.full, {}
 
