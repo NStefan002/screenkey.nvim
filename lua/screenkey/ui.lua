@@ -49,6 +49,7 @@ function M:open_win()
         })
         return
     end
+    self.active = true
     utils.clear_buf_lines(vim.g.screenkey_bufnr, 0, config.options.win_opts.height)
     api.nvim_set_option_value("filetype", "screenkey", { buf = vim.g.screenkey_bufnr })
     self.set_highlights()
@@ -166,7 +167,7 @@ function M:create_autocmds()
 end
 
 ---@private
-function M.close_win()
+function M:close_win()
     if vim.g.screenkey_bufnr ~= -1 and api.nvim_buf_is_valid(vim.g.screenkey_bufnr) then
         api.nvim_buf_delete(vim.g.screenkey_bufnr, { force = true })
 
@@ -179,6 +180,7 @@ function M.close_win()
     end
     vim.g.screenkey_winnr = -1
     vim.g.screenkey_bufnr = -1
+    self.active = false
 end
 
 function M:toggle()
