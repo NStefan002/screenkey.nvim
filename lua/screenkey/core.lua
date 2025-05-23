@@ -84,7 +84,7 @@ end
 
 ---@return fun(key: string, typed: string): string?
 function M:on_key()
-    log:info("core.on_key")
+    log:trace("core.on_key")
 
     return function(key, typed)
         if not ui:is_active() and not self.statusline_component_active then
@@ -118,35 +118,35 @@ function M:on_key()
 end
 
 function M:toggle()
-    log:info("core.toggle")
+    log:trace("core.toggle")
 
     self.queued_keys = {}
     ui:toggle()
 end
 
 function M:redraw()
-    log:info("core.redraw")
+    log:trace("core.redraw")
 
     ui:redraw()
     ui:display_text(self.queued_keys)
 end
 
 function M:toggle_statusline_component()
-    log:info("core.toggle_statusline_component")
+    log:trace("core.toggle_statusline_component")
 
     self.statusline_component_active = not self.statusline_component_active
 end
 
 ---@return boolean
 function M:statusline_component_is_active()
-    log:info("core.statusline_component_is_active")
+    log:trace("core.statusline_component_is_active")
 
     return self.statusline_component_active
 end
 
 ---@return string
 function M:get_keys()
-    log:info("core.get_keys")
+    log:trace("core.get_keys")
 
     return self.statusline_component_active and key_utils.to_string(self.queued_keys) or ""
 end

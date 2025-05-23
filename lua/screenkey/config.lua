@@ -91,9 +91,9 @@ function M.setup(opts)
     local log = require("screenkey.log")
     if not ok then
         log:notify(vim.log.levels.ERROR, {
-            { "invalid configuration, default settings will be used", vim.log.levels.INFO },
-            { "\n", vim.log.levels.OFF },
-            { "run ':checkhealth screenkey' for more details", vim.log.levels.INFO },
+            { "invalid configuration, default settings will be used\nrun ", vim.log.levels.OFF },
+            { ":checkhealth screenkey", vim.log.levels.INFO },
+            { " for more details", vim.log.levels.OFF },
         })
         log:error(err)
     else

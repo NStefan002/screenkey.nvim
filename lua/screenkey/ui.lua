@@ -162,7 +162,7 @@ function M:create_autocmds()
         end,
     })
 
-    log:info("autocmds are set")
+    log:info("ui autocmds are set")
 end
 
 ---@private
@@ -182,7 +182,7 @@ function M.close_win()
 end
 
 function M:toggle()
-    log:info("ui.toggle")
+    log:trace("ui.toggle")
 
     self.active = not self.active
     self.queued_keys = {}
@@ -195,7 +195,7 @@ function M:toggle()
 end
 
 function M:redraw()
-    log:info("ui.redraw")
+    log:trace("ui.redraw")
 
     if not self.active then
         return
@@ -206,7 +206,7 @@ end
 
 ---@return boolean
 function M:is_active()
-    log:info("ui.is_active")
+    log:trace("ui.is_active")
 
     return self.active
 end
@@ -217,13 +217,13 @@ function M:display_text(queued_keys)
         return
     end
 
-    log:info("ui.display_text")
+    log:trace("ui.display_text")
 
     local colored_keys = key_utils.colorize_keys(queued_keys)
-    log:debug("colored_keys:", colored_keys)
+    log:trace("colored_keys:", colored_keys)
 
     colored_keys = config.options.colorize(colored_keys)
-    log:debug("colored_keys after `colorize`:", colored_keys)
+    log:trace("colored_keys after `colorize`:", colored_keys)
 
     local line = math.floor(config.options.win_opts.height / 2)
     -- center text inside of the screenkey window
