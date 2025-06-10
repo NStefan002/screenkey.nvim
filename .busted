@@ -3,7 +3,7 @@ return {
         coverage = false,
         lpath = "lua/?.lua;lua/?/init.lua",
         lua = "~/.luarocks/bin/nlua",
-        -- helper = "spec/init_tests.lua",
+        helper = "spec/init_tests.lua",
     },
     default = {
         verbose = true,
