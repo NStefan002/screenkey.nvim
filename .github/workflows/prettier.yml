@@ -14,4 +14,4 @@ jobs:
         uses: creyD/prettier_action@v4.5
         with:
           dry: true
-          prettier_options: --check **/*.md
+          prettier_options: --check README.md CONTRIBUTING.md
