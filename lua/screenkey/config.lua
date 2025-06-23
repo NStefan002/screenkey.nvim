@@ -72,6 +72,7 @@ M.defaults = {
         ["ALT"] = "Alt",
         ["SUPER"] = "󰘳",
         ["<leader>"] = "<leader>",
+        ["%"] = "%%",
     },
     notify_method = "echo",
     log = {
