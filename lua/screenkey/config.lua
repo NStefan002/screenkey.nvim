@@ -72,7 +72,6 @@ M.defaults = {
         ["ALT"] = "Alt",
         ["SUPER"] = "󰘳",
         ["<leader>"] = "<leader>",
-        ["%"] = "%%",
     },
     notify_method = "echo",
     log = {
@@ -89,6 +88,8 @@ M.options = M.defaults
 function M.setup(opts)
     opts = opts or {}
     local ok, err = M.validate_config(opts)
+    local health = require("screenkey.health")
+    health.check()
     local log = require("screenkey.log")
     if not ok then
         log:notify(vim.log.levels.ERROR, {
@@ -149,7 +150,7 @@ function M.validate_config(config)
         for key, value in pairs(M.defaults.keys) do
             validation[key] = { value, "string", true }
         end
-        ok, err = utils.validate(validation, config.keys, "screenkey.config.keys")
+        ok, err = utils.validate_keytable(validation, config.keys , "screenkey.config.keys")
         if not ok then
             table.insert(errors, err)
         end
