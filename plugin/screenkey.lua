@@ -24,7 +24,7 @@ local subcmds = {
             if #args > 0 then
                 require("screenkey.log"):notify(vim.log.levels.ERROR, {
                     { "Command does not accept arguments: ", vim.log.levels.OFF },
-                    { (" Screenkey %s "):format(data.fargs[1]), vim.log.levels.INFO },
+                    { (" Screenkey %s "):format(data.fargs[1]), vim.log.levels.INFO }, --HERE--
                 })
                 return
             end

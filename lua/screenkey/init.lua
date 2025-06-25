@@ -18,7 +18,7 @@ function M.redraw()
     core:redraw()
 end
 
----@return boolean
+--@return boolean
 function M.is_active()
     return ui:is_active()
 end
