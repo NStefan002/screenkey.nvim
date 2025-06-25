@@ -88,8 +88,6 @@ M.options = M.defaults
 function M.setup(opts)
     opts = opts or {}
     local ok, err = M.validate_config(opts)
-    local health = require("screenkey.health")
-    health.check()
     local log = require("screenkey.log")
     if not ok then
         log:notify(vim.log.levels.ERROR, {
