@@ -147,8 +147,6 @@ require("screenkey").setup({
         ["ALT"] = "Alt",
         ["SUPER"] = "󰘳",
         ["<leader>"] = "<leader>",
-        ["%"] = "%%",
-
     },
 })
 ```
