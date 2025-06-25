@@ -58,7 +58,7 @@ function M.transform_input(in_key, group_mappings, show_leader)
                 or k:match("Release") ~= nil
                 or k:match("Middle") ~= nil
                 or k:match("Scroll") ~= nil
-                or k:match("Drag") ~= nil --TODOB
+                or k:match("Drag") ~= nil
             )
         then
             local leader = vim.g.mapleader or ""
@@ -103,7 +103,7 @@ function M.transform_input(in_key, group_mappings, show_leader)
                 end
             else
                 table.insert(transformed_keys, {
-                    key = config.options.keys[k] or k, ---TODOB
+                    key = config.options.keys[k] or k,
                     is_mapping = is_mapping,
                     consecutive_repeats = 1,
                 })
