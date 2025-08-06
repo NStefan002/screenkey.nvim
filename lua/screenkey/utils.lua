@@ -56,7 +56,12 @@ function M.validate_keytable(opts, user_config, path)
         if (type(key) ~= "string" or type(value) ~= "string") and opts[key] == nil then
             table.insert(
                 errors,
-                string.format("- [%s]=%s is not formatted correctly in %s", key, value, path)
+                string.format(
+                    "- both key and value ([%s] = %s) must be strings in %s",
+                    key,
+                    value,
+                    path
+                )
             )
         end
     end
