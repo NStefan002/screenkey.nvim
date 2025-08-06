@@ -91,15 +91,18 @@ function M.setup(opts)
     local log = require("screenkey.log")
     if not ok then
         log:notify(vim.log.levels.ERROR, {
-            { "invalid configuration, default settings will be used\nrun ", vim.log.levels.OFF },
-            { ":checkhealth screenkey", vim.log.levels.INFO },
-            { " for more details", vim.log.levels.OFF },
+            {
+                "invalid configuration, plugin may function improperly\nrun",
+                vim.log.levels.OFF,
+            },
+            { " :checkhealth screenkey ", vim.log.levels.INFO },
+            { "for more details", vim.log.levels.OFF },
         })
         log:error(err)
     else
         log:info("options setup done without errors")
-        M.options = vim.tbl_deep_extend("force", M.defaults, opts)
     end
+    M.options = vim.tbl_deep_extend("force", M.defaults, opts)
 end
 
 ---@param config screenkey.config
