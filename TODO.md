@@ -15,7 +15,7 @@
 ## Bugs
 
 - [ ] `which-key` duplicates keys
-- [ ] when neovim starts (and there is an error in the `config`), `screenkey` reports an error with
+- [x] when neovim starts (and there is an error in the `config`), `screenkey` reports an error with
       `\[...\] run :checkhealth screenkey for more details`, but the default `config` is used when the error occurs, so
       the `:checkhealth screenkey` command does not show any errors in `config`
 
@@ -33,4 +33,4 @@
 - [x] rework `logger` and add option to set the log level
 - [x] use `nvim_echo` to report messages (mainly in the `health` module)
 - [ ] remove deprecated `vim.validate()`
-- [ ] add examples of how to solve [#59](https://github.com/NStefan002/screenkey.nvim/issues/59)
+- [x] add examples of how to solve [#59](https://github.com/NStefan002/screenkey.nvim/issues/59)
