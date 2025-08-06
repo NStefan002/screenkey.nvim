@@ -52,7 +52,6 @@ function M.validate_keytable(opts, user_config, path)
     end
 
     local errors = {}
-    local i = 0
     for key, value in pairs(user_config) do
         if (type(key) ~= "string" or type(value) ~= "string") and opts[key] == nil then
             table.insert(
