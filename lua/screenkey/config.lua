@@ -148,7 +148,7 @@ function M.validate_config(config)
         for key, value in pairs(M.defaults.keys) do
             validation[key] = { value, "string", true }
         end
-        ok, err = utils.validate_keytable(validation, config.keys , "screenkey.config.keys")
+        ok, err = utils.validate_keytable(validation, config.keys, "screenkey.config.keys")
         if not ok then
             table.insert(errors, err)
         end
