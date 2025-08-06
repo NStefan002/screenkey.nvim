@@ -168,7 +168,7 @@ require("screenkey").setup({
 | `filter`              | function that takes an array of objects of type `screenkey.queued_keys`[^2] (`keys`) as input and returns a filtered array of the same keys, allowing customization of which keys should be displayed, see below for example                                                                                      |
 | `colorize`            | function that takes an array of `screenkey.colored_key`s[^2] (`keys`) as input and returns a modified array with the desired highlight groups applied, this enables dynamic styling of keys based on user preferences, see below for example                                                                      |
 | `separator`           | string of any length that separates the keys, space by default                                                                                                                                                                                                                                                    |
-| `keys`                | how to display the special keys                                                                                                                                                                                                                                                                                   |
+| `keys`                | how to display the special keys (or any other keys that you want to display differently)                                                                                                                                                                                                                          |
 
 [^1]:
     This is currently an experimental feature. Please report any issues you encounter. Use it responsibly, do not set
@@ -234,6 +234,35 @@ win_opts = {
 ```
 
 ### 🧩 Statusline integration
+
+> [!NOTE] Since '%' is a special character for neovim's statusline, you'll need to do one of the following:
+
+- First way (recommended):
+
+Add the following code snippet to your `screenkey` setup:
+
+```lua
+filter = function(keys)
+    local screenkey = require("screenkey")
+    for i, k in ipairs(keys) do
+        if screenkey.statusline_component_is_active() and k.key == "%" then
+            keys[i].key = "%%"
+        end
+    end
+    return keys
+end,
+```
+
+- Second way (only do this if you are not using the `screenkey`'s UI):
+
+Add the following code snippet to your `screenkey` setup:
+
+```lua
+keys = {
+    ["%"] = "%%",
+    -- other keys ...
+}
+```
 
 - Lualine integration:
 
