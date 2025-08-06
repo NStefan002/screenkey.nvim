@@ -41,6 +41,37 @@ function M.validate(opts, user_config, path)
     return false, table.concat(errors, "\n")
 end
 
+---@param opts table
+---@param user_config table
+---@param path string
+---@return boolean, string?
+function M.validate_keytable(opts, user_config, path)
+    local ok, err = pcall(vim.validate, opts)
+    if not ok then
+        return false, string.format("- %s: %s", path, err)
+    end
+
+    local errors = {}
+    for key, value in pairs(user_config) do
+        if (type(key) ~= "string" or type(value) ~= "string") and opts[key] == nil then
+            table.insert(
+                errors,
+                string.format(
+                    "- both key and value ([%s] = %s) must be strings in %s",
+                    key,
+                    value,
+                    path
+                )
+            )
+        end
+    end
+
+    if #errors == 0 then
+        return true, nil
+    end
+    return false, table.concat(errors, "\n")
+end
+
 ---@param str string string to split
 ---@param sep? string separator (whitespace by default)
 function M.split(str, sep)
