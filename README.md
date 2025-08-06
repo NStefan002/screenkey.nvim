@@ -258,7 +258,6 @@ require("lualine").setup({
 
 - For fully custom statusline users, `screenkey` will fire `User` events if `screenkey`'s statusline component is
   enabled. There are two patterns:
-
   1. `ScreenkeyUpdated` - fired on every key press
   2. `ScreenkeyCleared` - fired when clearing screenkey after some period of inactivity (see `clear_after` option)
 
