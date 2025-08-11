@@ -75,8 +75,7 @@ M.defaults = {
     },
     notify_method = "echo",
     log = {
-        min_level = vim.log.levels.DEBUG,
-        save_to_file = false,
+        min_level = vim.log.levels.OFF,
         filepath = vim.fn.stdpath("data") .. "/screenkey_log",
     },
 }
@@ -160,7 +159,6 @@ function M.validate_config(config)
     if config.log then
         ok, err = utils.validate({
             min_level = { config.log.min_level, "number", true },
-            save_to_file = { config.log.save_to_file, "boolean", true },
             filepath = { config.log.filepath, "string", true },
         }, config.log, "screenkey.config.log")
         if not ok then
