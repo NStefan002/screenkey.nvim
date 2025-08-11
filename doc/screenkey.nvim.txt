@@ -196,16 +196,11 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
 
   clear_after          clear the input after <clear_after> seconds of inactivity
 
-  emit_events          disable User events
+  emit_events          enable/disable User events
 
-  disable              temporarily disable screenkey (for specific filetype, buftype or
-                       mode), see :h 'filetype', :h 'buftype', :h vim-modes and :h mode()
-
-  disable.filetypes    for example: toggleterm or toml
-
-  disable.buftypes     see :h 'buftype', for example: terminal
-
-  disable.modes        :h vim-modes and :h mode(), for example: t
+  disable              temporarily disable screenkey for specific filetype (e.g. toml,
+                       see :h 'filetype'), buftype (e.g. terminal, see :h 'buftype') or
+                       mode (e.g. t, see :h vim-modes and :h mode())
 
   group_mappings       for example: <leader>sf opens up a fuzzy finder, if the
                        group_mappings option is set to true, every time you open up a
