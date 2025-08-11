@@ -67,20 +67,6 @@ local subcmds = {
             local log = require("screenkey.log")
             log:show()
         end,
-        complete = function(subcmd_arg_lead)
-            local log_args = {
-                "start",
-                "stop",
-                "show",
-                "clear",
-                "max_lines",
-            }
-            return vim.iter(log_args)
-                :filter(function(log_arg)
-                    return log_arg:find(subcmd_arg_lead) ~= nil
-                end)
-                :totable()
-        end,
     },
 }
 
