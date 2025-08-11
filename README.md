@@ -151,8 +151,7 @@ require("screenkey").setup({
     },
     notify_method = "echo",
     log = {
-        min_level = vim.log.levels.DEBUG,
-        save_to_file = false,
+        min_level = vim.log.levels.OFF,
         filepath = vim.fn.stdpath("data") .. "/screenkey_log",
     },
 })
@@ -175,7 +174,7 @@ require("screenkey").setup({
 | `separator`           | string of any length that separates the keys, space by default                                                                                                                                                                                                                                                    |
 | `keys`                | how to display the special keys (or any other keys that you want to display differently)                                                                                                                                                                                                                          |
 | `notify_method`       | how to display warnings and errors, can be `none` (disabled), `echo` (default, prints to command line), or `notify` (uses `vim.notify`)                                                                                                                                                                           |
-| `log`                 | options for logging, see [commands](#-commands) section (specifically `:Screenkey log`) for more information, `min_level` can be one of the `vim.log.levels` values, `save_to_file` is a boolean that indicates whether to save the log to a file, `filepath` is the path to the log file                         |
+| `log`                 | options for logging, see [commands](#-commands) section (specifically `:Screenkey log`) for more information, `min_level` can be one of the `vim.log.levels` values (set to `OFF` by default), `filepath` is the path to the log file                                                                                                        |
 
 [^1]:
     This is currently an experimental feature. Please report any issues you encounter. Use it responsibly, do not set
