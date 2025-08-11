@@ -126,6 +126,7 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
         disable = {
             filetypes = {},
             buftypes = {},
+            modes = {},
         },
         show_leader = true,
         group_mappings = false,
@@ -171,6 +172,12 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
             ["SUPER"] = "󰘳",
             ["<leader>"] = "<leader>",
         },
+        notify_method = "echo",
+        log = {
+            min_level = vim.log.levels.DEBUG,
+            save_to_file = false,
+            filepath = vim.fn.stdpath("data") .. "/screenkey_log",
+        },
     })
 <
 
@@ -191,12 +198,14 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
 
   emit_events          disable User events
 
-  disable              temporarily disable screenkey (for specific filetype or buftype),
-                       see :h 'filetype' and :h 'buftype'
+  disable              temporarily disable screenkey (for specific filetype, buftype or
+                       mode), see :h 'filetype', :h 'buftype', :h vim-modes and :h mode()
 
   disable.filetypes    for example: toggleterm or toml
 
   disable.buftypes     see :h 'buftype', for example: terminal
+
+  disable.modes        :h vim-modes and :h mode(), for example: t
 
   group_mappings       for example: <leader>sf opens up a fuzzy finder, if the
                        group_mappings option is set to true, every time you open up a
@@ -235,6 +244,15 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
 
   keys                 how to display the special keys (or any other keys that you want
                        to display differently)
+
+  notify_method        how to display warnings and errors, can be none (disabled), echo
+                       (default, prints to command line), or notify (uses vim.notify)
+
+  log                  options for logging, see commands section (specifically
+                       :Screenkey log) for more information, min_level can be one of the
+                       vim.log.levels values, save_to_file is a boolean that indicates
+                       whether to save the log to a file, filepath is the path to the log
+                       file
   ---------------------------------------------------------------------------------------
 
 [1] This is currently an experimental feature. Please report any issues
@@ -266,11 +284,7 @@ COMMANDS ~
 - `:Screenkey redraw` - force `screenkey` to redraw
 - `:Screenkey toggle_statusline_component` - toggle statusline component feature on/off (see
     |screenkey.nvim-statusline-integration|)
-- `:Screenkey log <arg>` - used for debugging, `<arg>` is one of the following:
-    - `on` - turn on logging
-    - `off` - turn off logging
-    - `max_lines` - set the maximum number of lines in the log file
-    - `show` - show the log file in a floating window
+- `:Screenkey log` - used for debugging, displays the current session’s log in a floating window
 - `:checkhealth screenkey` - run to diagnose possible configuration problems
 
 
