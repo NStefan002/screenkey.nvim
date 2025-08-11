@@ -103,6 +103,7 @@ require("screenkey").setup({
     disable = {
         filetypes = {},
         buftypes = {},
+        modes = {},
     },
     show_leader = true,
     group_mappings = false,
@@ -148,6 +149,12 @@ require("screenkey").setup({
         ["SUPER"] = "󰘳",
         ["<leader>"] = "<leader>",
     },
+    notify_method = "echo",
+    log = {
+        min_level = vim.log.levels.DEBUG,
+        save_to_file = false,
+        filepath = vim.fn.stdpath("data") .. "/screenkey_log",
+    },
 })
 ```
 
@@ -158,9 +165,10 @@ require("screenkey").setup({
 | `compress after`      | compress input when repeated <compress_after> times (for example `jjjj` will be compressed to `j..x4`)                                                                                                                                                                                                            |
 | `clear_after`         | clear the input after `<clear_after>` seconds of inactivity                                                                                                                                                                                                                                                       |
 | `emit_events`         | disable `User` events                                                                                                                                                                                                                                                                                             |
-| `disable`             | temporarily disable screenkey (for specific filetype or buftype), see `:h 'filetype'` and `:h 'buftype'`                                                                                                                                                                                                          |
+| `disable`             | temporarily disable screenkey (for specific filetype, buftype or mode), see `:h 'filetype'`, `:h 'buftype'`, `:h vim-modes` and `:h mode()`                                                                                                                                                                       |
 | `disable.filetypes`   | for example: `toggleterm` or `toml`                                                                                                                                                                                                                                                                               |
 | `disable.buftypes`    | see `:h 'buftype'`, for example: `terminal`                                                                                                                                                                                                                                                                       |
+| `disable.modes`       | `:h vim-modes` and `:h mode()`, for example: `t`                                                                                                                                                                                                                                                                  |
 | `group_mappings`      | for example: `<leader>sf` opens up a fuzzy finder, if the `group_mappings` option is set to `true`, every time you open up a fuzzy finder with `<leader>sf`, Screenkey will show `␣sf` instead of `␣ s f` to indicate that the used key combination was a defined mapping.                                        |
 | `show_leader`         | if this option is set to `true`, in the last example instead of `␣ s f` Screenkey will display `<leader> s f` (of course, if the `<space>` is `<leader>`), if the current key is not a defined mapping, Screenkey will display `<space>` as `␣`                                                                   |
 | `display_infront`[^1] | if the floating window containing the buffer of the same `filetype` as in `display_infront` is opened, screenkey window will be reopened in front of that window (if necessary), **Note:** you can define filetypes as lua regex, for example `"Telescope*"` to match every filetype that starts with `Telescope` |
@@ -169,6 +177,8 @@ require("screenkey").setup({
 | `colorize`            | function that takes an array of `screenkey.colored_key`s[^2] (`keys`) as input and returns a modified array with the desired highlight groups applied, this enables dynamic styling of keys based on user preferences, see below for example                                                                      |
 | `separator`           | string of any length that separates the keys, space by default                                                                                                                                                                                                                                                    |
 | `keys`                | how to display the special keys (or any other keys that you want to display differently)                                                                                                                                                                                                                          |
+| `notify_method`       | how to display warnings and errors, can be `none` (disabled), `echo` (default, prints to command line), or `notify` (uses `vim.notify`)                                                                                                                                                                           |
+| `log`                 | options for logging, see [commands](#-commands) section (specifically `:Screenkey log`) for more information, `min_level` can be one of the `vim.log.levels` values, `save_to_file` is a boolean that indicates whether to save the log to a file, `filepath` is the path to the log file                         |
 
 [^1]:
     This is currently an experimental feature. Please report any issues you encounter. Use it responsibly, do not set
@@ -187,11 +197,7 @@ require("screenkey").setup({
 <!-- TODO: add link to examples -->
 - `:Screenkey toggle_statusline_component` - toggle statusline component feature on/off (see
   [Statusline integration](#-statusline-integration))
-- `:Screenkey log <arg>` - used for debugging, `<arg>` is one of the following:
-  - `on` - turn on logging
-  - `off` - turn off logging
-  - `max_lines` - set the maximum number of lines in the log file
-  - `show` - show the log file in a floating window
+- `:Screenkey log` - used for debugging, displays the current session's log in a floating window
 - `:checkhealth screenkey` - run to diagnose possible configuration problems
 
 ### 📦 API
