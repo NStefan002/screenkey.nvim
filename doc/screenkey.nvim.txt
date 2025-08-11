@@ -174,8 +174,7 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
         },
         notify_method = "echo",
         log = {
-            min_level = vim.log.levels.DEBUG,
-            save_to_file = false,
+            min_level = vim.log.levels.OFF,
             filepath = vim.fn.stdpath("data") .. "/screenkey_log",
         },
     })
@@ -245,9 +244,8 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
 
   log                  options for logging, see commands section (specifically
                        :Screenkey log) for more information, min_level can be one of the
-                       vim.log.levels values, save_to_file is a boolean that indicates
-                       whether to save the log to a file, filepath is the path to the log
-                       file
+                       vim.log.levels values (set to OFF by default), filepath is the
+                       path to the log file
   ---------------------------------------------------------------------------------------
 
 [1] This is currently an experimental feature. Please report any issues
