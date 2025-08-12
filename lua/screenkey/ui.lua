@@ -52,6 +52,7 @@ function M:open_win()
     self.active = true
     utils.clear_buf_lines(vim.g.screenkey_bufnr, 0, config.options.win_opts.height)
     api.nvim_set_option_value("filetype", "screenkey", { buf = vim.g.screenkey_bufnr })
+    api.nvim_set_option_value("winfixbuf", true, { win = vim.g.screenkey_winnr })
     self.set_highlights()
     api.nvim_win_set_hl_ns(vim.g.screenkey_winnr, vim.g.screenkey_ns_id)
 
