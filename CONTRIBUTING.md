@@ -5,7 +5,6 @@ adding new features, improving documentation, or adding examples of usage.
 
 ## Table of contents
 
-- [Table of contents](#table-of-contents)
 - [Getting started](#getting-started)
 - [Commit messages / PR title](#commit-messages--pr-title)
 - [CI](#ci)
@@ -36,8 +35,9 @@ GitHub Actions will run the following checks on your PR:
 
 - `busted` tests
 - `luacheck` linting for lua files
-- `markdownlint` linting for markdown files
 - `stylua` formatting - checks if the lua files are formatted correctly
+- `markdownlint` linting for markdown files
+- `prettier` formatting - checks if the markdown files are formatted correctly
 
 If any CI check fails, review the logs, correct any issues in your code, and push the changes. If you're unsure, feel
 free to ask for assistance in the discussions or open an issue for guidance.
@@ -49,7 +49,8 @@ We use the following tools:
 ### Formatting
 
 - [`.editorconfig`](https://editorconfig.org/)
-- [`stylua`](https://github.com/JohnnyMorganz/StyLua)
+- [`stylua`](https://github.com/JohnnyMorganz/StyLua) for lua files
+- [`prettier`](https://prettier.io/) for markdown files
 
 ### Linting
 
