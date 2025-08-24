@@ -1,9 +1,9 @@
 local M = {}
 
 function M.check()
-    local Config = require("screenkey.config")
+    local config = require("screenkey.config")
     vim.health.start("screenkey.nvim")
-    local ok, err = Config.validate_config(Config.options)
+    local ok, err = config.validate_config(config.options)
     if ok then
         vim.health.ok("Setup is correct")
     else
