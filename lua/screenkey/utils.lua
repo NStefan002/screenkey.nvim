@@ -18,12 +18,23 @@ function M.tbl_contains(t, value, f)
     return false
 end
 
----@param opts table
+---@param opts table<string, table>
 ---@param user_config table
 ---@param path string
 ---@return boolean, string?
 function M.validate(opts, user_config, path)
-    local ok, err = pcall(vim.validate, opts)
+    unpack = unpack or table.unpack
+    local ok, err
+    if vim.fn.has("nvim-0.11") == 1 then
+        for k, v in pairs(opts) do
+            ok, err = pcall(vim.validate, k, unpack(v))
+            if not ok then
+                break
+            end
+        end
+    else
+        ok, err = pcall(vim.validate, opts)
+    end
     if not ok then
         return false, ("- %s: %s"):format(path, err)
     end
@@ -41,12 +52,23 @@ function M.validate(opts, user_config, path)
     return false, table.concat(errors, "\n")
 end
 
----@param opts table
+---@param opts table<string, table>
 ---@param user_config table
 ---@param path string
 ---@return boolean, string?
 function M.validate_keytable(opts, user_config, path)
-    local ok, err = pcall(vim.validate, opts)
+    unpack = unpack or table.unpack
+    local ok, err
+    if vim.fn.has("nvim-0.11") == 1 then
+        for k, v in pairs(opts) do
+            ok, err = pcall(vim.validate, k, unpack(v))
+            if not ok then
+                break
+            end
+        end
+    else
+        ok, err = pcall(vim.validate, opts)
+    end
     if not ok then
         return false, ("- %s: %s"):format(path, err)
     end
