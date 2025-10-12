@@ -83,19 +83,19 @@ function M.transform_input(in_key, group_mappings, show_leader)
                     end
                     if modifier == "C" then
                         table.insert(transformed_keys, {
-                            key = string.format("%s+%s", config.options.keys["CTRL"], key),
+                            key = ("%s+%s"):format(config.options.keys["CTRL"], key),
                             is_mapping = is_mapping,
                             consecutive_repeats = 1,
                         })
                     elseif modifier == "A" or modifier == "M" then
                         table.insert(transformed_keys, {
-                            key = string.format("%s+%s", config.options.keys["ALT"], key),
+                            key = ("%s+%s"):format(config.options.keys["ALT"], key),
                             is_mapping = is_mapping,
                             consecutive_repeats = 1,
                         })
                     elseif modifier == "D" then
                         table.insert(transformed_keys, {
-                            key = string.format("%s+%s", config.options.keys["SUPER"], key),
+                            key = ("%s+%s"):format(config.options.keys["SUPER"], key),
                             is_mapping = is_mapping,
                             consecutive_repeats = 1,
                         })

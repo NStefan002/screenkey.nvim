@@ -25,13 +25,13 @@ end
 function M.validate(opts, user_config, path)
     local ok, err = pcall(vim.validate, opts)
     if not ok then
-        return false, string.format("- %s: %s", path, err)
+        return false, ("- %s: %s"):format(path, err)
     end
 
     local errors = {}
     for key, _ in pairs(user_config) do
         if not opts[key] then
-            table.insert(errors, string.format("- '%s' is not a valid key of %s", key, path))
+            table.insert(errors, ("- '%s' is not a valid key of %s"):format(key, path))
         end
     end
 
@@ -48,7 +48,7 @@ end
 function M.validate_keytable(opts, user_config, path)
     local ok, err = pcall(vim.validate, opts)
     if not ok then
-        return false, string.format("- %s: %s", path, err)
+        return false, ("- %s: %s"):format(path, err)
     end
 
     local errors = {}
@@ -56,12 +56,7 @@ function M.validate_keytable(opts, user_config, path)
         if (type(key) ~= "string" or type(value) ~= "string") and opts[key] == nil then
             table.insert(
                 errors,
-                string.format(
-                    "- both key and value ([%s] = %s) must be strings in %s",
-                    key,
-                    value,
-                    path
-                )
+                ("- both key and value ([%s] = %s) must be strings in %s"):format(key, value, path)
             )
         end
     end
@@ -77,7 +72,7 @@ end
 function M.split(str, sep)
     sep = sep or "%s"
     local t = {}
-    for s in string.gmatch(str, "([^" .. sep .. "]+)") do
+    for s in str:gmatch("([^" .. sep .. "]+)") do
         table.insert(t, s)
     end
     return t
