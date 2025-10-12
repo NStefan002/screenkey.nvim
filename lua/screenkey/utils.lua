@@ -23,18 +23,7 @@ end
 ---@param path string
 ---@return boolean, string?
 function M.validate(opts, user_config, path)
-    unpack = unpack or table.unpack
-    local ok, err
-    if vim.fn.has("nvim-0.11") == 1 then
-        for k, v in pairs(opts) do
-            ok, err = pcall(vim.validate, k, unpack(v))
-            if not ok then
-                break
-            end
-        end
-    else
-        ok, err = pcall(vim.validate, opts)
-    end
+    local ok, err = pcall(vim.validate, opts)
     if not ok then
         return false, ("- %s: %s"):format(path, err)
     end
@@ -57,18 +46,7 @@ end
 ---@param path string
 ---@return boolean, string?
 function M.validate_keytable(opts, user_config, path)
-    unpack = unpack or table.unpack
-    local ok, err
-    if vim.fn.has("nvim-0.11") == 1 then
-        for k, v in pairs(opts) do
-            ok, err = pcall(vim.validate, k, unpack(v))
-            if not ok then
-                break
-            end
-        end
-    else
-        ok, err = pcall(vim.validate, opts)
-    end
+    local ok, err = pcall(vim.validate, opts)
     if not ok then
         return false, ("- %s: %s"):format(path, err)
     end
