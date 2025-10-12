@@ -23,9 +23,12 @@ end
 ---@param path string
 ---@return boolean, string?
 function M.validate(opts, user_config, path)
-    local ok, err = pcall(vim.validate, opts)
-    if not ok then
-        return false, ("- %s: %s"):format(path, err)
+    unpack = unpack or table.unpack
+    for k, v in pairs(opts) do
+        local ok, err = pcall(vim.validate, k, unpack(v))
+        if not ok then
+            return false, string.format("- %s: %s", path, err)
+        end
     end
 
     local errors = {}
@@ -46,9 +49,12 @@ end
 ---@param path string
 ---@return boolean, string?
 function M.validate_keytable(opts, user_config, path)
-    local ok, err = pcall(vim.validate, opts)
-    if not ok then
-        return false, ("- %s: %s"):format(path, err)
+    unpack = unpack or table.unpack
+    for k, v in pairs(opts) do
+        local ok, err = pcall(vim.validate, k, unpack(v))
+        if not ok then
+            return false, string.format("- %s: %s", path, err)
+        end
     end
 
     local errors = {}
