@@ -7,7 +7,7 @@ function M.check()
     if ok then
         vim.health.ok("Setup is correct")
     else
-        vim.health.error(string.format("Setup is incorrect:\n%s", err))
+        vim.health.error(("Setup is incorrect:\n%s"):format(err))
     end
 end
 
