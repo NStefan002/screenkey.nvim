@@ -1,4 +1,4 @@
-*screenkey.nvim.txt*      For Neovim >= 0.10.0     Last change: 2025 August 24
+*screenkey.nvim.txt*     For Neovim >= 0.10.0     Last change: 2025 October 12
 
 ==============================================================================
 Table of Contents                           *screenkey.nvim-table-of-contents*
@@ -70,7 +70,7 @@ REQUIREMENTS                      *screenkey.nvim-screenkey.nvim-requirements*
 
 INSTALLATION                      *screenkey.nvim-screenkey.nvim-installation*
 
-lazy <https://github.com/folke/lazy.nvim>
+lazy <https://github.com/folke/lazy.nvim>:
 
 >lua
     return {
@@ -80,7 +80,7 @@ lazy <https://github.com/folke/lazy.nvim>
     }
 <
 
-packer <https://github.com/wbthomason/packer.nvim>
+packer <https://github.com/wbthomason/packer.nvim>:
 
 >lua
     use({ "NStefan002/screenkey.nvim", tag = "*" })
@@ -92,7 +92,7 @@ rocks.nvim <https://github.com/nvim-neorocks/rocks.nvim>
 
 
   [!NOTE]
-  - Thereis no need to call the `setup` function, only call it if you need to change some options
+  - There is no need to call the `setup` function, only call it if you need to change some options
   - There is no need to lazy load `Screenkey`, it lazy loads by default.
 
 CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
@@ -382,7 +382,7 @@ Add the following code snippet to your `screenkey` setup:
     1. `ScreenkeyUpdated` - fired on every key press
     2. `ScreenkeyCleared` - fired when clearing screenkey after some period of inactivity (see `clear_after` option)
     If you are experiencing performance issues and do not rely on these events, you can disable them by setting
-    `emit_events` option to `false`. Example usage with heirline <https://github.com/rebelot/heirline.nvim>
+    `emit_events` option to `false`. Example usage with heirline <https://github.com/rebelot/heirline.nvim>:
 
 >lua
     require("heirline").setup({
