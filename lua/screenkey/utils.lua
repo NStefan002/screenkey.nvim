@@ -23,7 +23,7 @@ end
 ---@param path string
 ---@return boolean, string?
 function M.validate(opts, user_config, path)
-    unpack = unpack or table.unpack
+    local unpack = unpack or table.unpack
     for k, v in pairs(opts) do
         local ok, err = pcall(vim.validate, k, unpack(v))
         if not ok then
@@ -49,7 +49,7 @@ end
 ---@param path string
 ---@return boolean, string?
 function M.validate_keytable(opts, user_config, path)
-    unpack = unpack or table.unpack
+    local unpack = unpack or table.unpack
     for k, v in pairs(opts) do
         local ok, err = pcall(vim.validate, k, unpack(v))
         if not ok then
