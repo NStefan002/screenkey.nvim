@@ -27,7 +27,7 @@ function M.validate(opts, user_config, path)
     for k, v in pairs(opts) do
         local ok, err = pcall(vim.validate, k, unpack(v))
         if not ok then
-            return false, string.format("- %s: %s", path, err)
+            return false, ("- %s: %s"):format(path, err)
         end
     end
 
@@ -53,7 +53,7 @@ function M.validate_keytable(opts, user_config, path)
     for k, v in pairs(opts) do
         local ok, err = pcall(vim.validate, k, unpack(v))
         if not ok then
-            return false, string.format("- %s: %s", path, err)
+            return false, ("- %s: %s"):format(path, err)
         end
     end
 
