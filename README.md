@@ -97,6 +97,7 @@ require("screenkey").setup({
         ["screenkey.hl.map"] = { link = "Normal" },
         ["screenkey.hl.sep"] = { link = "Normal" },
     },
+    winblend = 0,
     compress_after = 3,
     clear_after = 3,
     emit_events = true,
@@ -161,6 +162,7 @@ require("screenkey").setup({
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `win_opts`            | see `:h nvim_open_win`, **note1:** other options from `nvim_open_win` help can be provided (such as `win`, `bufpos`, `zindex` etc.), the ones listed above are just defaults)                                                                                                                                     |
 | `hl_groups`           | highlight groups used to color different types of displayed text: **mappings**, **keys** and **separators** (see ':h nvim_set_hl()')                                                                                                                                                                              |
+| `winblend`            | transparency of the floating window (0-100)                                                                                                                                                                                                                                                                       |
 | `compress after`      | compress input when repeated <compress_after> times (for example `jjjj` will be compressed to `j..x4`)                                                                                                                                                                                                            |
 | `clear_after`         | clear the input after `<clear_after>` seconds of inactivity                                                                                                                                                                                                                                                       |
 | `emit_events`         | enable/disable `User` events                                                                                                                                                                                                                                                                                      |
