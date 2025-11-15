@@ -120,6 +120,7 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
             ["screenkey.hl.map"] = { link = "Normal" },
             ["screenkey.hl.sep"] = { link = "Normal" },
         },
+        winblend = 0,
         compress_after = 3,
         clear_after = 3,
         emit_events = true,
@@ -189,6 +190,8 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
 
   hl_groups            highlight groups used to color different types of displayed text:
                        mappings, keys and separators (see ‘:h nvim_set_hl()’)
+
+  winblend             transparency of the floating window (0-100)
 
   compress after       compress input when repeated times (for example jjjj will be
                        compressed to j..x4)
