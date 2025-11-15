@@ -3,6 +3,8 @@
 ---@field win_opts vim.api.keyset.win_config
 --- see ':h nvim_set_hl()'
 ---@field hl_groups table<screenkey.hl_group, vim.api.keyset.highlight>
+--- see ':h 'winblend''
+---@field winblend integer
 --- compress input when repeated <compress_after> times
 ---@field compress_after integer
 --- clear the input after `<clear_after>` seconds of inactivity

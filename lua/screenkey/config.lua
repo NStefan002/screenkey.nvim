@@ -21,6 +21,7 @@ M.defaults = {
         ["screenkey.hl.map"] = { link = "Normal" },
         ["screenkey.hl.sep"] = { link = "Normal" },
     },
+    winblend = 0,
     compress_after = 3,
     clear_after = 3,
     emit_events = true,
@@ -114,6 +115,7 @@ function M.validate_config(config)
     local ok, err = utils.validate({
         win_opts = { config.win_opts, "table", true },
         hl_groups = { config.hl_groups, "table", true },
+        winblend = { config.winblend, "number", true },
         compress_after = { config.compress_after, "number", true },
         clear_after = { config.clear_after, "number", true },
         emit_events = { config.emit_events, "boolean", true },
