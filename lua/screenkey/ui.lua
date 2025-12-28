@@ -168,21 +168,19 @@ function M:create_autocmds()
     api.nvim_create_autocmd({ "WinResized" }, {
         group = self.augrp,
         pattern = "*",
-        callback = function()
-            if not self.active or vim.g.screenkey_winnr == -1 then
+        callback = function(ev)
+            if
+                not self.active
+                or vim.g.screenkey_winnr == -1
+                or vim.g.screenkey_winnr ~= tonumber(ev.match)
+            then
                 return
             end
-            log:debug("WinResized: resizing window")
 
-            local resized_wins = vim.v.event.windows or {}
-            for _, win_id in ipairs(resized_wins) do
-                if win_id == vim.g.screenkey_winnr then
-                    local win_config = api.nvim_win_get_config(vim.g.screenkey_winnr)
-                    config.options.win_opts.width = win_config.width
-                    config.options.win_opts.height = win_config.height
-                    return
-                end
-            end
+            log:debug("WinResized: resizing window")
+            local win_config = api.nvim_win_get_config(vim.g.screenkey_winnr)
+            config.options.win_opts.width = win_config.width
+            config.options.win_opts.height = win_config.height
         end,
     })
 
