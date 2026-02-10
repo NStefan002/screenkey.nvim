@@ -74,12 +74,16 @@ function M.transform_input(in_key, group_mappings, show_leader)
                 })
             elseif M.is_special_key(k) then
                 local modifier = k:match("^<([CMAD])%-.+>$")
-                local key = k:match("^<.-%-.*(.)>$")
-                local shift = k:match("^<.-%-(S)%-.>$") ~= nil
+                local key = k:match("^<.+%-(.+)>$")
+                local shift = k:match("^<.-%-(S)%-.+>$") ~= nil
 
                 if key ~= nil then
-                    if not shift then
-                        key = key:lower()
+                    if #key == 1 then
+                        if not shift then
+                            key = key:lower()
+                        end
+                    else
+                        key = config.options.keys[("<" .. key:upper() .. ">")] or key
                     end
                     if modifier == "C" then
                         table.insert(transformed_keys, {
