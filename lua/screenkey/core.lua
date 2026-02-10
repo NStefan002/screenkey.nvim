@@ -103,14 +103,16 @@ function M:on_key()
         if not self.timer then
             self:create_timer()
         end
+        local prev_str = key_utils.to_string(self.queued_keys)
         local transformed_keys = key_utils.transform_input(typed)
         self.queued_keys = key_utils.append_new_keys(self.queued_keys, transformed_keys)
         self.queued_keys = config.options.filter(self.queued_keys)
         self.queued_keys = key_utils.remove_extra_keys(self.queued_keys)
+        local changed = key_utils.to_string(self.queued_keys) ~= prev_str
         if ui:is_active() then
             ui:display_text(self.queued_keys)
         end
-        if config.options.emit_events and self.statusline_component_active then
+        if changed and config.options.emit_events and self.statusline_component_active then
             log:trace("emitting ScreenkeyUpdated event")
             api.nvim_exec_autocmds("User", { pattern = "ScreenkeyUpdated" })
         end
