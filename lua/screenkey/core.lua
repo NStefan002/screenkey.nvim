@@ -9,7 +9,7 @@ local utils = require("screenkey.utils")
 ---@field private queued_keys screenkey.queued_key[]
 ---@field private statusline_component_active boolean
 ---@field private time integer
----@field private timer uv_timer_t
+---@field private timer uv.uv_timer_t
 local M = {}
 
 ---@return screenkey.core
