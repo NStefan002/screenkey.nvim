@@ -4,6 +4,13 @@ local key_utils = require("screenkey.key_utils")
 local log = require("screenkey.log")
 local utils = require("screenkey.utils")
 
+---@param tx string
+---@param v string
+---@return boolean
+local function cmp(tx, v)
+    return v:match(tx) ~= nil
+end
+
 ---@class screenkey.ui
 ---@field private active boolean
 ---@field private augrp integer
@@ -128,12 +135,6 @@ function M:create_autocmds()
         group = self.augrp,
         pattern = "*",
         callback = function(ev)
-            ---@param tx string
-            ---@param v string
-            ---@return boolean
-            local function cmp(tx, v)
-                return v:match(tx) ~= nil
-            end
             local infront = utils.tbl_contains(config.options.display_infront, ev.match, cmp)
             local behind = utils.tbl_contains(config.options.display_behind, ev.match, cmp)
             -- NOTE: I don't want to deal with conflicts (for now)
@@ -212,9 +213,10 @@ function M:toggle()
     if self.active then
         self:open_win()
         self:create_autocmds()
-    else
-        self:close_win()
+        return
     end
+
+    self:close_win()
 end
 
 function M:redraw()
@@ -248,9 +250,9 @@ function M:display_text(queued_keys)
     colored_keys = config.options.colorize(colored_keys)
     log:trace("colored_keys after `colorize`:", colored_keys)
 
-    local line = math.floor(config.options.win_opts.height / 2)
+    local line = utils.round(config.options.win_opts.height / 2)
     -- center text inside of the screenkey window
-    local col = math.floor(
+    local col = utils.round(
         (config.options.win_opts.width - api.nvim_strwidth(key_utils.to_string(queued_keys))) / 2
     )
     vim.schedule(function()
