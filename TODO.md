@@ -26,7 +26,7 @@
 - [x] `Contributing.md`
 - [x] update the `README.md` with the new changes
 - [ ] organize the examples in the `README.md`
-- [ ] create `highlight` section for examples in the `README.md
+- [ ] create `highlight` section for examples in the `README.md`
   - [x] add example of the window title/border coloring to the `README.md`
   - [ ] add example of the key coloring to the `README.md`
 - [x] change `disable.events` to be a separate option (e.g. `emit_events`)
