@@ -74,8 +74,8 @@ function M.transform_input(in_key, group_mappings, show_leader)
                 })
             elseif M.is_special_key(k) then
                 local modifier = k:match("^<([CMAD])%-.+>$") ---@type string
-                local key = k:match("^<([CMAD])%-.+>$") ---@type string
-                local shift = k:match("^<.+%-(.+)>$") ~= nil ---@type boolean
+                local key = k:match("^<.+%-(.+)>$") ---@type string
+                local shift = k:match("^<.-%-(S)%-.+>$") ~= nil ---@type boolean
 
                 if key ~= nil then
                     if #key == 1 then
