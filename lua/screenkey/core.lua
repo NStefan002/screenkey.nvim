@@ -50,6 +50,9 @@ end
 
 ---@private
 function M:create_timer()
+    if config.options.clear_after <= 0 then
+        return
+    end
     self.timer = vim.uv.new_timer()
     self.timer:start(
         0,
