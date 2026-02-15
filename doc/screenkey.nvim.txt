@@ -196,7 +196,8 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
   compress after       compress input when repeated times (for example jjjj will be
                        compressed to j..x4)
 
-  clear_after          clear the input after <clear_after> seconds of inactivity
+  clear_after          clear the input after <clear_after> seconds of inactivity, it
+                       would not be cleared if <clear_after> is below or equal to zero
 
   emit_events          enable/disable User events
 
