@@ -1,3 +1,5 @@
+---@meta
+
 ---@class (exact) screenkey.config.full
 --- see ':h nvim_open_win()'
 ---@field win_opts vim.api.keyset.win_config
