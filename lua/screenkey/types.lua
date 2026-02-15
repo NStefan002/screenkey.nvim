@@ -8,6 +8,7 @@
 --- compress input when repeated <compress_after> times
 ---@field compress_after integer
 --- clear the input after `<clear_after>` seconds of inactivity
+--- it would not be cleared if `<clear_after>` is below or equal to zero
 ---@field clear_after number
 --- weather or not to emit autocmd events, useful for fully custom statusline
 ---@field emit_events boolean
