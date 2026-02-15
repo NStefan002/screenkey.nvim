@@ -1,5 +1,63 @@
 # Changelog
 
+## [3.0.0](https://github.com/NStefan002/screenkey.nvim/compare/v2.4.2...v3.0.0) (2026-02-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **log:** remove `save_to_file` option, `OFF` is now default for `min_level`
+* **events:** extract `emit_events` to be a separate option
+* **statusline:** rework stline component and add new API for working with it
+* **types:** rename `config` types
+
+### Features
+
+* allow screen to never be cleared ([#75](https://github.com/NStefan002/screenkey.nvim/issues/75)) ([95bc18c](https://github.com/NStefan002/screenkey.nvim/commit/95bc18cf346556a771ce46738d8fea963d0efa17))
+* change some log inputs ([6412873](https://github.com/NStefan002/screenkey.nvim/commit/641287339dfe1eca4f031f59469addd55f10e343))
+* **command:** add `:Screenkey log clear` command ([6d96d5b](https://github.com/NStefan002/screenkey.nvim/commit/6d96d5b47e3c820edd6e568d13770ede6396c6a0))
+* **config:** add `colorize` function, completes tasks in [#54](https://github.com/NStefan002/screenkey.nvim/issues/54) ([15a8552](https://github.com/NStefan002/screenkey.nvim/commit/15a8552ab27b5c9236d09a02dfcc5989ea52c7a7))
+* **config:** allow any key in `config.keys` (fix [#59](https://github.com/NStefan002/screenkey.nvim/issues/59)) ([0f18732](https://github.com/NStefan002/screenkey.nvim/commit/0f187324bbe4caae453143b4e431ec3187ecec30))
+* **config:** enable customization of window transparency ([#70](https://github.com/NStefan002/screenkey.nvim/issues/70)) ([4f40230](https://github.com/NStefan002/screenkey.nvim/commit/4f40230af95d3fa9beaac224c666b1e4965fed00))
+* **disable:** users can now disable screenkey in specific modes ([390e379](https://github.com/NStefan002/screenkey.nvim/commit/390e3791b5bf9ebfb8f7f8bd91b014e2437527fb))
+* **events:** extract `emit_events` to be a separate option ([df80952](https://github.com/NStefan002/screenkey.nvim/commit/df80952043cda3cd7165191fc4d88c8312dadb8a))
+* **highlights:** define hlgroups for different types of keys ([208739a](https://github.com/NStefan002/screenkey.nvim/commit/208739a291738d7c2df32d0b6765656ff4ab82a7))
+* **keys:** `consecutive_repeats` field of the `queued_key` ([d494c6b](https://github.com/NStefan002/screenkey.nvim/commit/d494c6bbf884023627040560e3f1a530b50dd5ed))
+* **log:** add `save_to_file` and `filepath` log options ([d9833ba](https://github.com/NStefan002/screenkey.nvim/commit/d9833baf0422728787377425fb195a219e4c9ea1))
+* **log:** remove `save_to_file` option, `OFF` is now default for `min_level` ([52fdb94](https://github.com/NStefan002/screenkey.nvim/commit/52fdb941fe6d208b1dea8e489cc0f8d433e4973e))
+* **log:** rework `logger` ([9605131](https://github.com/NStefan002/screenkey.nvim/commit/9605131792a23902e00bbd4ccb747f4207267053))
+* **separator:** introduce separator between displayed keys ([9366ee3](https://github.com/NStefan002/screenkey.nvim/commit/9366ee3374a18d4a099d117194b0502ef9584b1e))
+* **statusline:** rework stline component and add new API for working with it ([37171c4](https://github.com/NStefan002/screenkey.nvim/commit/37171c430accedd6e5540a3b8ae47d76b137d799))
+* **types:** more precise types for highlights ([a8d95f2](https://github.com/NStefan002/screenkey.nvim/commit/a8d95f2bbd974404443707754a31d2c71393ccbd))
+* **ui:** persist window size on resize ([#71](https://github.com/NStefan002/screenkey.nvim/issues/71)) ([cb5ca77](https://github.com/NStefan002/screenkey.nvim/commit/cb5ca777b69413ef2a99735a2eaae12ac444dfb1))
+* **ui:** set `winfixbuf` for `screenkey` window ([cc83075](https://github.com/NStefan002/screenkey.nvim/commit/cc830750de70328c2bd3d845e349e7cc456b8892))
+* **utils:** improve errors styling ([5706541](https://github.com/NStefan002/screenkey.nvim/commit/570654185e94a4d49b911d1e0dc15b857e7cdc26))
+
+
+### Bug Fixes
+
+* **commands:** remove old `log` subcommands ([008e7cb](https://github.com/NStefan002/screenkey.nvim/commit/008e7cb52c7777c2b06ba62e85e543d490c1e451))
+* **config:** don't fall back to default config if the config is invalid ([1c61a57](https://github.com/NStefan002/screenkey.nvim/commit/1c61a57d82d415695e2ee3806d18f75f187ca19f))
+* **core:** filter keys should be applied for statusline too ([961be36](https://github.com/NStefan002/screenkey.nvim/commit/961be36ca5f2d2d52eb265bd77284cc084f113ee))
+* **core:** only emit ScreenkeyUpdated when queued keys actually change ([#73](https://github.com/NStefan002/screenkey.nvim/issues/73)) ([f42fe7a](https://github.com/NStefan002/screenkey.nvim/commit/f42fe7a4f9dee945ac8d3902db276e6548e93f0f))
+* **core:** statusline component bug ([9285cae](https://github.com/NStefan002/screenkey.nvim/commit/9285cae2004c7b0cb7b7136bc4af17aa7c176f47))
+* **key_utils:** handle multi-character key names in modifier parsing ([#72](https://github.com/NStefan002/screenkey.nvim/issues/72)) ([d231c2f](https://github.com/NStefan002/screenkey.nvim/commit/d231c2f96f3731d4faa504182ec57c0f9f2dc71c))
+* **lint:** `prettierd` conflicts with `markdownlint` rules ([689ae10](https://github.com/NStefan002/screenkey.nvim/commit/689ae10ed0acf140d5f6dd1bd68a7134b3121eca))
+* partial fix for [#47](https://github.com/NStefan002/screenkey.nvim/issues/47) ([a2f9f29](https://github.com/NStefan002/screenkey.nvim/commit/a2f9f29519f5d1d7309e6ef8f21dc9cdb0cd0866))
+* **ui:** update `active` field ([6d6c889](https://github.com/NStefan002/screenkey.nvim/commit/6d6c88922283c8227353d26dcf00f3254a73289e))
+* use `nvim_strwidth` instead of `#` ([1dddfce](https://github.com/NStefan002/screenkey.nvim/commit/1dddfcea0ee26989f55f4574d128c86b3d64a1d5))
+* **utils:** increment/decrement z-index accordingly ([bcdf8f8](https://github.com/NStefan002/screenkey.nvim/commit/bcdf8f8fd2ab5f44e1733a6fd9a6f09f86dbb500))
+* **util:** use `nvim_win_set_config()` instead of redrawing ([8adb110](https://github.com/NStefan002/screenkey.nvim/commit/8adb110adab9f5a30df8e3ac6241267b450186f1))
+
+
+### Reverts
+
+* "refactor(types)!: rename `config` types" ([01dc077](https://github.com/NStefan002/screenkey.nvim/commit/01dc077eb0f26568c98f35a7508fb1e8f24ec58f))
+
+
+### Code Refactoring
+
+* **types:** rename `config` types ([f309701](https://github.com/NStefan002/screenkey.nvim/commit/f3097016862133290e02edf517c52705479fe24e))
+
 ## [2.4.2](https://github.com/NStefan002/screenkey.nvim/compare/v2.4.1...v2.4.2) (2024-12-09)
 
 
