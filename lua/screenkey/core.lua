@@ -9,7 +9,7 @@ local utils = require("screenkey.utils")
 ---@field private queued_keys screenkey.queued_key[]
 ---@field private statusline_component_active boolean
 ---@field private time integer
----@field private timer uv_timer_t
+---@field private timer uv.uv_timer_t
 local M = {}
 
 ---@return screenkey.core
@@ -59,16 +59,18 @@ function M:create_timer()
         1000,
         vim.schedule_wrap(function()
             self.time = self.time + 1
-            if self.time >= config.options.clear_after then
-                self.queued_keys = {}
-                if ui:is_active() then
-                    log:debug("clearing screenkey buffer")
-                    utils.clear_buf_lines(vim.g.screenkey_bufnr, 0, config.options.win_opts.height)
-                end
-                if config.options.emit_events and self.statusline_component_active then
-                    log:debug("emitting ScreenkeyCleared event")
-                    api.nvim_exec_autocmds("User", { pattern = "ScreenkeyCleared" })
-                end
+            if self.time < config.options.clear_after then
+                return
+            end
+
+            self.queued_keys = {}
+            if ui:is_active() then
+                log:debug("clearing screenkey buffer")
+                utils.clear_buf_lines(vim.g.screenkey_bufnr, 0, config.options.win_opts.height)
+            end
+            if config.options.emit_events and self.statusline_component_active then
+                log:debug("emitting ScreenkeyCleared event")
+                api.nvim_exec_autocmds("User", { pattern = "ScreenkeyCleared" })
             end
         end)
     )
@@ -77,12 +79,14 @@ end
 
 ---@private
 function M:kill_timer()
-    if self.timer then
-        self.timer:stop()
-        self.timer:close()
-        self.timer = nil
-        log:info("killed timer")
+    if not self.timer then
+        return
     end
+
+    self.timer:stop()
+    self.timer:close()
+    self.timer = nil
+    log:info("killed timer")
 end
 
 ---@return fun(key: string, typed: string): string?
@@ -99,7 +103,7 @@ function M:on_key()
         end
         typed = typed or key
         log:trace("typed:", typed, "key:", key)
-        if not typed or #typed == 0 then
+        if not typed or typed:len() == 0 then
             return
         end
         self.time = 0

@@ -9,7 +9,7 @@ function M.split_key(key)
     local split = {}
     local tmp = ""
     local diamond_open = false
-    for i = 1, #key do
+    for i = 1, key:len() do
         local curr_char = key:sub(i, i)
         tmp = tmp .. curr_char
         if curr_char == "<" then
@@ -73,9 +73,9 @@ function M.transform_input(in_key, group_mappings, show_leader)
                     consecutive_repeats = 1,
                 })
             elseif M.is_special_key(k) then
-                local modifier = k:match("^<([CMAD])%-.+>$")
-                local key = k:match("^<.+%-(.+)>$")
-                local shift = k:match("^<.-%-(S)%-.+>$") ~= nil
+                local modifier = k:match("^<([CMAD])%-.+>$") ---@type string
+                local key = k:match("^<.+%-(.+)>$") ---@type string
+                local shift = k:match("^<.-%-(S)%-.+>$") ~= nil ---@type boolean
 
                 if key ~= nil then
                     if #key == 1 then
@@ -115,7 +115,7 @@ function M.transform_input(in_key, group_mappings, show_leader)
         end
     end
 
-    if group_mappings and #transformed_keys > 0 and is_mapping then
+    if group_mappings and not vim.tbl_isempty(transformed_keys) and is_mapping then
         return {
             {
                 key = table.concat(
@@ -138,7 +138,7 @@ end
 ---@return screenkey.queued_key[]
 function M.append_new_keys(queued_keys, new_keys)
     for _, k in ipairs(new_keys) do
-        if #queued_keys > 0 and k.key == queued_keys[#queued_keys].key then
+        if not vim.tbl_isempty(queued_keys) and k.key == queued_keys[#queued_keys].key then
             queued_keys[#queued_keys].consecutive_repeats = queued_keys[#queued_keys].consecutive_repeats
                 + 1
         else
@@ -193,7 +193,7 @@ end
 ---@param width? integer
 ---@return screenkey.queued_key[]
 function M.remove_extra_keys(queued_keys, compress_after, width)
-    if #queued_keys == 0 then
+    if vim.tbl_isempty(queued_keys) then
         return queued_keys
     end
 
@@ -261,10 +261,7 @@ function M.colorize_keys(queued_keys, compress_after, separator)
                     qkey.is_mapping and "screenkey.hl.map" or "screenkey.hl.key",
                 })
                 if i < #queued_keys or j < qkey.consecutive_repeats then
-                    table.insert(colorized_keys, {
-                        separator,
-                        "screenkey.hl.sep",
-                    })
+                    table.insert(colorized_keys, { separator, "screenkey.hl.sep" })
                 end
             end
         else
