@@ -6,7 +6,7 @@ adding new features, improving documentation, or adding examples of usage.
 ## Table of contents
 
 - [Getting started](#getting-started)
-- [Commit messages / PR title](#commit-messages--pr-title)
+- [PR's and commit messages](#prs-and-commit-messages)
 - [CI](#ci)
 - [Development](#development)
   - [Formatting](#formatting)
@@ -24,10 +24,14 @@ adding new features, improving documentation, or adding examples of usage.
 If you want to contribute to `screenkey.nvim`, and you don't have a specific idea in mind, you can check the
 [TODO](TODO.md) list for some ideas.
 
-## Commit messages / PR title
+## PR's and commit messages
 
-Please ensure your pull request title conforms to
-[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+Please ensure your pull request title and commit messages conform to
+[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). Make sure to use the appropriate type (e.g.,
+`feat`, `fix`, `docs`, etc.) and provide a clear description of the changes.
+
+Each PR should be focused on a single change (e.g. a bug fix, a new feature, a documentation update, etc.). If you have
+multiple unrelated changes, please consider opening separate PRs for each change.
 
 ## CI
 
