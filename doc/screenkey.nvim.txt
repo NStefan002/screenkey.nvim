@@ -64,7 +64,7 @@ SHOWCASE                              *screenkey.nvim-screenkey.nvim-showcase*
 
 REQUIREMENTS                      *screenkey.nvim-screenkey.nvim-requirements*
 
-- Neovim version >= 0.10.0
+- Neovim version >= 0.11.0
 - a Nerd Font <https://www.nerdfonts.com/> **(optional, but recommended)**
 
 
