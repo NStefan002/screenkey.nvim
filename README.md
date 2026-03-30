@@ -41,7 +41,7 @@ live coding sessions.
 
 ## 🔥 Requirements
 
-- Neovim version >= 0.10.0
+- Neovim version >= 0.11.0
 - a [Nerd Font](https://www.nerdfonts.com/) **_(optional, but recommended)_**
 
 ## 📋 Installation
