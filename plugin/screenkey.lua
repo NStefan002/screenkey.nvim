@@ -10,15 +10,18 @@ if vim.g.screenkey_ns_id ~= nil then
     return
 end
 
-vim.g.screenkey_ns_id = api.nvim_create_namespace("screenkey") ---@type integer
-vim.g.screenkey_bufnr = -1 ---@type integer
-vim.g.screenkey_winnr = -1 ---@type integer
+---@type integer
+vim.g.screenkey_ns_id = api.nvim_create_namespace("screenkey")
+---@type integer
+vim.g.screenkey_bufnr = -1
+---@type integer
+vim.g.screenkey_winnr = -1
 
 ---@type table<string, ScreenkeySubcmd>
 local subcmds = {
     toggle_statusline_component = {
         impl = function(args, data)
-            if not vim.tbl_isempty(args) then
+            if #args > 0 then
                 require("screenkey.log"):notify(vim.log.levels.ERROR, {
                     { "Command does not accept arguments: ", vim.log.levels.OFF },
                     { (" Screenkey %s "):format(data.fargs[1]), vim.log.levels.INFO },
@@ -30,7 +33,7 @@ local subcmds = {
     },
     toggle = {
         impl = function(args, data)
-            if not vim.tbl_isempty(args) then
+            if #args > 0 then
                 require("screenkey.log"):notify(vim.log.levels.ERROR, {
                     { "Command does not accept arguments: ", vim.log.levels.OFF },
                     { (" Screenkey %s "):format(data.fargs[1]), vim.log.levels.INFO },
@@ -42,7 +45,7 @@ local subcmds = {
     },
     redraw = {
         impl = function(args, data)
-            if not vim.tbl_isempty(args) then
+            if #args > 0 then
                 require("screenkey.log"):notify(vim.log.levels.ERROR, {
                     { "Command does not accept arguments: ", vim.log.levels.OFF },
                     { (" Screenkey %s "):format(data.fargs[1]), vim.log.levels.INFO },
@@ -54,7 +57,7 @@ local subcmds = {
     },
     log = {
         impl = function(args, data)
-            if not vim.tbl_isempty(args) then
+            if #args ~= 0 then
                 require("screenkey.log"):notify(vim.log.levels.ERROR, {
                     { "Command does not accept arguments: ", vim.log.levels.OFF },
                     { (" Screenkey %s "):format(data.fargs[1]), vim.log.levels.INFO },
@@ -70,7 +73,7 @@ local subcmds = {
 local function screenkey_cmd(data)
     local fargs = data.fargs
     -- NOTE: :Screenkey is the same as :Screenkey toggle
-    if not vim.tbl_isempty(fargs) then
+    if #fargs == 0 then
         require("screenkey").toggle()
         return
     end

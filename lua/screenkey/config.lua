@@ -168,8 +168,8 @@ function M.validate_config(config)
         end
     end
 
-    if vim.tbl_isempty(errors) then
-        return true
+    if #errors == 0 then
+        return true, nil
     end
     return false, table.concat(errors, "\n")
 end

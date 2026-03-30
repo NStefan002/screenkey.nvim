@@ -20,11 +20,10 @@ function M.tbl_contains(t, value, f)
     return false
 end
 
----@param opts table<string, table>
+---@param opts table
 ---@param user_config table
 ---@param path string
----@return boolean valid
----@return string? err
+---@return boolean, string?
 function M.validate(opts, user_config, path)
     local unpack = unpack or table.unpack
     for k, v in pairs(opts) do
@@ -41,17 +40,16 @@ function M.validate(opts, user_config, path)
         end
     end
 
-    if vim.tbl_isempty(errors) then
-        return true
+    if #errors == 0 then
+        return true, nil
     end
     return false, table.concat(errors, "\n")
 end
 
----@param opts table<string, table>
+---@param opts table
 ---@param user_config table
 ---@param path string
----@return boolean valid
----@return string? err
+---@return boolean, string?
 function M.validate_keytable(opts, user_config, path)
     local unpack = unpack or table.unpack
     for k, v in pairs(opts) do
@@ -71,8 +69,8 @@ function M.validate_keytable(opts, user_config, path)
         end
     end
 
-    if vim.tbl_isempty(errors) then
-        return true
+    if #errors == 0 then
+        return true, nil
     end
     return false, table.concat(errors, "\n")
 end
@@ -82,7 +80,7 @@ end
 ---@return string[]
 function M.split(str, sep)
     sep = sep or "%s"
-    local t = {} ---@type string[]
+    local t = {}
     for s in str:gmatch("([^" .. sep .. "]+)") do
         table.insert(t, s)
     end
