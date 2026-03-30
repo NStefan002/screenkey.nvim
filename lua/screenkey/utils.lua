@@ -7,8 +7,10 @@ local M = {}
 ---@param f? fun(tx: any, v: any): boolean Function to compare values (fist argument is table value, second is value to compare)
 ---@return boolean `true` if `t` contains `value`
 function M.tbl_contains(t, value, f)
-    f = f or function(tx, v)
-        return tx == v
+    if f == nil or not vim.is_callable(f) then
+        f = function(tx, v)
+            return tx == v
+        end
     end
     for _, tx in pairs(t) do
         if f(tx, value) then
@@ -23,9 +25,12 @@ end
 ---@param path string
 ---@return boolean, string?
 function M.validate(opts, user_config, path)
-    local ok, err = pcall(vim.validate, opts)
-    if not ok then
-        return false, ("- %s: %s"):format(path, err)
+    local unpack = unpack or table.unpack
+    for k, v in pairs(opts) do
+        local ok, err = pcall(vim.validate, k, unpack(v))
+        if not ok then
+            return false, ("- %s: %s"):format(path, err)
+        end
     end
 
     local errors = {}
@@ -46,9 +51,12 @@ end
 ---@param path string
 ---@return boolean, string?
 function M.validate_keytable(opts, user_config, path)
-    local ok, err = pcall(vim.validate, opts)
-    if not ok then
-        return false, ("- %s: %s"):format(path, err)
+    local unpack = unpack or table.unpack
+    for k, v in pairs(opts) do
+        local ok, err = pcall(vim.validate, k, unpack(v))
+        if not ok then
+            return false, ("- %s: %s"):format(path, err)
+        end
     end
 
     local errors = {}
@@ -69,6 +77,7 @@ end
 
 ---@param str string string to split
 ---@param sep? string separator (whitespace by default)
+---@return string[]
 function M.split(str, sep)
     sep = sep or "%s"
     local t = {}
