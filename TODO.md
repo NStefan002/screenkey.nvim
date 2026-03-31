@@ -18,17 +18,22 @@
 - [x] when neovim starts (and there is an error in the `config`), `screenkey` reports an error with
       `\[...\] run :checkhealth screenkey for more details`, but the default `config` is used when the error occurs, so
       the `:checkhealth screenkey` command does not show any errors in `config`
+- [ ] log text display
 
-## Other
+## Documentation
 
-- [ ] tests
-- [ ] more logging
 - [x] `Contributing.md`
 - [x] update the `README.md` with the new changes
 - [ ] organize the examples in the `README.md`
 - [ ] create `highlight` section for examples in the `README.md`
   - [x] add example of the window title/border coloring to the `README.md`
   - [ ] add example of the key coloring to the `README.md`
+- [ ] `vim.pack` example
+
+## Other
+
+- [ ] tests
+- [ ] more logging
 - [x] change `disable.events` to be a separate option (e.g. `emit_events`)
 - [x] rework `logger` and add option to set the log level
 - [x] use `nvim_echo` to report messages (mainly in the `health` module)
