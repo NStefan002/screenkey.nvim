@@ -53,7 +53,12 @@ function M:create_timer()
     if config.options.clear_after <= 0 then
         return
     end
-    self.timer = vim.uv.new_timer()
+    local tmp_timer, err, err_name = vim.uv.new_timer()
+    if not tmp_timer then
+        log:error("failed to create timer, error name:", err_name, "error code:", err)
+        return
+    end
+    self.timer = tmp_timer
     self.timer:start(
         0,
         1000,
