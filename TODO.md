@@ -19,6 +19,7 @@
       `\[...\] run :checkhealth screenkey for more details`, but the default `config` is used when the error occurs, so
       the `:checkhealth screenkey` command does not show any errors in `config`
 - [ ] log text display
+- [ ] properly parse `<tab>`, `<pageup>`, `<pagedown>`, arrow keys, `<home>`, `<end>`, `<del>`, `<esc>`, `<insert>`
 
 ## Documentation
 
