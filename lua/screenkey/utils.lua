@@ -91,7 +91,11 @@ end
 ---@param x number
 ---@return integer
 function M.round(x)
-    return math.floor(x + 0.5)
+    if x >= 0 then
+        return math.floor(x + 0.5)
+    else
+        return math.ceil(x - 0.5)
+    end
 end
 
 ---@param bufnr integer
