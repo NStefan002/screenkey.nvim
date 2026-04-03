@@ -73,19 +73,26 @@ function M.transform_input(in_key, group_mappings, show_leader)
                     consecutive_repeats = 1,
                 })
             elseif M.is_special_key(k) then
-                local modifier = k:match("^<([CMAD])%-.+>$")
-                local key = k:match("^<.+%-(.+)>$")
-                local shift = k:match("^<.-%-(S)%-.+>$") ~= nil
+                local modifier = k:match("^<([CMADT])%-.+>$")
+                local key = k:match("^<.+%-(.+)>$") or k:match("^<(.+)>$") -- for keys without modifiers, e.g. <Esc>
+                local shift = k:match("^<.-%-S%-.+>$") ~= nil or k:match("^<S%-.+>$") ~= nil -- shift can be indicated by either -S- or S-, e.g. <C-S-a> or <S-Tab>
 
                 if key ~= nil then
-                    if #key == 1 then
-                        if not shift then
-                            key = key:lower()
-                        end
+                    if #key == 1 and not shift then
+                        key = key:lower()
                     else
                         key = config.options.keys[("<" .. key:upper() .. ">")] or key
                     end
-                    if modifier == "C" then
+                    if modifier == nil then
+                        if shift then
+                            key = ("shift+%s"):format(key)
+                        end
+                        table.insert(transformed_keys, {
+                            key = key,
+                            is_mapping = is_mapping,
+                            consecutive_repeats = 1,
+                        })
+                    elseif modifier == "C" then
                         table.insert(transformed_keys, {
                             key = ("%s+%s"):format(config.options.keys["CTRL"], key),
                             is_mapping = is_mapping,
@@ -235,7 +242,7 @@ end
 ---@param key string
 ---@return boolean
 function M.is_special_key(key)
-    return key:match("^<([CMAD])%-.+>$") ~= nil
+    return key:match("^<.+>$") ~= nil
 end
 
 --- NOTE: subject to change in the future
