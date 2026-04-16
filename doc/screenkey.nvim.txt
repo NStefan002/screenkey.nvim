@@ -1,4 +1,5 @@
-*screenkey.nvim.txt*      For Neovim >= 0.10.0      Last change: 2026 April 07
+*screenkey.nvim.txt*
+                            For Neovim >= 0.10.0    Last change: 2026 April 16
 
 ==============================================================================
 Table of Contents                           *screenkey.nvim-table-of-contents*
@@ -49,7 +50,7 @@ TABLE OF CONTENTS            *screenkey.nvim-screenkey.nvim-table-of-contents*
 
 WHY                                        *screenkey.nvim-screenkey.nvim-why*
 
-- Don’t worry about leaking your passwords (e.g. when using `sudo`) while streaming/recording because you forgot to turn
+- Don’t worry about leaking your passwords (e.g. when using `sudo`) while streaming/recording because you forgot to turn
     off your display-key application, `Screenkey` will only show pieces of information about your input in Neovim.
 - You can use `Screenkey` to show your keys in a presentation or a screencast, so your audience can follow along.
 - You can use `Screenkey` to show your keys in a live coding session, so your neovim-newbie friends can understand what
@@ -440,7 +441,7 @@ RANDOM EXAMPLES ~
     })
 <
 
-- Use `filter` function to avoid displaying some keys (e.g. `h`, `j`, `k`, `l`).
+- Use `filter` function to avoid displaying some keys (e.g. `h`, `j`, `k`, `l`).
 
 >lua
     require("screenkey").setup({
