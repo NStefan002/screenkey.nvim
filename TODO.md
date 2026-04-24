@@ -5,7 +5,6 @@
 - [x] `disable.modes` option - list of vim-modes to disable screenkey in
 - [ ] `group_insert` - don't split keys when typing (if this is `true` and `config.options.group_mappings` is `true`
       then the insert mode mappings will be grouped and separated from 'typed' text)
-- [ ] better mapping detection system (mainly for builtin mappings)
 - [x] `hl_groups` - allow user to customize the predefined highlight groups such as:
   - [x] `screenkey.hl.map` - highlight group for mappings
   - [x] `screenkey.hl.key` - highlight group for non-mapping keys
@@ -34,10 +33,11 @@
 
 ## Other
 
-- [ ] tests
+- [x] tests
 - [ ] more logging
 - [x] change `disable.events` to be a separate option (e.g. `emit_events`)
 - [x] rework `logger` and add option to set the log level
 - [x] use `nvim_echo` to report messages (mainly in the `health` module)
 - [x] remove deprecated `vim.validate()`
 - [x] add examples of how to solve [#59](https://github.com/NStefan002/screenkey.nvim/issues/59)
+- [ ] rework `colorize` and `filter` options
