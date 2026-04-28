@@ -1,5 +1,5 @@
 *screenkey.nvim.txt*
-                            For Neovim >= 0.10.0    Last change: 2026 April 24
+                            For Neovim >= 0.10.0    Last change: 2026 April 28
 
 ==============================================================================
 Table of Contents                           *screenkey.nvim-table-of-contents*
@@ -200,7 +200,8 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
   clear_after          clear the input after <clear_after> seconds of inactivity, it
                        would not be cleared if <clear_after> is below or equal to zero
 
-  emit_events          enable/disable User events
+  emit_events          enable/disable User events (useful for custom statusline
+                       component)
 
   disable              temporarily disable screenkey for specific filetype (e.g. toml,
                        see :h 'filetype'), buftype (e.g. terminal, see :h 'buftype') or
