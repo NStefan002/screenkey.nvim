@@ -243,7 +243,9 @@ CONFIGURATION                    *screenkey.nvim-screenkey.nvim-configuration*
   separator            string of any length that separates the keys, space by default
 
   keys                 how to display the special keys (or any other keys that you want
-                       to display differently)
+                       to display differently), can also be a function that returns
+                       string so you can dynamically change the visual representation of
+                       the keys based on your preferences and use cases
 
   notify_method        how to display warnings and errors, can be none (disabled), echo
                        (default, prints to command line), or notify (uses vim.notify)
