@@ -33,7 +33,7 @@
 --- string to display in-between the keys
 ---@field separator string
 --- how to display the special keys
----@field keys table<string, string>
+---@field keys table<string, string | fun(): string>
 --- how to display notifications
 ---@field notify_method "none" | "notify" | "echo"
 --- logger settings

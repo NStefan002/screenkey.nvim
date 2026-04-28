@@ -68,7 +68,7 @@ function M.transform_input(in_key, group_mappings, show_leader)
                 and (k:upper() == leader:upper() or k:upper() == vim.fn.keytrans(leader):upper())
             then
                 table.insert(transformed_keys, {
-                    key = config.options.keys["<leader>"],
+                    key = M.get_key_representation("<leader>"),
                     is_mapping = true,
                     consecutive_repeats = 1,
                 })
@@ -78,15 +78,14 @@ function M.transform_input(in_key, group_mappings, show_leader)
                 local shift = k:match("^<.-%-S%-.+>$") ~= nil or k:match("^<S%-.+>$") ~= nil -- shift can be indicated by either -S- or S-, e.g. <C-S-a> or <S-Tab>
 
                 if key ~= nil then
-                    if #key == 1 and not shift then
-                        key = key:lower()
+                    if #key == 1 then
+                        key = shift and key:upper() or key:lower()
                     else
-                        key = config.options.keys[("<" .. key:upper() .. ">")] or key
+                        key = M.get_key_representation("<" .. key:upper() .. ">")
+                        key = shift and ("%s+%s"):format(M.get_key_representation("SHIFT"), key)
+                            or key
                     end
                     if modifier == nil then
-                        if shift then
-                            key = ("shift+%s"):format(key)
-                        end
                         table.insert(transformed_keys, {
                             key = key,
                             is_mapping = is_mapping,
@@ -94,19 +93,19 @@ function M.transform_input(in_key, group_mappings, show_leader)
                         })
                     elseif modifier == "C" then
                         table.insert(transformed_keys, {
-                            key = ("%s+%s"):format(config.options.keys["CTRL"], key),
+                            key = ("%s+%s"):format(M.get_key_representation("CTRL"), key),
                             is_mapping = is_mapping,
                             consecutive_repeats = 1,
                         })
                     elseif modifier == "A" or modifier == "M" then
                         table.insert(transformed_keys, {
-                            key = ("%s+%s"):format(config.options.keys["ALT"], key),
+                            key = ("%s+%s"):format(M.get_key_representation("ALT"), key),
                             is_mapping = is_mapping,
                             consecutive_repeats = 1,
                         })
                     elseif modifier == "D" then
                         table.insert(transformed_keys, {
-                            key = ("%s+%s"):format(config.options.keys["SUPER"], key),
+                            key = ("%s+%s"):format(M.get_key_representation("SUPER"), key),
                             is_mapping = is_mapping,
                             consecutive_repeats = 1,
                         })
@@ -114,7 +113,7 @@ function M.transform_input(in_key, group_mappings, show_leader)
                 end
             else
                 table.insert(transformed_keys, {
-                    key = config.options.keys[k] or k,
+                    key = M.get_key_representation(k),
                     is_mapping = is_mapping,
                     consecutive_repeats = 1,
                 })
@@ -289,6 +288,19 @@ function M.colorize_keys(queued_keys, compress_after, separator)
     end
 
     return colorized_keys
+end
+
+---@param key string
+---@return string
+function M.get_key_representation(key)
+    if not config.options.keys[key] then
+        return key
+    elseif type(config.options.keys[key]) == "function" then
+        return config.options.keys[key]()
+    else
+        ---@type string
+        return config.options.keys[key]
+    end
 end
 
 return M

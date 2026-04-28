@@ -69,6 +69,7 @@ M.defaults = {
         ["<F10>"] = "󱊴",
         ["<F11>"] = "󱊵",
         ["<F12>"] = "󱊶",
+        ["SHIFT"] = "Shift",
         ["CTRL"] = "Ctrl",
         ["ALT"] = "Alt",
         ["SUPER"] = "󰘳",
@@ -150,7 +151,7 @@ function M.validate_config(config)
     if config.keys then
         local validation = {}
         for key, value in pairs(M.defaults.keys) do
-            validation[key] = { value, "string", true }
+            validation[key] = { value, { "string", "function" }, true }
         end
         ok, err = utils.validate_keytable(validation, config.keys, "screenkey.config.keys")
         if not ok then

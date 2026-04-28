@@ -61,10 +61,17 @@ function M.validate_keytable(opts, user_config, path)
 
     local errors = {}
     for key, value in pairs(user_config) do
-        if (type(key) ~= "string" or type(value) ~= "string") and opts[key] == nil then
+        if
+            (type(key) ~= "string" or (type(value) ~= "string" and type(value) ~= "function"))
+            and opts[key] == nil
+        then
             table.insert(
                 errors,
-                ("- both key and value ([%s] = %s) must be strings in %s"):format(key, value, path)
+                ("- ([%s] = %s) key must be string, value must be string or function that returns string %s"):format(
+                    key,
+                    value,
+                    path
+                )
             )
         end
     end
