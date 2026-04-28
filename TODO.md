@@ -10,6 +10,7 @@
   - [x] `screenkey.hl.key` - highlight group for non-mapping keys
   - [x] `screenkey.hl.sep` - highlight group for the separator
 - [x] `colorize` - similar as `filter` but for coloring of the keys
+- [x] `keys` - for each key users can provide function that returns string
 
 ## Bugs
 
